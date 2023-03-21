@@ -6,6 +6,7 @@ import SideNav from "./common/SideNav";
 function App() {
 	return (
 		<div className="App">
+			<SideNav />
 			<Departments />
 		</div>
 	);

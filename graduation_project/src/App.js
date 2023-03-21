@@ -1,10 +1,14 @@
-import logo from "./logo.svg";
 import "./App.css";
+import Nav from "./common/Nav";
+import SideNav from "./common/SideNav";
+import Faculty from "./component/Faculty";
 
 function App() {
 	return (
 		<div className="App">
-			<header className="App-header">A7a ya youssef</header>
+			<Nav />
+			<SideNav />
+			<Faculty />
 		</div>
 	);
 }

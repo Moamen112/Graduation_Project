@@ -46,11 +46,13 @@ const Container = styled.div`
 	position: fixed;
 	display: flex;
 	flex-direction: column;
-	width: 250px;
+	width: 15%;
 	height: 100%;
 	background-color: #063443;
 	color: #fff;
 	gap: 40px;
+	margin-right: 15%;
+	left: 0;
 `;
 
 const Logo = styled.div`
@@ -108,7 +110,7 @@ const LogoutButton = styled.button`
 	border-radius: 15px;
 	transition: background-color 0.2s ease-in-out;
 	bottom: 50px;
-	left: 70px;
+	left: 25%;
 
 	&:hover {
 		background-color: #041f2a;

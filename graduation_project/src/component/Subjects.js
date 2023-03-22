@@ -7,7 +7,7 @@ import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 
 function Subjects() {
 	return (
-		<DepContainer>
+		<SubContainer>
 			<Content>
 				<Header>
 					<h2>Subjects</h2>
@@ -17,12 +17,12 @@ function Subjects() {
 					</AddButton>
 				</Header>
 
-				<DepList>
-					<DepSection>
-						<DepImage>
-							<EventNoteIcon style={DepImageStyle} />
-						</DepImage>
-						<DepInfo>
+				<SubList>
+					<SubSection>
+						<SubImage>
+							<EventNoteIcon style={SubImageStyle} />
+						</SubImage>
+						<SubInfo>
 							<h2>Subject Name</h2>
 							<p>
 								Lorem Ipsum is simply dummy text of the printing
@@ -34,7 +34,7 @@ function Subjects() {
 								but also the leap into electronic typesetting,
 								remaining essentially unchanged.
 							</p>
-						</DepInfo>
+						</SubInfo>
 
 						<EditSection>
 							<EditIcon style={editSectionStyle} />
@@ -42,13 +42,13 @@ function Subjects() {
 								style={{ ...editSectionStyle, ...red }}
 							/>
 						</EditSection>
-					</DepSection>
+					</SubSection>
 
-					<DepSection>
-						<DepImage>
-							<EventNoteIcon style={DepImageStyle} />
-						</DepImage>
-						<DepInfo>
+					<SubSection>
+						<SubImage>
+							<EventNoteIcon style={SubImageStyle} />
+						</SubImage>
+						<SubInfo>
 							<h2>Subject Name</h2>
 							<p>
 								Lorem Ipsum is simply dummy text of the printing
@@ -60,7 +60,7 @@ function Subjects() {
 								but also the leap into electronic typesetting,
 								remaining essentially unchanged.
 							</p>
-						</DepInfo>
+						</SubInfo>
 
 						<EditSection>
 							<EditIcon style={editSectionStyle} />
@@ -68,13 +68,13 @@ function Subjects() {
 								style={{ ...editSectionStyle, ...red }}
 							/>
 						</EditSection>
-					</DepSection>
+					</SubSection>
 
-					<DepSection>
-						<DepImage>
-							<EventNoteIcon style={DepImageStyle} />
-						</DepImage>
-						<DepInfo>
+					<SubSection>
+						<SubImage>
+							<EventNoteIcon style={SubImageStyle} />
+						</SubImage>
+						<SubInfo>
 							<h2>Subject Name</h2>
 							<p>
 								Lorem Ipsum is simply dummy text of the printing
@@ -86,7 +86,7 @@ function Subjects() {
 								but also the leap into electronic typesetting,
 								remaining essentially unchanged.
 							</p>
-						</DepInfo>
+						</SubInfo>
 
 						<EditSection>
 							<EditIcon style={editSectionStyle} />
@@ -94,13 +94,13 @@ function Subjects() {
 								style={{ ...editSectionStyle, ...red }}
 							/>
 						</EditSection>
-					</DepSection>
+					</SubSection>
 
-					<DepSection>
-						<DepImage>
-							<EventNoteIcon style={DepImageStyle} />
-						</DepImage>
-						<DepInfo>
+					<SubSection>
+						<SubImage>
+							<EventNoteIcon style={SubImageStyle} />
+						</SubImage>
+						<SubInfo>
 							<h2>Subject Name</h2>
 							<p>
 								Lorem Ipsum is simply dummy text of the printing
@@ -112,7 +112,7 @@ function Subjects() {
 								but also the leap into electronic typesetting,
 								remaining essentially unchanged.
 							</p>
-						</DepInfo>
+						</SubInfo>
 
 						<EditSection>
 							<EditIcon style={editSectionStyle} />
@@ -120,16 +120,16 @@ function Subjects() {
 								style={{ ...editSectionStyle, ...red }}
 							/>
 						</EditSection>
-					</DepSection>
-				</DepList>
+					</SubSection>
+				</SubList>
 			</Content>
-		</DepContainer>
+		</SubContainer>
 	);
 }
 
 export default Subjects;
 
-const DepContainer = styled.div`
+const SubContainer = styled.div`
 	background-color: #cddee5;
 	text-align: left;
 	display: flex;
@@ -174,7 +174,7 @@ const AddButton = styled.button`
 	}
 `;
 
-const DepList = styled.ul`
+const SubList = styled.ul`
 	list-style: none;
 	padding: 0 10px;
 	width: 100%;
@@ -186,7 +186,7 @@ const DepList = styled.ul`
 	text-align: left;
 `;
 
-const DepSection = styled.li`
+const SubSection = styled.li`
 	width: 90%;
 	display: flex;
 	align-items: center;
@@ -201,7 +201,7 @@ const DepSection = styled.li`
 	justify-content: space-around;
 `;
 
-const DepInfo = styled.div`
+const SubInfo = styled.div`
 	width: 70%;
 	text-align: left;
 `;
@@ -213,14 +213,14 @@ const EditSection = styled.div`
 	justify-content: space-around;
 `;
 
-const DepImage = styled.div`
+const SubImage = styled.div`
 	color: white;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 `;
 
-const DepImageStyle = {
+const SubImageStyle = {
 	width: "80%",
 	fontSize: "60px",
 	backgroundColor: "#053546",

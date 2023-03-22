@@ -5,12 +5,12 @@ import EventNoteIcon from "@mui/icons-material/EventNote";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 
-function Departments() {
+function Subjects() {
 	return (
 		<DepContainer>
 			<Content>
 				<Header>
-					<h2>Departments</h2>
+					<h2>Subjects</h2>
 					<AddButton>
 						<AddCircleOutlineIcon style={addStyle} />
 						Add
@@ -23,7 +23,7 @@ function Departments() {
 							<EventNoteIcon style={DepImageStyle} />
 						</DepImage>
 						<DepInfo>
-							<h2>Department Name</h2>
+							<h2>Subject Name</h2>
 							<p>
 								Lorem Ipsum is simply dummy text of the printing
 								and typesetting industry. Lorem Ipsum has been
@@ -49,7 +49,7 @@ function Departments() {
 							<EventNoteIcon style={DepImageStyle} />
 						</DepImage>
 						<DepInfo>
-							<h2>Department Name</h2>
+							<h2>Subject Name</h2>
 							<p>
 								Lorem Ipsum is simply dummy text of the printing
 								and typesetting industry. Lorem Ipsum has been
@@ -75,7 +75,7 @@ function Departments() {
 							<EventNoteIcon style={DepImageStyle} />
 						</DepImage>
 						<DepInfo>
-							<h2>Department Name</h2>
+							<h2>Subject Name</h2>
 							<p>
 								Lorem Ipsum is simply dummy text of the printing
 								and typesetting industry. Lorem Ipsum has been
@@ -101,7 +101,7 @@ function Departments() {
 							<EventNoteIcon style={DepImageStyle} />
 						</DepImage>
 						<DepInfo>
-							<h2>Department Name</h2>
+							<h2>Subject Name</h2>
 							<p>
 								Lorem Ipsum is simply dummy text of the printing
 								and typesetting industry. Lorem Ipsum has been
@@ -127,7 +127,7 @@ function Departments() {
 	);
 }
 
-export default Departments;
+export default Subjects;
 
 const DepContainer = styled.div`
 	background-color: #cddee5;

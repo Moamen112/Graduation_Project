@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import EditIcon from "@mui/icons-material/Edit";
+import TwoColumnForm from "../common/TwoColumnForm";
 
 function EditSubject() {
 	return (
@@ -11,11 +12,7 @@ function EditSubject() {
 					<EditIcon style={editSectionStyle} />
 				</Header>
 
-				<EditSubject>
-					<SubInfo>
-						<SubInfoItems>a</SubInfoItems>
-					</SubInfo>
-				</EditSubject>
+				<TwoColumnForm />
 			</Content>
 		</Container>
 	);
@@ -57,7 +54,8 @@ const editSectionStyle = {
 	padding: "5px",
 };
 
-const EditSubject = styled.div`
+/*
+	const EditSubject = styled.div`
 	width: 90%;
 	display: flex;
 	flex-direction: column;
@@ -86,3 +84,7 @@ const SubInfo = styled.ul`
 `;
 
 const SubInfoItems = styled.li``;
+
+const ListOfContent = styled.input``;
+
+*/

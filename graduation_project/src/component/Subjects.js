@@ -30,9 +30,7 @@ function Subjects() {
 								the industry's standard dummy text ever since
 								the 1500s, when an unknown printer took a galley
 								of type and scrambled it to make a type specimen
-								book. It has survived not only five centuries,
-								but also the leap into electronic typesetting,
-								remaining essentially unchanged.
+								book.
 							</p>
 						</SubInfo>
 
@@ -56,9 +54,7 @@ function Subjects() {
 								the industry's standard dummy text ever since
 								the 1500s, when an unknown printer took a galley
 								of type and scrambled it to make a type specimen
-								book. It has survived not only five centuries,
-								but also the leap into electronic typesetting,
-								remaining essentially unchanged.
+								book.
 							</p>
 						</SubInfo>
 
@@ -82,35 +78,7 @@ function Subjects() {
 								the industry's standard dummy text ever since
 								the 1500s, when an unknown printer took a galley
 								of type and scrambled it to make a type specimen
-								book. It has survived not only five centuries,
-								but also the leap into electronic typesetting,
-								remaining essentially unchanged.
-							</p>
-						</SubInfo>
-
-						<EditSection>
-							<EditIcon style={editSectionStyle} />
-							<ClearOutlinedIcon
-								style={{ ...editSectionStyle, ...red }}
-							/>
-						</EditSection>
-					</SubSection>
-
-					<SubSection>
-						<SubImage>
-							<EventNoteIcon style={SubImageStyle} />
-						</SubImage>
-						<SubInfo>
-							<h2>Subject Name</h2>
-							<p>
-								Lorem Ipsum is simply dummy text of the printing
-								and typesetting industry. Lorem Ipsum has been
-								the industry's standard dummy text ever since
-								the 1500s, when an unknown printer took a galley
-								of type and scrambled it to make a type specimen
-								book. It has survived not only five centuries,
-								but also the leap into electronic typesetting,
-								remaining essentially unchanged.
+								book.
 							</p>
 						</SubInfo>
 
@@ -221,8 +189,7 @@ const SubImage = styled.div`
 `;
 
 const SubImageStyle = {
-	width: "80%",
-	fontSize: "60px",
+	fontSize: "55px",
 	backgroundColor: "#053546",
 	borderRadius: "50%",
 	padding: "20px",

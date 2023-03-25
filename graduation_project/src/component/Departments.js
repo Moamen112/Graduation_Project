@@ -1,126 +1,67 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
+import DepartmentCard from "../common/DepartmentCard";
 
 function Departments() {
+	const [departments, setDepartments] = useState([]);
+
+	const addDepartment = () => {
+		const newDepartment = () => {
+			<DepartmentCard />;
+		};
+		setDepartments([...departments, newDepartment]);
+	};
+
+	function handleDeleteDepartment(index) {
+		const newDepartments = [...departments];
+		newDepartments.splice(index, 1);
+		setDepartments(newDepartments);
+	}
+
 	return (
 		<DepContainer>
 			<Content>
 				<Header>
 					<h2>Departments</h2>
 					<AddButton>
-						<AddCircleOutlineIcon style={addStyle} />
+						<AddCircleOutlineIcon
+							style={addStyle}
+							onClick={addDepartment}
+						/>
 						Add
 					</AddButton>
 				</Header>
 
 				<DepList>
-					<DepSection>
-						<DepImage>
-							<EventNoteIcon style={DepImageStyle} />
-						</DepImage>
-						<DepInfo>
-							<h2>Department Name</h2>
-							<p>
-								Lorem Ipsum is simply dummy text of the printing
-								and typesetting industry. Lorem Ipsum has been
-								the industry's standard dummy text ever since
-								the 1500s, when an unknown printer took a galley
-								of type and scrambled it to make a type specimen
-								book. It has survived not only five centuries,
-								but also the leap into electronic typesetting,
-								remaining essentially unchanged.
-							</p>
-						</DepInfo>
-
-						<EditSection>
-							<EditIcon style={editSectionStyle} />
-							<ClearOutlinedIcon
-								style={{ ...editSectionStyle, ...red }}
-							/>
-						</EditSection>
-					</DepSection>
-
-					<DepSection>
-						<DepImage>
-							<EventNoteIcon style={DepImageStyle} />
-						</DepImage>
-						<DepInfo>
-							<h2>Department Name</h2>
-							<p>
-								Lorem Ipsum is simply dummy text of the printing
-								and typesetting industry. Lorem Ipsum has been
-								the industry's standard dummy text ever since
-								the 1500s, when an unknown printer took a galley
-								of type and scrambled it to make a type specimen
-								book. It has survived not only five centuries,
-								but also the leap into electronic typesetting,
-								remaining essentially unchanged.
-							</p>
-						</DepInfo>
-
-						<EditSection>
-							<EditIcon style={editSectionStyle} />
-							<ClearOutlinedIcon
-								style={{ ...editSectionStyle, ...red }}
-							/>
-						</EditSection>
-					</DepSection>
-
-					<DepSection>
-						<DepImage>
-							<EventNoteIcon style={DepImageStyle} />
-						</DepImage>
-						<DepInfo>
-							<h2>Department Name</h2>
-							<p>
-								Lorem Ipsum is simply dummy text of the printing
-								and typesetting industry. Lorem Ipsum has been
-								the industry's standard dummy text ever since
-								the 1500s, when an unknown printer took a galley
-								of type and scrambled it to make a type specimen
-								book. It has survived not only five centuries,
-								but also the leap into electronic typesetting,
-								remaining essentially unchanged.
-							</p>
-						</DepInfo>
-
-						<EditSection>
-							<EditIcon style={editSectionStyle} />
-							<ClearOutlinedIcon
-								style={{ ...editSectionStyle, ...red }}
-							/>
-						</EditSection>
-					</DepSection>
-
-					<DepSection>
-						<DepImage>
-							<EventNoteIcon style={DepImageStyle} />
-						</DepImage>
-						<DepInfo>
-							<h2>Department Name</h2>
-							<p>
-								Lorem Ipsum is simply dummy text of the printing
-								and typesetting industry. Lorem Ipsum has been
-								the industry's standard dummy text ever since
-								the 1500s, when an unknown printer took a galley
-								of type and scrambled it to make a type specimen
-								book. It has survived not only five centuries,
-								but also the leap into electronic typesetting,
-								remaining essentially unchanged.
-							</p>
-						</DepInfo>
-
-						<EditSection>
-							<EditIcon style={editSectionStyle} />
-							<ClearOutlinedIcon
-								style={{ ...editSectionStyle, ...red }}
-							/>
-						</EditSection>
-					</DepSection>
+					{departments.map((department, index) => (
+						<DepSectionMain>
+							<DepImage>
+								<EventNoteIcon style={DepImageStyle} />
+							</DepImage>
+							<DepartmentCardStyle>
+								<DepartmentCard
+									key={index}
+									departmentName={"Department Name"}
+									departmentDescription={
+										"description department description department description"
+									}
+								/>
+							</DepartmentCardStyle>
+							<EditSection>
+								<EditIcon style={editSectionStyle} />
+								<ClearOutlinedIcon
+									onClick={() =>
+										handleDeleteDepartment(index)
+									}
+									style={{ ...editSectionStyle, ...red }}
+								/>
+							</EditSection>
+						</DepSectionMain>
+					))}
 				</DepList>
 			</Content>
 		</DepContainer>
@@ -128,6 +69,10 @@ function Departments() {
 }
 
 export default Departments;
+
+const DepartmentCardStyle = styled.div`
+	width: 70%;
+`;
 
 const DepContainer = styled.div`
 	background-color: #cddee5;
@@ -186,43 +131,32 @@ const DepList = styled.ul`
 	text-align: left;
 `;
 
-const DepSection = styled.li`
+const DepSectionMain = styled.li`
 	width: 90%;
+	min-height: 150px;
 	display: flex;
 	align-items: center;
-	justify-content: space-around;
 	border-radius: 40px;
-	align-items: center;
 	background-color: white;
 	padding: 8px 10px;
 	text-align: center;
-	transition: background-color 0.2s ease-in-out;
 	margin-bottom: 25px;
-	justify-content: space-around;
-`;
-
-const DepInfo = styled.div`
-	width: 70%;
-	text-align: left;
 `;
 
 const EditSection = styled.div`
 	width: 10%;
 	display: flex;
-	align-items: center;
+	align-items: right;
 	justify-content: space-around;
 `;
 
 const DepImage = styled.div`
 	color: white;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	width: 15%;
 `;
 
 const DepImageStyle = {
-	width: "80%",
-	fontSize: "60px",
+	fontSize: "65px",
 	backgroundColor: "#053546",
 	borderRadius: "50%",
 	padding: "20px",
@@ -234,6 +168,7 @@ const editSectionStyle = {
 	backgroundColor: "#053546",
 	borderRadius: "50%",
 	padding: "5px",
+	cursor: "pointer",
 };
 
 const addStyle = {

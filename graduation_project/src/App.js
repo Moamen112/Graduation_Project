@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import Departments from "./component/Departments";
 import Subjects from "./component/Subjects";
@@ -11,7 +10,7 @@ function App() {
 		<div className="App">
 			<Nav />
 			<SideNav />
-			<EditSubject />
+			<Departments />
 		</div>
 	);
 }

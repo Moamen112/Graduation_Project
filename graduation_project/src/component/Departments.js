@@ -1,26 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
-import DepartmentCard from "../common/DepartmentCard";
+import DepartmentsData from "../common/DepartmentsData";
 
 function Departments() {
 	const [departments, setDepartments] = useState([]);
 
-	const addDepartment = () => {
-		const newDepartment = () => {
-			<DepartmentCard />;
-		};
-		setDepartments([...departments, newDepartment]);
-	};
+	useEffect(() => {
+		setDepartments(DepartmentsData);
+	}, []);
 
-	function handleDeleteDepartment(index) {
-		const newDepartments = [...departments];
-		newDepartments.splice(index, 1);
-		setDepartments(newDepartments);
-	}
+	// Add Function
+
+	// const addDepartment = () => {
+	// 	const newDepartment = () => {};
+	// 	setDepartments([...departments, newDepartment]);
+	// };
+
+	// Delete function
+
+	// function handleDeleteDepartment(index) {
+	// 	const newDepartments = [...departments];
+	// 	newDepartments.splice(index, 1);
+	// 	setDepartments(newDepartments);
+	// }
 
 	return (
 		<DepContainer>
@@ -30,33 +36,27 @@ function Departments() {
 					<AddButton>
 						<AddCircleOutlineIcon
 							style={addStyle}
-							onClick={addDepartment}
+							//onClick={addDepartment}
 						/>
 						Add
 					</AddButton>
 				</Header>
 
 				<DepList>
-					{departments.map((department, index) => (
+					{/* Map method to get departments automatically */}
+					{departments.map((department) => (
 						<DepSectionMain>
 							<DepImage>
 								<EventNoteIcon style={DepImageStyle} />
 							</DepImage>
-							<DepartmentCardStyle>
-								<DepartmentCard
-									key={index}
-									departmentName={"Department Name"}
-									departmentDescription={
-										"description department description department description"
-									}
-								/>
-							</DepartmentCardStyle>
+							<DepartmentInfoStyle>
+								<h1>{department.name}</h1>
+								<p>{department.description}</p>
+							</DepartmentInfoStyle>
 							<EditSection>
 								<EditIcon style={editSectionStyle} />
 								<ClearOutlinedIcon
-									onClick={() =>
-										handleDeleteDepartment(index)
-									}
+									//onClick={() => handleDeleteDepartment(index)}
 									style={{ ...editSectionStyle, ...red }}
 								/>
 							</EditSection>
@@ -70,8 +70,9 @@ function Departments() {
 
 export default Departments;
 
-const DepartmentCardStyle = styled.div`
+const DepartmentInfoStyle = styled.div`
 	width: 70%;
+	text-align: left;
 `;
 
 const DepContainer = styled.div`

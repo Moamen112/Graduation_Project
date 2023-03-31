@@ -1,94 +1,70 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
+import subjectsData from "../common/SubjectsData";
 
 function Subjects() {
+	const [subjects, setSubjects] = useState([]);
+
+	useEffect(() => {
+		setSubjects(subjectsData);
+	}, []);
+
+	// Add Function
+
+	// const addSubject = () => {
+	// 	const newSubject = () => {
+	// 	};
+	// 	setSubjects([...subjects, newSubject]);
+	// };
+
+	// Delete Function
+
+	// function handleDeleteSubject(index) {
+	// 	const newSubjects = [...subjects];
+	// 	newSubjects.splice(index, 1);
+	// 	setSubjects(newSubjects);
+	// }
+
 	return (
 		<SubContainer>
 			<Content>
 				<Header>
 					<h2>Subjects</h2>
 					<AddButton>
-						<AddCircleOutlineIcon style={addStyle} />
+						<AddCircleOutlineIcon
+							style={addStyle}
+							//onClick={addSubject}
+						/>
 						Add
 					</AddButton>
 				</Header>
 
 				<SubList>
-					<SubSection>
-						<SubImage>
-							<EventNoteIcon style={SubImageStyle} />
-						</SubImage>
-						<SubInfo>
-							<h2>Subject Name</h2>
-							<p>
-								Lorem Ipsum is simply dummy text of the printing
-								and typesetting industry. Lorem Ipsum has been
-								the industry's standard dummy text ever since
-								the 1500s, when an unknown printer took a galley
-								of type and scrambled it to make a type specimen
-								book.
-							</p>
-						</SubInfo>
+					{/* Map method to get subjects automatically */}
+					{subjects.map((subject) => (
+						<SubSection>
+							<SubImage>
+								<EventNoteIcon style={SubImageStyle} />
+							</SubImage>
 
-						<EditSection>
-							<EditIcon style={editSectionStyle} />
-							<ClearOutlinedIcon
-								style={{ ...editSectionStyle, ...red }}
-							/>
-						</EditSection>
-					</SubSection>
+							<SubjectInfoStyle>
+								<h1>{subject.name}</h1>
+								<p>{subject.description}</p>
+							</SubjectInfoStyle>
 
-					<SubSection>
-						<SubImage>
-							<EventNoteIcon style={SubImageStyle} />
-						</SubImage>
-						<SubInfo>
-							<h2>Subject Name</h2>
-							<p>
-								Lorem Ipsum is simply dummy text of the printing
-								and typesetting industry. Lorem Ipsum has been
-								the industry's standard dummy text ever since
-								the 1500s, when an unknown printer took a galley
-								of type and scrambled it to make a type specimen
-								book.
-							</p>
-						</SubInfo>
-
-						<EditSection>
-							<EditIcon style={editSectionStyle} />
-							<ClearOutlinedIcon
-								style={{ ...editSectionStyle, ...red }}
-							/>
-						</EditSection>
-					</SubSection>
-
-					<SubSection>
-						<SubImage>
-							<EventNoteIcon style={SubImageStyle} />
-						</SubImage>
-						<SubInfo>
-							<h2>Subject Name</h2>
-							<p>
-								Lorem Ipsum is simply dummy text of the printing
-								and typesetting industry. Lorem Ipsum has been
-								the industry's standard dummy text ever since
-								the 1500s, when an unknown printer took a galley
-								of type and scrambled it to make a type specimen
-								book.
-							</p>
-						</SubInfo>
-
-						<EditSection>
-							<EditIcon style={editSectionStyle} />
-							<ClearOutlinedIcon
-								style={{ ...editSectionStyle, ...red }}
-							/>
-						</EditSection>
-					</SubSection>
+							<EditSection>
+								<EditIcon style={editSectionStyle} />
+								<ClearOutlinedIcon
+									//onClick={() => handleDeleteSubject(index)}
+									style={{ ...editSectionStyle, ...red }}
+								/>
+							</EditSection>
+						</SubSection>
+					))}
 				</SubList>
 			</Content>
 		</SubContainer>
@@ -96,6 +72,11 @@ function Subjects() {
 }
 
 export default Subjects;
+
+const SubjectInfoStyle = styled.div`
+	width: 70%;
+	text-align: left;
+`;
 
 const SubContainer = styled.div`
 	background-color: #cddee5;

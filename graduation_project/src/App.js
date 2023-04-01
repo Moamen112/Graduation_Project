@@ -10,7 +10,7 @@ function App() {
 		<div className="App">
 			<Nav />
 			<SideNav />
-			<Subjects />
+			<Departments />
 		</div>
 	);
 }

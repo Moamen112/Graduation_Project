@@ -5,6 +5,13 @@ import EventNoteIcon from "@mui/icons-material/EventNote";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 import subjectsData from "../common/SubjectsData";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 function Subjects() {
 	const [subjects, setSubjects] = useState([]);
@@ -12,6 +19,41 @@ function Subjects() {
 	useEffect(() => {
 		setSubjects(subjectsData);
 	}, []);
+
+	const [open, setOpen] = useState(false);
+
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
+
+	const [data, setData] = useState(subjectsData);
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		fetch("../common/SubjectsData", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log("Success:", data);
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+			});
+	};
+
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setData((prevData) => ({ ...prevData, [name]: value }));
+	};
 
 	// Add Function
 
@@ -34,11 +76,8 @@ function Subjects() {
 			<Content>
 				<Header>
 					<h2>Subjects</h2>
-					<AddButton>
-						<AddCircleOutlineIcon
-							style={addStyle}
-							//onClick={addSubject}
-						/>
+					<AddButton onClick={handleClickOpen}>
+						<AddCircleOutlineIcon style={addStyle} />
 						Add
 					</AddButton>
 				</Header>
@@ -67,6 +106,47 @@ function Subjects() {
 					))}
 				</SubList>
 			</Content>
+
+			<Dialog
+				open={open}
+				onClose={handleClose}>
+				<form onSubmit={handleSubmit}>
+					<DialogTitle>Subject Details</DialogTitle>
+					<DialogContent>
+						<TextField
+							autoFocus
+							margin="dense"
+							id="name"
+							label="Subject Name"
+							type="text"
+							value={data.name}
+							fullWidth
+							variant="standard"
+							onChange={handleChange}
+						/>
+
+						<TextField
+							autoFocus
+							margin="dense"
+							id="description"
+							label="Subject Description"
+							type="text"
+							value={data.description}
+							fullWidth
+							variant="standard"
+							onChange={handleChange}
+						/>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={handleClose}>Cancel</Button>
+						<Button
+							onClick={handleClose}
+							type="submit">
+							Save
+						</Button>
+					</DialogActions>
+				</form>
+			</Dialog>
 		</SubContainer>
 	);
 }

@@ -39,12 +39,11 @@ function Nav() {
 export default Nav;
 
 const Container = styled.nav`
-	width: 85%;
+	width: 100%;
 	position: fixed;
 	background-color: #fff;
 	box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 	height: 10%;
-	margin-left: 15%;
 	display: flex;
 	align-items: center;
 	flex-direction: row-reverse;

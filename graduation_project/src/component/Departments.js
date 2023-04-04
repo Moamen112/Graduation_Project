@@ -14,13 +14,31 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 function Departments() {
-	const [departments, setDepartments] = useState([]);
-
-	useEffect(() => {
-		setDepartments(DepartmentsData);
-	}, []);
+	const [departments, setDepartments] = useState(DepartmentsData);
 
 	const [open, setOpen] = useState(false);
+
+	const [formData, setFormData] = useState({
+		id: "",
+		name: "",
+		description: "",
+	});
+
+	function handleInputChange(e) {
+		const { name, value } = e.target;
+		setFormData({ ...formData, [name]: value });
+	}
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		const formData = new FormData(event.target);
+		const newDepartment = {
+			id: departments.length + 1,
+			name: formData.get("name"),
+			description: formData.get("description"),
+		};
+		setDepartments([...departments, newDepartment]);
+	};
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -30,56 +48,13 @@ function Departments() {
 		setOpen(false);
 	};
 
-	const [data, setData] = useState(DepartmentsData);
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		fetch("../common/DepartmentsData", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(data),
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				console.log("Success:", data);
-			})
-			.catch((error) => {
-				console.error("Error:", error);
-			});
-	};
-
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setData((prevData) => ({ ...prevData, [name]: value }));
-	};
-
-	// Add Function
-
-	// const addDepartment = () => {
-	// 	const newDepartment = () => {};
-	// 	setDepartments([...departments, newDepartment]);
-	// };
-
-	// Delete function
-
-	// function handleDeleteDepartment(index) {
-	// 	const newDepartments = [...departments];
-	// 	newDepartments.splice(index, 1);
-	// 	setDepartments(newDepartments);
-	// }
-
 	return (
 		<DepContainer>
 			<Content>
 				<Header>
 					<h2>Departments</h2>
 					<AddButton onClick={handleClickOpen}>
-						<AddCircleOutlineIcon
-							style={addStyle}
-							//onClick={addDepartment}
-						/>
+						<AddCircleOutlineIcon style={addStyle} />
 						Add
 					</AddButton>
 				</Header>
@@ -87,7 +62,7 @@ function Departments() {
 				<DepList>
 					{/* Map method to get departments automatically */}
 					{departments.map((department) => (
-						<DepSectionMain>
+						<DepSectionMain key={department.id}>
 							<DepImage>
 								<EventNoteIcon style={DepImageStyle} />
 							</DepImage>
@@ -98,7 +73,6 @@ function Departments() {
 							<EditSection>
 								<EditIcon style={editSectionStyle} />
 								<ClearOutlinedIcon
-									//onClick={() => handleDeleteDepartment(index)}
 									style={{ ...editSectionStyle, ...red }}
 								/>
 							</EditSection>
@@ -109,43 +83,42 @@ function Departments() {
 
 			<Dialog
 				open={open}
-				onClose={handleClose}>
-				<form onSubmit={handleSubmit}>
-					<DialogTitle>Department Details</DialogTitle>
-					<DialogContent>
-						<TextField
-							autoFocus
-							margin="dense"
-							id="name"
-							label="Department Name"
-							type="text"
-							value={data.name}
-							fullWidth
-							variant="standard"
-							onChange={handleChange}
-						/>
+				onClose={handleClose}
+				onSubmit={handleSubmit}>
+				<DialogTitle>Department Details</DialogTitle>
+				<DialogContent>
+					<TextField
+						autoFocus
+						margin="dense"
+						label="Department Name"
+						name="name"
+						value={formData.name}
+						type="text"
+						fullWidth
+						variant="standard"
+						onChange={handleInputChange}
+					/>
 
-						<TextField
-							autoFocus
-							margin="dense"
-							id="description"
-							label="Department Description"
-							type="text"
-							value={data.description}
-							fullWidth
-							variant="standard"
-							onChange={handleChange}
-						/>
-					</DialogContent>
-					<DialogActions>
-						<Button onClick={handleClose}>Cancel</Button>
-						<Button
-							onClick={handleClose}
-							type="submit">
-							Save
-						</Button>
-					</DialogActions>
-				</form>
+					<TextField
+						autoFocus
+						margin="dense"
+						label="Department Description"
+						name="description"
+						value={formData.description}
+						type="text"
+						fullWidth
+						variant="standard"
+						onChange={handleInputChange}
+					/>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleClose}>Cancel</Button>
+					<Button
+						onClick={handleClose}
+						type="submit">
+						Save
+					</Button>
+				</DialogActions>
 			</Dialog>
 		</DepContainer>
 	);
@@ -163,9 +136,7 @@ const DepContainer = styled.div`
 	text-align: left;
 	display: flex;
 	flex-direction: column;
-	width: 85%;
 	height: 100%;
-	gap: 40px;
 	margin-left: 15%;
 	padding-top: 8%;
 `;

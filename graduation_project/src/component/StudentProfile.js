@@ -102,6 +102,7 @@ function StudentProfile() {
 export default StudentProfile;
 
 const StyledButton = styled.button`
+	margin-top: 2%;
 	border: none;
 	background-color: #063443;
 	color: white;
@@ -115,25 +116,13 @@ const FontStyle = {
 	fontSize: "1.2em",
 };
 
-const Item = styled("div")({
-	marginBottom: "16px",
-	"& input": {
-		border: "none",
-		borderBottom: "1px solid #ccc",
-		width: "100%",
-		padding: "8px 0",
-		boxSizing: "border-box",
-		fontSize: "16px",
-	},
-});
-
 const Input = styled.input`
 	width: 100%;
 	padding: 8px;
 `;
 
 const ContentContainer = styled.div`
-	margin-top: 8%;
+	margin-top: 3%;
 	color: #063443;
 	font-weight: bold;
 	display: flex;
@@ -153,9 +142,7 @@ const Header = styled.header`
 
 const ProfileImageContainer = styled.div`
 	position: fixed;
-	top: 20%;
-	left: 8%;
-
+	margin-top: -10%;
 	p {
 		display: flex;
 		justify-content: center;

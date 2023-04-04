@@ -5,6 +5,7 @@ import EventNoteIcon from "@mui/icons-material/EventNote";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 import DepartmentsData from "../common/DepartmentsData";
+
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -16,36 +17,53 @@ import DialogTitle from "@mui/material/DialogTitle";
 function Departments() {
 	const [departments, setDepartments] = useState(DepartmentsData);
 
+	const [editingDepartment, setEditingDepartment] = useState(null);
+
 	const [open, setOpen] = useState(false);
 
-	const [formData, setFormData] = useState({
-		id: "",
-		name: "",
-		description: "",
-	});
-
-	function handleInputChange(e) {
-		const { name, value } = e.target;
-		setFormData({ ...formData, [name]: value });
-	}
-
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		const formData = new FormData(event.target);
-		const newDepartment = {
-			id: departments.length + 1,
-			name: formData.get("name"),
-			description: formData.get("description"),
-		};
-		setDepartments([...departments, newDepartment]);
-	};
-
 	const handleClickOpen = () => {
+		setEditingDepartment(null);
 		setOpen(true);
 	};
 
 	const handleClose = () => {
 		setOpen(false);
+	};
+
+	const handleEdit = (department) => {
+		setEditingDepartment(department);
+		setOpen(true);
+	};
+
+	const handleSave = () => {
+		const departmentName = document.getElementById("name").value;
+		const departmentDescription =
+			document.getElementById("description").value;
+		const newDepartment = {
+			id: departments.length + 1,
+			name: departmentName,
+			description: departmentDescription,
+		};
+
+		if (editingDepartment === null) {
+			setDepartments([...departments, newDepartment]);
+		} else {
+			const newDepartments = departments.map((department) => {
+				if (department === editingDepartment) {
+					return { ...department, ...newDepartment };
+				}
+				return department;
+			});
+			setDepartments(newDepartments);
+		}
+		handleClose();
+	};
+
+	const handleDelete = (id) => {
+		const newDepartments = departments.filter(
+			(department) => department.id !== id,
+		);
+		setDepartments(newDepartments);
 	};
 
 	return (
@@ -71,8 +89,12 @@ function Departments() {
 								<p>{department.description}</p>
 							</DepartmentInfoStyle>
 							<EditSection>
-								<EditIcon style={editSectionStyle} />
+								<EditIcon
+									style={editSectionStyle}
+									onClick={() => handleEdit(department)}
+								/>
 								<ClearOutlinedIcon
+									onClick={() => handleDelete(department.id)}
 									style={{ ...editSectionStyle, ...red }}
 								/>
 							</EditSection>
@@ -82,39 +104,43 @@ function Departments() {
 			</Content>
 
 			<Dialog
+				onSubmit={handleSave}
 				open={open}
-				onClose={handleClose}
-				onSubmit={handleSubmit}>
+				onClose={handleClose}>
 				<DialogTitle>Department Details</DialogTitle>
 				<DialogContent>
 					<TextField
 						autoFocus
 						margin="dense"
 						label="Department Name"
-						name="name"
-						value={formData.name}
+						id="name"
 						type="text"
 						fullWidth
 						variant="standard"
-						onChange={handleInputChange}
+						defaultValue={
+							editingDepartment ? editingDepartment.name : ""
+						}
 					/>
 
 					<TextField
 						autoFocus
 						margin="dense"
 						label="Department Description"
-						name="description"
-						value={formData.description}
+						id="description"
 						type="text"
 						fullWidth
 						variant="standard"
-						onChange={handleInputChange}
+						defaultValue={
+							editingDepartment
+								? editingDepartment.description
+								: ""
+						}
 					/>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleClose}>Cancel</Button>
 					<Button
-						onClick={handleClose}
+						onClick={handleSave}
 						type="submit">
 						Save
 					</Button>
@@ -176,7 +202,6 @@ const AddButton = styled.button`
 
 const DepList = styled.ul`
 	list-style: none;
-	padding: 0 10px;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -187,15 +212,18 @@ const DepList = styled.ul`
 `;
 
 const DepSectionMain = styled.li`
-	width: 90%;
+	width: 80%;
 	min-height: 150px;
 	display: flex;
 	align-items: center;
+	justify-content: space-around;
 	border-radius: 40px;
+	align-items: center;
 	background-color: white;
 	padding: 8px 10px;
 	text-align: center;
 	margin-bottom: 25px;
+	justify-content: space-around;
 `;
 
 const EditSection = styled.div`
@@ -207,11 +235,13 @@ const EditSection = styled.div`
 
 const DepImage = styled.div`
 	color: white;
-	width: 15%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 
 const DepImageStyle = {
-	fontSize: "65px",
+	fontSize: "55px",
 	backgroundColor: "#053546",
 	borderRadius: "50%",
 	padding: "20px",

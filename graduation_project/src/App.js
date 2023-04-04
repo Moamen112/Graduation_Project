@@ -7,12 +7,14 @@ import Nav from "./common/Nav";
 import StudentProfile from "./component/StudentProfile";
 import StudentPortal from "./component/StudentPortal";
 import StudentQues from "./component/StudentQues";
+import Faculties from "./component/Faculties";
 
 function App() {
 	return (
 		<div className="App">
 			<Nav />
-			<StudentProfile />
+			<SideNav />
+			<Subjects />
 		</div>
 	);
 }

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
-import subjectsData from "../common/SubjectsData";
+import facultiesData from "../common/FacultiesData";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -13,15 +13,15 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 
-function Subjects() {
-	const [subjects, setSubjects] = useState(subjectsData);
+function Faculties() {
+	const [faculties, setFaculties] = useState(facultiesData);
 
-	const [editingSubject, setEditingSubject] = useState(null);
+	const [editingFaculty, setEditingFaculty] = useState(null);
 
 	const [open, setOpen] = useState(false);
 
 	const handleClickOpen = () => {
-		setEditingSubject(null);
+		setEditingFaculty(null);
 		setOpen(true);
 	};
 
@@ -29,105 +29,105 @@ function Subjects() {
 		setOpen(false);
 	};
 
-	const handleEdit = (subject) => {
-		setEditingSubject(subject);
+	const handleEdit = (faculty) => {
+		setEditingFaculty(faculty);
 		setOpen(true);
 	};
 
 	const handleSave = () => {
-		const subjectName = document.getElementById("name").value;
-		const subjectDescription = document.getElementById("description").value;
-		const newSubject = {
-			id: subjects.length + 1,
-			name: subjectName,
-			description: subjectDescription,
+		const facultyName = document.getElementById("name").value;
+		const facultyDescription = document.getElementById("description").value;
+		const newFaculty = {
+			id: faculties.length + 1,
+			name: facultyName,
+			description: facultyDescription,
 		};
 
-		if (editingSubject === null) {
-			setSubjects([...subjects, newSubject]);
+		if (editingFaculty === null) {
+			setFaculties([...faculties, newFaculty]);
 		} else {
-			const newSubjects = subjects.map((subject) => {
-				if (subject === editingSubject) {
-					return { ...subject, ...newSubject };
+			const newFaculties = faculties.map((faculty) => {
+				if (faculty === editingFaculty) {
+					return { ...faculty, ...newFaculty };
 				}
-				return subject;
+				return faculty;
 			});
-			setSubjects(newSubjects);
+			setFaculties(newFaculties);
 		}
 		handleClose();
 	};
 
 	const handleDelete = (id) => {
-		const newSubjects = subjects.filter((subject) => subject.id !== id);
-		setSubjects(newSubjects);
+		const newFaculties = faculties.filter((faculty) => faculty.id !== id);
+		setFaculties(newFaculties);
 	};
 
 	return (
-		<SubContainer>
+		<FacContainer>
 			<Content>
 				<Header>
-					<h2>Subjects</h2>
+					<h2>Faculties</h2>
 					<AddButton onClick={handleClickOpen}>
 						<AddCircleOutlineIcon style={addStyle} />
 						Add
 					</AddButton>
 				</Header>
 
-				<SubList>
+				<FacList>
 					{/* Map method to get subjects automatically */}
-					{subjects.map((subject) => (
-						<SubSection key={subject.id}>
-							<SubImage>
-								<EventNoteIcon style={SubImageStyle} />
-							</SubImage>
+					{faculties.map((faculty) => (
+						<FacSection key={faculty.id}>
+							<FacImage>
+								<EventNoteIcon style={FacImageStyle} />
+							</FacImage>
 
-							<SubjectInfoStyle>
-								<h1>{subject.name}</h1>
-								<p>{subject.description}</p>
-							</SubjectInfoStyle>
+							<FacultyInfoStyle>
+								<h1>{faculty.name}</h1>
+								<p>{faculty.description}</p>
+							</FacultyInfoStyle>
 
 							<EditSection>
 								<EditIcon
 									style={editSectionStyle}
-									onClick={() => handleEdit(subject)}
+									onClick={() => handleEdit(faculty)}
 								/>
 								<ClearOutlinedIcon
-									onClick={() => handleDelete(subject.id)}
+									onClick={() => handleDelete(faculty.id)}
 									style={{ ...editSectionStyle, ...red }}
 								/>
 							</EditSection>
-						</SubSection>
+						</FacSection>
 					))}
-				</SubList>
+				</FacList>
 			</Content>
 
 			<Dialog
 				onSubmit={handleSave}
 				open={open}
 				onClose={handleClose}>
-				<DialogTitle>Subject Details</DialogTitle>
+				<DialogTitle>Faculty Details</DialogTitle>
 				<DialogContent>
 					<TextField
 						autoFocus
 						margin="dense"
 						id="name"
-						label="Subject Name"
+						label="Faculty Name"
 						type="text"
 						fullWidth
 						variant="standard"
-						defaultValue={editingSubject ? editingSubject.name : ""}
+						defaultValue={editingFaculty ? editingFaculty.name : ""}
 					/>
 
 					<TextField
 						autoFocus
 						margin="dense"
 						id="description"
-						label="Subject Description"
+						label="Faculty Description"
 						type="text"
 						fullWidth
 						variant="standard"
 						defaultValue={
-							editingSubject ? editingSubject.description : ""
+							editingFaculty ? editingFaculty.description : ""
 						}
 					/>
 				</DialogContent>
@@ -140,23 +140,24 @@ function Subjects() {
 					</Button>
 				</DialogActions>
 			</Dialog>
-		</SubContainer>
+		</FacContainer>
 	);
 }
 
-export default Subjects;
+export default Faculties;
 
-const SubjectInfoStyle = styled.div`
+const FacultyInfoStyle = styled.div`
 	width: 70%;
 	text-align: left;
 `;
 
-const SubContainer = styled.div`
+const FacContainer = styled.div`
 	background-color: #cddee5;
 	text-align: left;
 	display: flex;
 	flex-direction: column;
 	width: 85%;
+	height: 100%;
 	gap: 40px;
 	margin-left: 15%;
 	padding-top: 8%;
@@ -195,7 +196,7 @@ const AddButton = styled.button`
 	}
 `;
 
-const SubList = styled.ul`
+const FacList = styled.ul`
 	list-style: none;
 	width: 100%;
 	display: flex;
@@ -206,7 +207,7 @@ const SubList = styled.ul`
 	text-align: left;
 `;
 
-const SubSection = styled.li`
+const FacSection = styled.li`
 	width: 80%;
 	min-height: 150px;
 	display: flex;
@@ -228,14 +229,14 @@ const EditSection = styled.div`
 	justify-content: space-around;
 `;
 
-const SubImage = styled.div`
+const FacImage = styled.div`
 	color: white;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 `;
 
-const SubImageStyle = {
+const FacImageStyle = {
 	fontSize: "55px",
 	backgroundColor: "#053546",
 	borderRadius: "50%",

@@ -7,6 +7,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 
 function StudentProfile() {
 	const Item = styled(Paper)(() => ({
@@ -39,38 +40,79 @@ function StudentProfile() {
 							item
 							xs={6}>
 							<Item style={FontStyle}>University</Item>
-							<Input />
-						</Grid>
-						<Grid
-							item
-							xs={6}>
-							<Item style={FontStyle}>Email Address</Item>
-							<Input />
+							<TextField
+								style={FontStyle}
+								id="fullWidth"
+								label=""
+								defaultValue="Damanhour University"
+								variant="filled"
+								InputProps={{
+									readOnly: true,
+								}}
+							/>
 						</Grid>
 						<Grid
 							item
 							xs={6}>
 							<Item style={FontStyle}>Faculty</Item>
-							<Input />
+							<TextField
+								style={FontStyle}
+								id="fullWidth"
+								label=""
+								defaultValue="Computer Science"
+								variant="filled"
+								InputProps={{
+									readOnly: true,
+								}}
+							/>
 						</Grid>
 						<Grid
 							item
 							xs={6}>
+							<Item style={FontStyle}>Email Address</Item>
+							<TextField
+								style={FontStyle}
+								id="fullWidth"
+								label=""
+								defaultValue="email@gmail.com"
+								variant="filled"
+							/>
+						</Grid>
+
+						<Grid
+							item
+							xs={6}>
 							<Item style={FontStyle}>Phone Number</Item>
-							<Input />
+							<TextField
+								style={FontStyle}
+								id="fullWidth"
+								label=""
+								defaultValue="0123456789"
+								variant="filled"
+							/>
 						</Grid>
 					</Grid>
 				</Box>
 			</ContentContainer>
+			<StyledButton>Save</StyledButton>
 		</div>
 	);
 }
 
 export default StudentProfile;
 
+const StyledButton = styled.button`
+	border: none;
+	background-color: #063443;
+	color: white;
+	width: 10%;
+	padding: 8px 15px;
+	cursor: pointer;
+`;
+
 const FontStyle = {
 	color: "#063443",
-	fontSize: "1.5em",
+	fontSize: "1.2em",
 };
 
 const Item = styled("div")({

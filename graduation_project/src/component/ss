@@ -1,0 +1,8 @@
+<SideNav
+					reSize={reSize}
+					size={size}
+				/>
+				<Nav
+					handleClick={handleClick}
+					resizeStyle={handleReSizechange}
+				/>

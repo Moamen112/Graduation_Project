@@ -8,22 +8,18 @@ function Proffessor() {
 		{
 			name: "Professor name",
 			selector: (row) => row.title,
-			sortable: true,
 		},
 		{
 			name: "Professor Subject",
 			selector: (row) => row.year,
-			sortable: true,
 		},
 		{
 			name: "Hiring Date",
 			selector: (row) => row.Date,
-			sortable: true,
 		},
 		{
 			name: "Professor rate",
 			selector: (row) => row.rate,
-			sortable: true,
 		},
 	];
 

@@ -1,40 +1,76 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useState, useEffect, useLayoutEffect } from "react";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import BorderAllOutlinedIcon from "@mui/icons-material/BorderAllOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import LibraryBooksOutlinedIcon from "@mui/icons-material/LibraryBooksOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
-const SideNav = () => {
+const SideNav = (props) => {
 	return (
 		<>
-			<Container>
+			<Container
+				style={
+					props.reSize
+						? sideNavFun
+						: { transition: "all ease-in-out 0.5s" }
+				}>
 				<Logo>Logo</Logo>
-				<NavLinks>
+				<NavLinks
+					style={
+						props.reSize
+							? noPadding
+							: { transition: "all ease-in-out 0.5s" }
+					}>
 					<NavLink>
-						<HomeOutlinedIcon />
-						Home
+						<Link to={"/"}>
+							<HomeOutlinedIcon />
+							{props.size[0] > 750 && !props.reSize ? "Home" : ""}
+						</Link>
 					</NavLink>
 					<NavLink>
-						<PermIdentityOutlinedIcon />
-						Professors
+						<Link to={"facultyproff"}>
+							<PermIdentityOutlinedIcon />
+							{props.size[0] > 750 && !props.reSize
+								? "Professors"
+								: ""}
+						</Link>
 					</NavLink>
 					<NavLink>
-						<BorderAllOutlinedIcon />
-						Departments
+						<Link to={"facultydep"}>
+							<BorderAllOutlinedIcon />
+							{props.size[0] > 750 && !props.reSize
+								? "Departments"
+								: ""}
+						</Link>
 					</NavLink>
 					<NavLink>
-						<LibraryBooksOutlinedIcon />
-						Subject
+						<Link to={"facultysubj"}>
+							<LibraryBooksOutlinedIcon />
+							{props.size[0] > 750 && !props.reSize
+								? "Subject"
+								: ""}
+						</Link>
 					</NavLink>
 					<NavLink>
-						<SettingsOutlinedIcon />
-						Manage Admin
+						<Link>
+							<SettingsOutlinedIcon />
+							{props.size[0] > 750 && !props.reSize
+								? "Manage Admin"
+								: ""}
+						</Link>
 					</NavLink>
 				</NavLinks>
-				<LogoutButton>Logout</LogoutButton>
+				{props.size[0] > 750 && !props.reSize ? (
+					<LogoutButton>Logout</LogoutButton>
+				) : (
+					<div className="logout-icon">
+						<ExitToAppIcon />
+					</div>
+				)}
 			</Container>
 		</>
 	);
@@ -51,8 +87,20 @@ const Container = styled.div`
 	background-color: #063443;
 	color: #fff;
 	gap: 40px;
-	margin-right: 15%;
+
 	left: 0;
+
+	.logout-icon {
+		position: absolute;
+		color: #fff;
+		bottom: 50px;
+		left: 25%;
+	}
+
+	@media only screen and (max-width: 600px) {
+		width: 15%;
+		align-items: center;
+	}
 `;
 
 const Logo = styled.div`
@@ -74,6 +122,10 @@ const NavLinks = styled.ul`
 	flex-direction: column;
 	align-items: left;
 	justify-content: center;
+
+	@media only screen and (max-width: 600px) {
+		padding: 0;
+	}
 `;
 
 const NavLink = styled.li`
@@ -118,3 +170,13 @@ const LogoutButton = styled.button`
 		cursor: pointer;
 	}
 `;
+
+const sideNavFun = {
+	width: "5%",
+	transition: "all ease-in-out 0.5s",
+};
+
+const noPadding = {
+	padding: "0 10px",
+	marginRight: "0",
+};

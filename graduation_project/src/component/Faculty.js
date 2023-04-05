@@ -29,7 +29,7 @@ createTheme(
 	"dark",
 );
 
-function Faculty() {
+function Faculty(props) {
 	const columns = [
 		{
 			name: "Title",
@@ -134,7 +134,11 @@ function Faculty() {
 
 	return (
 		<>
-			<Container>
+			<Container
+				style={{
+					...props.resizeStyle,
+					transition: "all ease-in-out 0.5s",
+				}}>
 				<Cards>
 					<Card>
 						<ImgContainer>
@@ -175,18 +179,24 @@ function Faculty() {
 				</Cards>
 				<Analysis>
 					<div className="left-analysis">
-						<img
-							src="/imgs/analysis1.png"
-							alt="analysis1"
-						/>
+						<iframe
+							title="aa"
+							width="100%"
+							height="100%"
+							overflow="scroll"
+							scrolling="0"
+							frameborder="0"
+							src="//plotly.com/~Muhammed_Zidan/80.embed"></iframe>
 					</div>
 					<div className="right-analysis">
 						<div className="upper-analysis">
-							{" "}
-							<img
-								src="/imgs/analysis2.png"
-								alt="analysis1"
-							/>
+							<iframe
+								title="ss"
+								width="100%"
+								height="100%"
+								frameborder="0"
+								scrolling="no"
+								src="//plotly.com/~Muhammed_Zidan/129.embed"></iframe>
 						</div>
 						<div className="bottom-analysis">
 							<img
@@ -196,55 +206,6 @@ function Faculty() {
 						</div>
 					</div>
 				</Analysis>
-				<Tables>
-					<div className="prof">
-						<div className="headers">
-							<h1>Professors</h1>
-							<button>Add</button>
-						</div>
-						<div>
-							<DataTable
-								columns={[...columns, { cell: deleteButton }]}
-								data={data}
-								customStyles={customStyles}
-								pagination
-								conditionalRowStyles={conditionalRowStyles}
-							/>
-						</div>
-					</div>
-					<div className="depa">
-						<div className="headers">
-							<h1>Departments</h1>
-							<button>Add</button>
-						</div>
-						<DataTable
-							columns={[...columns, { cell: deleteButton }]}
-							data={data}
-							customStyles={customStyles}
-							pagination={true}
-							conditionalRowStyles={conditionalRowStyles}
-						/>
-					</div>
-				</Tables>
-
-				<Subjects>
-					<div className="subjects">
-						<div className="headers">
-							<h1>Subjects</h1>
-							<button>Add</button>
-						</div>
-						<div>
-							<DataTable
-								columns={[...columns, { cell: deleteButton }]}
-								data={data}
-								customStyles={customStyles}
-								pagination
-								dense
-								conditionalRowStyles={conditionalRowStyles}
-							/>
-						</div>
-					</div>
-				</Subjects>
 			</Container>
 		</>
 	);
@@ -257,6 +218,10 @@ const Container = styled.section`
 	margin-left: 15%;
 	padding-top: 8%;
 	background-color: #cddee4;
+
+	@media only screen and (max-width: 600px) {
+		padding-top: 20%;
+	}
 `;
 
 const Cards = styled.div`
@@ -265,6 +230,9 @@ const Cards = styled.div`
 	align-items: center;
 	justify-content: space-evenly;
 	flex-wrap: wrap;
+	@media only screen and (max-width: 600px) {
+		gap: 20px;
+	}
 `;
 
 const ImgContainer = styled.div`
@@ -302,6 +270,11 @@ const Card = styled.div`
 	&:hover {
 		background-color: #041f2a;
 	}
+
+	@media only screen and (max-width: 600px) {
+		width: 250px;
+		align-items: center;
+	}
 `;
 
 const Analysis = styled.div`
@@ -310,13 +283,22 @@ const Analysis = styled.div`
 	width: 100%;
 	display: flex;
 	justify-content: space-evenly;
+	flex-direction: column;
+	gap: 20px;
 
 	.left-analysis {
-		width: 70%;
+		width: 100%;
 		background-color: #fff;
-		height: 450px;
+		height: 500px;
 		border-radius: 20px;
 		box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.2);
+		overflow: scroll;
+
+		iframe {
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
 
 		img {
 			width: 100%;
@@ -325,18 +307,27 @@ const Analysis = styled.div`
 	}
 
 	.right-analysis {
-		width: 25%;
+		width: 100%;
 		border-radius: 20px;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		justify-content: space-between;
 
 		.upper-analysis {
 			background-color: #fff;
 			box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.2);
-			width: 100%;
-			height: 48%;
+			width: 48%;
+			height: 300px;
 			border-radius: 20px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			iframe {
+				width: 100%;
+				height: 100%;
+				border: none;
+			}
 
 			img {
 				width: 100%;
@@ -347,8 +338,8 @@ const Analysis = styled.div`
 		.bottom-analysis {
 			background-color: #fff;
 			box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.2);
-			width: 100%;
-			height: 48%;
+			width: 48%;
+			height: 300px;
 			border-radius: 20px;
 
 			img {

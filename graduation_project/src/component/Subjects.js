@@ -1,104 +1,155 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
-import { Link } from "react-router-dom";
+import subjectsData from "../common/SubjectsData";
+
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 
 function Subjects() {
+	const [subjects, setSubjects] = useState(subjectsData);
+
+	const [editingSubject, setEditingSubject] = useState(null);
+
+	const [open, setOpen] = useState(false);
+
+	const handleClickOpen = () => {
+		setEditingSubject(null);
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
+
+	const handleEdit = (subject) => {
+		setEditingSubject(subject);
+		setOpen(true);
+	};
+
+	const handleSave = () => {
+		const subjectName = document.getElementById("name").value;
+		const subjectDescription = document.getElementById("description").value;
+		const newSubject = {
+			id: subjects.length + 1,
+			name: subjectName,
+			description: subjectDescription,
+		};
+
+		if (editingSubject === null) {
+			setSubjects([...subjects, newSubject]);
+		} else {
+			const newSubjects = subjects.map((subject) => {
+				if (subject === editingSubject) {
+					return { ...subject, ...newSubject };
+				}
+				return subject;
+			});
+			setSubjects(newSubjects);
+		}
+		handleClose();
+	};
+
+	const handleDelete = (id) => {
+		const newSubjects = subjects.filter((subject) => subject.id !== id);
+		setSubjects(newSubjects);
+	};
+
 	return (
 		<SubContainer>
 			<Content>
 				<Header>
 					<h2>Subjects</h2>
-					<AddButton>
+					<AddButton onClick={handleClickOpen}>
 						<AddCircleOutlineIcon style={addStyle} />
 						Add
 					</AddButton>
 				</Header>
 
 				<SubList>
-					<SubSection>
-						<SubImage>
-							<EventNoteIcon style={SubImageStyle} />
-						</SubImage>
-						<SubInfo>
-							<h2>Subject Name</h2>
-							<p>
-								Lorem Ipsum is simply dummy text of the printing
-								and typesetting industry. Lorem Ipsum has been
-								the industry's standard dummy text ever since
-								the 1500s, when an unknown printer took a galley
-								of type and scrambled it to make a type specimen
-								book.
-							</p>
-						</SubInfo>
+					{/* Map method to get subjects automatically */}
+					{subjects.map((subject) => (
+						<SubSection key={subject.id}>
+							<SubImage>
+								<EventNoteIcon style={SubImageStyle} />
+							</SubImage>
 
-						<EditSection>
-							<Link to={"/facultyeditsubj"}>
-								<EditIcon style={editSectionStyle} />
-							</Link>
-							<ClearOutlinedIcon
-								style={{ ...editSectionStyle, ...red }}
-							/>
-						</EditSection>
-					</SubSection>
+							<SubjectInfoStyle>
+								<h1>{subject.name}</h1>
+								<p>{subject.description}</p>
+							</SubjectInfoStyle>
 
-					<SubSection>
-						<SubImage>
-							<EventNoteIcon style={SubImageStyle} />
-						</SubImage>
-						<SubInfo>
-							<h2>Subject Name</h2>
-							<p>
-								Lorem Ipsum is simply dummy text of the printing
-								and typesetting industry. Lorem Ipsum has been
-								the industry's standard dummy text ever since
-								the 1500s, when an unknown printer took a galley
-								of type and scrambled it to make a type specimen
-								book.
-							</p>
-						</SubInfo>
-
-						<EditSection>
-							<EditIcon style={editSectionStyle} />
-							<ClearOutlinedIcon
-								style={{ ...editSectionStyle, ...red }}
-							/>
-						</EditSection>
-					</SubSection>
-
-					<SubSection>
-						<SubImage>
-							<EventNoteIcon style={SubImageStyle} />
-						</SubImage>
-						<SubInfo>
-							<h2>Subject Name</h2>
-							<p>
-								Lorem Ipsum is simply dummy text of the printing
-								and typesetting industry. Lorem Ipsum has been
-								the industry's standard dummy text ever since
-								the 1500s, when an unknown printer took a galley
-								of type and scrambled it to make a type specimen
-								book.
-							</p>
-						</SubInfo>
-
-						<EditSection>
-							<EditIcon style={editSectionStyle} />
-							<ClearOutlinedIcon
-								style={{ ...editSectionStyle, ...red }}
-							/>
-						</EditSection>
-					</SubSection>
+							<EditSection>
+								<EditIcon
+									style={editSectionStyle}
+									onClick={() => handleEdit(subject)}
+								/>
+								<ClearOutlinedIcon
+									onClick={() => handleDelete(subject.id)}
+									style={{ ...editSectionStyle, ...red }}
+								/>
+							</EditSection>
+						</SubSection>
+					))}
 				</SubList>
 			</Content>
+
+			<Dialog
+				onSubmit={handleSave}
+				open={open}
+				onClose={handleClose}>
+				<DialogTitle>Subject Details</DialogTitle>
+				<DialogContent>
+					<TextField
+						autoFocus
+						margin="dense"
+						id="name"
+						label="Subject Name"
+						type="text"
+						fullWidth
+						variant="standard"
+						defaultValue={editingSubject ? editingSubject.name : ""}
+					/>
+
+					<TextField
+						autoFocus
+						margin="dense"
+						id="description"
+						label="Subject Description"
+						type="text"
+						fullWidth
+						variant="standard"
+						defaultValue={
+							editingSubject ? editingSubject.description : ""
+						}
+					/>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleClose}>Cancel</Button>
+					<Button
+						onClick={handleSave}
+						type="submit">
+						Save
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</SubContainer>
 	);
 }
 
 export default Subjects;
+
+const SubjectInfoStyle = styled.div`
+	width: 70%;
+	text-align: left;
+`;
 
 const SubContainer = styled.div`
 	background-color: #cddee5;
@@ -106,7 +157,6 @@ const SubContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 85%;
-	height: 100vh;
 	gap: 40px;
 	margin-left: 15%;
 	padding-top: 8%;
@@ -122,7 +172,6 @@ const Header = styled.div`
 	align-items: center;
 	text-align: left;
 	gap: 10%;
-	padding: 20px 0;
 `;
 
 const AddButton = styled.button`
@@ -148,7 +197,6 @@ const AddButton = styled.button`
 
 const SubList = styled.ul`
 	list-style: none;
-	padding: 0 10px;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -159,7 +207,8 @@ const SubList = styled.ul`
 `;
 
 const SubSection = styled.li`
-	width: 90%;
+	width: 80%;
+	min-height: 150px;
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
@@ -168,14 +217,8 @@ const SubSection = styled.li`
 	background-color: white;
 	padding: 8px 10px;
 	text-align: center;
-	transition: background-color 0.2s ease-in-out;
 	margin-bottom: 25px;
 	justify-content: space-around;
-`;
-
-const SubInfo = styled.div`
-	width: 70%;
-	text-align: left;
 `;
 
 const EditSection = styled.div`
@@ -205,6 +248,7 @@ const editSectionStyle = {
 	backgroundColor: "#053546",
 	borderRadius: "50%",
 	padding: "5px",
+	cursor: "pointer",
 };
 
 const addStyle = {

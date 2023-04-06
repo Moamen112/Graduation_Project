@@ -38,6 +38,14 @@ function App() {
 	return (
 		<div className="App">
 			<Router>
+				<SideNav
+					reSize={reSize}
+					size={size}
+				/>
+				<Nav
+					handleClick={handleClick}
+					resizeStyle={handleReSizechange}
+				/>
 				<Routes>
 					<Route
 						exact

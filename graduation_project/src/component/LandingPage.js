@@ -14,7 +14,7 @@ function LandingPage() {
 							<li>Contact Us</li>
 						</ul>
 					</div>
-					<input />
+					<input placeholder="Search" />
 				</Nav>
 				<Header>
 					<div className="header-content">
@@ -36,7 +36,12 @@ function LandingPage() {
 				<Services>
 					<h1>Services</h1>
 					<div className="all-services">
-						<div className="img-container"></div>
+						<div className="img-container">
+							<img
+								src="/imgs/services.jpg"
+								alt="services"
+							/>
+						</div>
 						<div className="services">
 							<div>
 								<h2>Service 1</h2>
@@ -96,7 +101,12 @@ function LandingPage() {
 				<Universities>
 					<h1>Universities</h1>
 					<div className="university">
-						<div className="img-container"></div>
+						<div className="img-container">
+							<img
+								src="/imgs/university.jpg"
+								alt="university"
+							/>
+						</div>
 						<div className="universities">
 							<div className="uni-details">
 								<h1>University name</h1>
@@ -128,7 +138,12 @@ function LandingPage() {
 						</div>
 					</div>
 					<div className="university reverse">
-						<div className="img-container"></div>
+						<div className="img-container">
+							<img
+								src="/imgs/university.jpg"
+								alt="university"
+							/>
+						</div>
 						<div className="universities">
 							<div className="uni-details">
 								<h1>University name</h1>
@@ -160,7 +175,12 @@ function LandingPage() {
 						</div>
 					</div>
 					<div className="university">
-						<div className="img-container"></div>
+						<div className="img-container">
+							<img
+								src="/imgs/university.jpg"
+								alt="university"
+							/>
+						</div>
 						<div className="universities">
 							<div className="uni-details">
 								<h1>University name</h1>
@@ -216,7 +236,10 @@ function LandingPage() {
 							Ipsum has been the industry's standard dummy text
 						</p>
 					</div>
-					<img />
+					<img
+						src="/imgs/about-us.jpg"
+						alt="about Us"
+					/>
 				</AboutUs>
 				<ContacUs></ContacUs>
 			</Container>
@@ -277,6 +300,10 @@ const Header = styled.section`
 	height: 750px;
 	padding-top: 8%;
 	display: flex;
+	background-image: url("/imgs/landing-header.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	box-shadow: 20px 20px 80px 10px #063443;
 
 	.header-content {
 		width: 60%;
@@ -296,6 +323,7 @@ const Header = styled.section`
 			button {
 				padding: 12px 30px;
 				border-radius: 20px;
+				cursor: pointer;
 			}
 		}
 	}
@@ -321,8 +349,11 @@ const Services = styled.section`
 		width: 100%;
 
 		.img-container {
-			border: 1px solid #fff;
 			width: 25%;
+
+			img {
+				width: 100%;
+			}
 		}
 
 		.services {
@@ -364,9 +395,13 @@ const Universities = styled.section`
 		align-items: center;
 
 		.img-container {
-			border: 1px solid #fff;
 			width: 25%;
 			height: 400px;
+
+			img {
+				width: 100%;
+				height: 100%;
+			}
 		}
 
 		.universities {
@@ -422,7 +457,6 @@ const AboutUs = styled.section`
 		height: 100%;
 		align-items: center;
 		justify-content: center;
-		box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.2);
 
 		h1 {
 			font-size: 30px;
@@ -439,6 +473,5 @@ const AboutUs = styled.section`
 		height: 100%;
 		position: absolute;
 		left: 0;
-		border: 1px solid #fff;
 	}
 `;

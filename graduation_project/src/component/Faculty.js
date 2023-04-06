@@ -289,10 +289,9 @@ const Analysis = styled.div`
 	.left-analysis {
 		width: 100%;
 		background-color: #fff;
-		height: 500px;
+		height: 650px;
 		border-radius: 20px;
 		box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.2);
-		overflow: scroll;
 
 		iframe {
 			width: 100%;

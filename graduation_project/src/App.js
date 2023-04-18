@@ -14,7 +14,7 @@ function App() {
 		<div className="App">
 			<Nav />
 			<SideNav />
-			<Subjects />
+			<DepAdmin />
 		</div>
 	);
 }

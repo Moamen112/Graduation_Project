@@ -10,6 +10,10 @@ import Faculty from "./component/Faculty";
 import Proffessor from "./component/Proffessor";
 import Subjects from "./component/Subjects";
 import LandingPage from "./component/LandingPage";
+import University from "./component/University";
+import FacultyUni from "./component/FacultyUni";
+import LandingUni from "./component/LandingUni";
+import Faculties from "./component/Faculties";
 
 function App() {
 	const [reSize, setResize] = useState(false);
@@ -22,7 +26,6 @@ function App() {
 		updateSize();
 		return () => window.removeEventListener("resize", updateSize);
 	}, []);
-	console.log(size);
 
 	const handleClick = () => {
 		setResize(!reSize);
@@ -80,6 +83,22 @@ function App() {
 					<Route
 						path="/landing"
 						element={<LandingPage />}
+					/>
+					<Route
+						path="/university"
+						element={<University />}
+					/>
+					<Route
+						path="/facultyuni"
+						element={<FacultyUni />}
+					/>
+					<Route
+						path="/landinguni"
+						element={<LandingUni />}
+					/>
+					<Route
+						path="/unifaculties"
+						element={<Faculties />}
 					/>
 				</Routes>
 			</Router>

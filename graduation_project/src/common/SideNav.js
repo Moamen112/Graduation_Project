@@ -32,6 +32,14 @@ const SideNav = (props) => {
 						</Link>
 					</NavLink>
 					<NavLink>
+						<Link to={"unifac"}>
+							<PermIdentityOutlinedIcon />
+							{props.size[0] > 750 && !props.reSize
+								? "Faculties"
+								: ""}
+						</Link>
+					</NavLink>
+					<NavLink>
 						<Link to={"facultyproff"}>
 							<PermIdentityOutlinedIcon />
 							{props.size[0] > 750 && !props.reSize

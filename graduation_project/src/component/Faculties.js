@@ -1,23 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 import facultiesData from "../common/FacultiesData";
-
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import axios from "axios";
 
 function Faculties() {
 	const [faculties, setFaculties] = useState(facultiesData);
-
 	const [editingFaculty, setEditingFaculty] = useState(null);
-
 	const [open, setOpen] = useState(false);
 
 	const handleClickOpen = () => {
@@ -61,6 +59,21 @@ function Faculties() {
 		const newFaculties = faculties.filter((faculty) => faculty.id !== id);
 		setFaculties(newFaculties);
 	};
+
+	const universityId = "86F697D4-A762-44D6-8322-2C08C66F94E4";
+
+	useEffect(() => {
+		axios
+			.get(
+				`https://localhost:7097/api/universities/${universityId}/faculities`,
+			)
+			.then((response) => {
+				console.log(response.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
 
 	return (
 		<FacContainer>
@@ -161,6 +174,7 @@ const FacContainer = styled.div`
 	gap: 40px;
 	margin-left: 15%;
 	padding-top: 8%;
+	min-height: 100vh;
 `;
 
 const Content = styled.div`
@@ -173,6 +187,7 @@ const Header = styled.div`
 	align-items: center;
 	text-align: left;
 	gap: 10%;
+	padding: 20px;
 `;
 
 const AddButton = styled.button`

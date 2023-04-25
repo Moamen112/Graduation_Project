@@ -1,0 +1,17 @@
+F:\GraduationProject_API\Repository\bin\Debug\net6.0\Repository.deps.json
+F:\GraduationProject_API\Repository\bin\Debug\net6.0\Repository.dll
+F:\GraduationProject_API\Repository\bin\Debug\net6.0\Repository.pdb
+F:\GraduationProject_API\Repository\bin\Debug\net6.0\Contracts.dll
+F:\GraduationProject_API\Repository\bin\Debug\net6.0\Entities.dll
+F:\GraduationProject_API\Repository\bin\Debug\net6.0\Contracts.pdb
+F:\GraduationProject_API\Repository\bin\Debug\net6.0\Entities.pdb
+F:\GraduationProject_API\Repository\obj\Debug\net6.0\Repository.csproj.AssemblyReference.cache
+F:\GraduationProject_API\Repository\obj\Debug\net6.0\Repository.GeneratedMSBuildEditorConfig.editorconfig
+F:\GraduationProject_API\Repository\obj\Debug\net6.0\Repository.AssemblyInfoInputs.cache
+F:\GraduationProject_API\Repository\obj\Debug\net6.0\Repository.AssemblyInfo.cs
+F:\GraduationProject_API\Repository\obj\Debug\net6.0\Repository.csproj.CoreCompileInputs.cache
+F:\GraduationProject_API\Repository\obj\Debug\net6.0\Repository.csproj.CopyComplete
+F:\GraduationProject_API\Repository\obj\Debug\net6.0\Repository.dll
+F:\GraduationProject_API\Repository\obj\Debug\net6.0\refint\Repository.dll
+F:\GraduationProject_API\Repository\obj\Debug\net6.0\Repository.pdb
+F:\GraduationProject_API\Repository\obj\Debug\net6.0\ref\Repository.dll

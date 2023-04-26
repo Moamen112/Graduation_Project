@@ -2,6 +2,15 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import DataTable, { createTheme } from "react-data-table-component";
 import CancelIcon from "@mui/icons-material/Cancel";
+import EditIcon from "@mui/icons-material/Edit";
+
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 function Admins() {
 	const columns = [
@@ -10,93 +19,27 @@ function Admins() {
 			selector: (row) => row.name,
 		},
 		{
-			name: "Admin UserName",
-			selector: (row) => row.userName,
+			name: "E-mail",
+			selector: (row) => row.email,
 		},
 		{
-			name: "Hiring Date",
-			selector: (row) => row.hiringDate,
+			name: "Phone Number",
+			selector: (row) => row.phoneNumber,
 		},
 	];
 
 	const data = [
 		{
 			id: 1,
-			name: "Ahmed Mohsen",
-			userName: "hassona",
-			hiringDate: "1998",
+			name: "Youssef Aamer",
+			email: "youssefaamer@gmail.com",
+			phoneNumber: "12345678990",
 		},
 		{
-			id: 1,
-			name: "Ahmed Mohsen",
-			userName: "hassona",
-			hiringDate: "1998",
-		},
-		{
-			id: 1,
-			name: "Ahmed Mohsen",
-			userName: "hassona",
-			hiringDate: "1998",
-		},
-		{
-			id: 1,
-			name: "Ahmed Mohsen",
-			userName: "hassona",
-			hiringDate: "1998",
-		},
-		{
-			id: 1,
-			name: "Ahmed Mohsen",
-			userName: "hassona",
-			hiringDate: "1998",
-		},
-		{
-			id: 1,
-			name: "Ahmed Mohsen",
-			userName: "hassona",
-			hiringDate: "1998",
-		},
-		{
-			id: 1,
-			name: "Ahmed Mohsen",
-			userName: "hassona",
-			hiringDate: "1998",
-		},
-		{
-			id: 1,
-			name: "Ahmed Mohsen",
-			userName: "hassona",
-			hiringDate: "1998",
-		},
-		{
-			id: 1,
-			name: "Ahmed Mohsen",
-			userName: "hassona",
-			hiringDate: "1998",
-		},
-		{
-			id: 1,
-			name: "Ahmed Mohsen",
-			userName: "hassona",
-			hiringDate: "1998",
-		},
-		{
-			id: 1,
-			name: "Ahmed Mohsen",
-			userName: "hassona",
-			hiringDate: "1998",
-		},
-		{
-			id: 1,
-			name: "Ahmed Mohsen",
-			userName: "hassona",
-			hiringDate: "1998",
-		},
-		{
-			id: 1,
-			name: "Ahmed Mohsen",
-			userName: "hassona",
-			hiringDate: "1998",
+			id: 2,
+			name: "Youssef Aamer",
+			email: "youssefaamer@gmail.com",
+			phoneNumber: "12345678990",
 		},
 	];
 
@@ -130,16 +73,71 @@ function Admins() {
 		},
 	};
 
-	const [tableData, setTableData] = useState(data);
+	const [admins, setAdmins] = useState(data);
 
-	const handleDelete = (index) => {
-		const newData = [...tableData];
-		newData.splice(index, 1);
-		setTableData(newData);
+	const [editingAdmin, setEditingAdmin] = useState(null);
+
+	const [open, setOpen] = React.useState(false);
+
+	const handleClickOpen = () => {
+		setEditingAdmin(null);
+		setOpen(true);
 	};
 
-	const deleteButton = (cell, row, rowIndex) => {
-		return <CancelIcon onClick={() => handleDelete(rowIndex)} />;
+	const handleClose = () => {
+		setOpen(false);
+	};
+
+	const handleEdit = (admin) => {
+		setEditingAdmin(admin);
+		setOpen(true);
+	};
+
+	const handleDelete = (index) => {
+		const newAdmins = [...admins];
+		newAdmins.splice(index, 1);
+		setAdmins(newAdmins);
+	};
+
+	const handleSave = () => {
+		const adminName = document.getElementById("name").value;
+		const adminEmail = document.getElementById("email").value;
+		const adminPhone = document.getElementById("phoneNumber").value;
+
+		const newAdmin = {
+			id: admins.length + 1,
+			name: adminName,
+			email: adminEmail,
+			phoneNumber: adminPhone,
+		};
+
+		if (editingAdmin === null) {
+			setAdmins([...admins, newAdmin]);
+		} else {
+			const newAdmins = admins.map((admin) => {
+				if (admin === editingAdmin) {
+					return { ...admin, ...newAdmin };
+				}
+				return admin;
+			});
+			setAdmins(newAdmins);
+		}
+		handleClose();
+	};
+
+	const EditSection = (cell, row, rowIndex) => {
+		return (
+			<EditSection>
+				<CancelIcon
+					style={{ ...editSectionStyle, ...red }}
+					onClick={() => handleDelete(rowIndex)}
+				/>
+				<EditIcon
+					style={editSectionStyle}
+					onClick={() => handleEdit(rowIndex)}
+				/>
+			</EditSection>
+		);
 	};
 
 	const conditionalRowStyles = [
@@ -166,12 +164,12 @@ function Admins() {
 				<div className="subjects">
 					<div className="headers">
 						<h1>Admins</h1>
-						<AddButton>Add</AddButton>
+						<AddButton onClick={handleClickOpen}>Add</AddButton>
 					</div>
 					<div>
 						<DataTable
-							columns={[...columns, { cell: deleteButton }]}
-							data={data}
+							columns={[...columns, { cell: EditSection }]}
+							data={admins}
 							customStyles={customStyles}
 							pagination
 							dense
@@ -180,11 +178,77 @@ function Admins() {
 					</div>
 				</div>
 			</Table>
+			<Dialog
+				onSubmit={handleSave}
+				open={open}
+				onClose={handleClose}>
+				<DialogTitle>Admin Information</DialogTitle>
+				<DialogContent>
+					<TextField
+						autoFocus
+						margin="dense"
+						id="name"
+						label="Admin Name"
+						type="name"
+						fullWidth
+						variant="standard"
+						defaultValue={editingAdmin ? editingAdmin.name : ""}
+					/>
+					<TextField
+						autoFocus
+						margin="dense"
+						id="email"
+						label="Email Address"
+						type="email"
+						fullWidth
+						variant="standard"
+						defaultValue={editingAdmin ? editingAdmin.email : ""}
+					/>
+
+					<TextField
+						autoFocus
+						margin="dense"
+						id="phoneNumber"
+						label="Phone Number"
+						type="text"
+						fullWidth
+						variant="standard"
+						defaultValue={
+							editingAdmin ? editingAdmin.phoneNumber : ""
+						}
+					/>
+					<TextField
+						autoFocus
+						margin="dense"
+						id="password"
+						label="Password"
+						type="password"
+						fullWidth
+						variant="standard"
+						defaultValue={editingAdmin ? editingAdmin.password : ""}
+					/>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleClose}>Cancel</Button>
+					<Button
+						onClick={handleSave}
+						type="submit">
+						Save
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</Container>
 	);
 }
 
 export default Admins;
+
+const EditSection = styled.div`
+	width: 10%;
+	display: flex;
+	align-items: right;
+	justify-content: space-around;
+`;
 
 const Container = styled.section`
 	width: 100%;
@@ -194,19 +258,13 @@ const Container = styled.section`
 `;
 
 const AddButton = styled.button`
-	font-size: 10px;
 	border: none;
 	background-color: #053344;
 	color: #fff;
-	padding: 25px;
+	padding: 15px 25px;
 	border-radius: 15px;
 	transition: background-color 0.2s ease-in-out;
-
-	&:hover {
-		background-color: #fff;
-		color: #000;
-		cursor: pointer;
-	}
+	cursor: pointer;
 `;
 
 const Table = styled.div`
@@ -229,13 +287,18 @@ const Table = styled.div`
 			align-items: center;
 			justify-content: space-between;
 			padding: 20px 5px;
-
-			button {
-				padding: 2px 10px;
-				background-color: #063443;
-				color: #fff;
-				border-radius: 10px;
-			}
 		}
 	}
 `;
+
+const editSectionStyle = {
+	fontSize: "25px",
+	color: "white",
+	backgroundColor: "#053546",
+	borderRadius: "50%",
+	cursor: "pointer",
+};
+
+const red = {
+	backgroundColor: "#F7433A",
+};

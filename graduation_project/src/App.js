@@ -56,7 +56,7 @@ function App() {
 						exact
 						path="/"
 						element={
-							<LandingUni
+							<Admins
 								reSize={reSize}
 								resizeStyle={handleReSizechange}
 							/>

@@ -6,10 +6,14 @@ import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNone
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import ArrowLeftOutlinedIcon from "@mui/icons-material/ArrowLeftOutlined";
-function Nav() {
+function Nav(props) {
 	return (
 		<>
-			<Container>
+			<Container
+				style={{
+					...props.resizeStyle,
+					transition: "all ease-in-out 0.5s",
+				}}>
 				<Info>
 					<NotificationsNoneOutlinedIcon />
 					<EmailOutlinedIcon />
@@ -20,7 +24,7 @@ function Nav() {
 						</p>
 					</div>
 				</Info>
-				<HideNav>
+				<HideNav onClick={props.handleClick}>
 					<ArrowLeftOutlinedIcon
 						sx={{
 							padding: 0,
@@ -39,11 +43,12 @@ function Nav() {
 export default Nav;
 
 const Container = styled.nav`
-	width: 100%;
+	width: 85%;
 	position: fixed;
 	background-color: #fff;
 	box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 	height: 10%;
+	margin-left: 15%;
 	display: flex;
 	align-items: center;
 	flex-direction: row-reverse;
@@ -83,4 +88,9 @@ const HideNav = styled.div`
 	align-items: center;
 	justify-content: center;
 	opacity: 0.6;
+	cursor: pointer;
+
+	@media only screen and (max-width: 600px) {
+		display: none;
+	}
 `;

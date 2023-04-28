@@ -34,6 +34,12 @@ function Questions() {
 		console.log("Time:", time);
 	};
 
+	const subjects = [
+		"Computer Science",
+		"Embedded Systems",
+		"Information System",
+	];
+
 	return (
 		<Container>
 			<Box>
@@ -45,20 +51,25 @@ function Questions() {
 							Subject
 						</InputLabel>
 						<Select
+							sx={{ width: 300 }}
 							labelId="demo-simple-select-label"
 							id="demo-simple-select"
 							value={subject}
 							label="Subject"
 							onChange={handleChange}>
-							<MenuItem value={10}>Computer Science</MenuItem>
-							<MenuItem value={20}>Embedded Sustems</MenuItem>
-							<MenuItem value={30}>Information System</MenuItem>
+							{subjects.map((subject) => (
+								<MenuItem
+									key={subject}
+									value={subject}>
+									{subject}
+								</MenuItem>
+							))}
 						</Select>
 					</div>
 
 					<TextField
-						id="date"
-						label="Date"
+						id="startDate"
+						label="Start Date"
 						type="date"
 						value={date}
 						onChange={handleDateChange}
@@ -68,11 +79,11 @@ function Questions() {
 					/>
 
 					<TextField
-						id="time"
-						label="Time"
-						type="time"
-						value={time}
-						onChange={handleTimeChange}
+						id="endDate"
+						label="End Date"
+						type="date"
+						value={date}
+						onChange={handleDateChange}
 						InputLabelProps={{
 							shrink: true,
 						}}
@@ -132,10 +143,12 @@ const FormControlStyle = {
 	flexDirection: "row",
 	justifyContent: "flex-start",
 	alignItems: "center",
-	gap: "10px",
+	gap: "2%",
+	marginLeft: "5%",
 };
 
 const Container = styled.div`
+	margin-left: 5%;
 	background-color: #cddee5;
 	text-align: left;
 	display: flex;
@@ -148,6 +161,8 @@ const Container = styled.div`
 `;
 
 const StyledUl = styled.ul`
+	width: 80%;
+	margin-left: 5%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;

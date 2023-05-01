@@ -56,7 +56,7 @@ function App() {
 						exact
 						path="/"
 						element={
-							<Questions
+							<Admins
 								reSize={reSize}
 								resizeStyle={handleReSizechange}
 							/>

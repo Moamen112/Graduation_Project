@@ -1,133 +1,60 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import DataTable, { createTheme } from "react-data-table-component";
+import DataTable from "react-data-table-component";
 import CancelIcon from "@mui/icons-material/Cancel";
+import EditIcon from "@mui/icons-material/Edit";
 
 function Proffessor() {
 	const columns = [
 		{
-			name: "Professor name",
-			selector: (row) => row.title,
+			name: "Professor Name",
+			selector: (row) => row.name,
 		},
 		{
-			name: "Professor Subject",
-			selector: (row) => row.year,
+			name: "Email",
+			selector: (row) => row.email,
 		},
 		{
-			name: "Hiring Date",
-			selector: (row) => row.Date,
+			name: "Phone Number",
+			selector: (row) => row.phoneNumber,
 		},
 		{
-			name: "Professor rate",
+			name: "Professor Rate",
 			selector: (row) => row.rate,
+		},
+		{
+			name: "",
+			cell: (row) => (
+				<EditIcon
+					style={editSectionStyle}
+					// onClick={() => handleEdit(row.id)}
+				/>
+			),
+			ignoreRowClick: true,
+			allowOverflow: true,
+			button: true,
+		},
+		{
+			name: "",
+			cell: (row) => (
+				<CancelIcon
+					style={{ ...editSectionStyle, ...red }}
+					onClick={() => handleDelete(row.id)}
+				/>
+			),
+			ignoreRowClick: true,
+			allowOverflow: true,
+			button: true,
 		},
 	];
 
 	const data = [
 		{
 			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
+			name: "Hamza Yisri",
+			email: "Hamza.Yisri@example.com",
+			phoneNumber: "01256543256",
+			rate: "0",
 		},
 	];
 
@@ -169,10 +96,6 @@ function Proffessor() {
 		setTableData(newData);
 	};
 
-	const deleteButton = (cell, row, rowIndex) => {
-		return <CancelIcon onClick={() => handleDelete(rowIndex)} />;
-	};
-
 	const conditionalRowStyles = [
 		{
 			when: (row) => true,
@@ -201,7 +124,8 @@ function Proffessor() {
 					</div>
 					<div>
 						<DataTable
-							columns={[...columns, { cell: deleteButton }]}
+							//
+							columns={[...columns]}
 							data={data}
 							customStyles={customStyles}
 							pagination
@@ -255,3 +179,15 @@ const Table = styled.div`
 		}
 	}
 `;
+
+const editSectionStyle = {
+	fontSize: "25px",
+	color: "white",
+	backgroundColor: "#053546",
+	borderRadius: "50%",
+	cursor: "pointer",
+};
+
+const red = {
+	backgroundColor: "#F7433A",
+};

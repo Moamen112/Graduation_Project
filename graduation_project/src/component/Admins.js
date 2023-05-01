@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import DataTable, { createTheme } from "react-data-table-component";
+import DataTable from "react-data-table-component";
 import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
 
@@ -9,7 +9,6 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 function Admins() {
@@ -25,6 +24,30 @@ function Admins() {
 		{
 			name: "Phone Number",
 			selector: (row) => row.phoneNumber,
+		},
+		{
+			name: "",
+			cell: (row) => (
+				<EditIcon
+					style={editSectionStyle}
+					onClick={() => handleEdit(row)}
+				/>
+			),
+			ignoreRowClick: true,
+			allowOverflow: true,
+			button: true,
+		},
+		{
+			name: "",
+			cell: (row) => (
+				<CancelIcon
+					style={{ ...editSectionStyle, ...red }}
+					onClick={() => handleDelete(row.id)}
+				/>
+			),
+			ignoreRowClick: true,
+			allowOverflow: true,
+			button: true,
 		},
 	];
 
@@ -77,7 +100,7 @@ function Admins() {
 
 	const [editingAdmin, setEditingAdmin] = useState(null);
 
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = useState(false);
 
 	const handleClickOpen = () => {
 		setEditingAdmin(null);
@@ -88,15 +111,11 @@ function Admins() {
 		setOpen(false);
 	};
 
-	const handleEdit = (admin) => {
-		setEditingAdmin(admin);
+	const handleEdit = (row) => {
+		setEditingAdmin(row);
 		setOpen(true);
-	};
-
-	const handleDelete = (index) => {
-		const newAdmins = [...admins];
-		newAdmins.splice(index, 1);
-		setAdmins(newAdmins);
+		console.log(row);
+		console.log(admins);
 	};
 
 	const handleSave = () => {
@@ -114,30 +133,20 @@ function Admins() {
 		if (editingAdmin === null) {
 			setAdmins([...admins, newAdmin]);
 		} else {
-			const newAdmins = admins.map((admin) => {
-				if (admin === editingAdmin) {
-					return { ...admin, ...newAdmin };
+			const newAdmins = admins.map((a) => {
+				if (a === editingAdmin) {
+					return { ...a, ...newAdmin };
 				}
-				return admin;
+				return a;
 			});
 			setAdmins(newAdmins);
 		}
 		handleClose();
 	};
 
-	const EditSection = (cell, row, rowIndex) => {
-		return (
-			<EditSection>
-				<CancelIcon
-					style={{ ...editSectionStyle, ...red }}
-					onClick={() => handleDelete(rowIndex)}
-				/>
-				<EditIcon
-					style={editSectionStyle}
-					onClick={() => handleEdit(rowIndex)}
-				/>
-			</EditSection>
-		);
+	const handleDelete = (id) => {
+		const newAdmins = admins.filter((admin) => admin.id !== id);
+		setAdmins(newAdmins);
 	};
 
 	const conditionalRowStyles = [
@@ -168,7 +177,7 @@ function Admins() {
 					</div>
 					<div>
 						<DataTable
-							columns={[...columns, { cell: EditSection }]}
+							columns={[...columns]}
 							data={admins}
 							customStyles={customStyles}
 							pagination

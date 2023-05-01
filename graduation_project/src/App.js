@@ -56,7 +56,7 @@ function App() {
 						exact
 						path="/"
 						element={
-							<Admins
+							<Proffessor
 								reSize={reSize}
 								resizeStyle={handleReSizechange}
 							/>

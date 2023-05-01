@@ -4,6 +4,13 @@ import DataTable from "react-data-table-component";
 import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
 
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+
 function Proffessor() {
 	const columns = [
 		{
@@ -11,7 +18,7 @@ function Proffessor() {
 			selector: (row) => row.name,
 		},
 		{
-			name: "Email",
+			name: "Professor Email",
 			selector: (row) => row.email,
 		},
 		{
@@ -27,7 +34,7 @@ function Proffessor() {
 			cell: (row) => (
 				<EditIcon
 					style={editSectionStyle}
-					// onClick={() => handleEdit(row.id)}
+					onClick={() => handleEdit(row)}
 				/>
 			),
 			ignoreRowClick: true,
@@ -49,6 +56,13 @@ function Proffessor() {
 	];
 
 	const data = [
+		{
+			id: 1,
+			name: "Hamza Yisri",
+			email: "Hamza.Yisri@example.com",
+			phoneNumber: "01256543256",
+			rate: "0",
+		},
 		{
 			id: 1,
 			name: "Hamza Yisri",
@@ -88,12 +102,57 @@ function Proffessor() {
 		},
 	};
 
-	const [tableData, setTableData] = useState(data);
+	const [profs, setProfs] = useState(data);
 
-	const handleDelete = (index) => {
-		const newData = [...tableData];
-		newData.splice(index, 1);
-		setTableData(newData);
+	const [editingProf, setEditingProf] = useState(null);
+
+	const [open, setOpen] = useState(false);
+
+	const handleClickOpen = () => {
+		setEditingProf(null);
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
+
+	const handleEdit = (row) => {
+		setEditingProf(row);
+		setOpen(true);
+	};
+
+	const handleSave = () => {
+		const profName = document.getElementById("name").value;
+		const profEmail = document.getElementById("email").value;
+		const profPhone = document.getElementById("phoneNumber").value;
+		const profRate = document.getElementById("rate").value;
+
+		const newProf = {
+			id: profs.length + 1,
+			name: profName,
+			email: profEmail,
+			phoneNumber: profPhone,
+			rate: profRate,
+		};
+
+		if (editingProf === null) {
+			setProfs([...profs, newProf]);
+		} else {
+			const newProfs = profs.map((p) => {
+				if (p === editingProf) {
+					return { ...p, ...newProf };
+				}
+				return p;
+			});
+			setProfs(newProfs);
+		}
+		handleClose();
+	};
+
+	const handleDelete = (id) => {
+		const newProfs = profs.filter((prof) => prof.id !== id);
+		setProfs(newProfs);
 	};
 
 	const conditionalRowStyles = [
@@ -120,13 +179,13 @@ function Proffessor() {
 				<div className="subjects">
 					<div className="headers">
 						<h1>Professors</h1>
-						<button>Add</button>
+						<AddButton onClick={handleClickOpen}>Add</AddButton>
 					</div>
 					<div>
 						<DataTable
 							//
 							columns={[...columns]}
-							data={data}
+							data={profs}
 							customStyles={customStyles}
 							pagination
 							dense
@@ -135,6 +194,77 @@ function Proffessor() {
 					</div>
 				</div>
 			</Table>
+			<Dialog
+				onSubmit={handleSave}
+				open={open}
+				onClose={handleClose}>
+				<DialogTitle>Professor Information</DialogTitle>
+				<DialogContent>
+					<TextField
+						autoFocus
+						margin="dense"
+						id="name"
+						label="Professor Name"
+						type="name"
+						fullWidth
+						variant="standard"
+						defaultValue={editingProf ? editingProf.name : ""}
+					/>
+					<TextField
+						autoFocus
+						margin="dense"
+						id="email"
+						label="Email Address"
+						type="email"
+						fullWidth
+						variant="standard"
+						defaultValue={editingProf ? editingProf.email : ""}
+					/>
+
+					<TextField
+						autoFocus
+						margin="dense"
+						id="phoneNumber"
+						label="Phone Number"
+						type="text"
+						fullWidth
+						variant="standard"
+						defaultValue={
+							editingProf ? editingProf.phoneNumber : ""
+						}
+					/>
+
+					<TextField
+						autoFocus
+						margin="dense"
+						id="rate"
+						label="Rate"
+						type="text"
+						fullWidth
+						variant="standard"
+						defaultValue={editingProf ? editingProf.rate : ""}
+					/>
+
+					<TextField
+						autoFocus
+						margin="dense"
+						id="password"
+						label="Password"
+						type="password"
+						fullWidth
+						variant="standard"
+						defaultValue={editingProf ? editingProf.password : ""}
+					/>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleClose}>Cancel</Button>
+					<Button
+						onClick={handleSave}
+						type="submit">
+						Save
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</Container>
 	);
 }
@@ -143,7 +273,6 @@ export default Proffessor;
 
 const Container = styled.section`
 	width: 85%;
-	margin-left: 15%;
 	padding-top: 8%;
 	background-color: #cddee4;
 	min-height: 100vh;
@@ -178,6 +307,16 @@ const Table = styled.div`
 			}
 		}
 	}
+`;
+
+const AddButton = styled.button`
+	border: none;
+	background-color: #053344;
+	color: #fff;
+	padding: 15px 25px;
+	border-radius: 15px;
+	transition: background-color 0.2s ease-in-out;
+	cursor: pointer;
 `;
 
 const editSectionStyle = {

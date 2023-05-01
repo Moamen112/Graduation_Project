@@ -114,8 +114,6 @@ function Admins() {
 	const handleEdit = (row) => {
 		setEditingAdmin(row);
 		setOpen(true);
-		console.log(row);
-		console.log(admins);
 	};
 
 	const handleSave = () => {
@@ -251,13 +249,6 @@ function Admins() {
 }
 
 export default Admins;
-
-const EditSection = styled.div`
-	width: 10%;
-	display: flex;
-	align-items: right;
-	justify-content: space-around;
-`;
 
 const Container = styled.section`
 	width: 100%;

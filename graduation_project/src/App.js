@@ -15,6 +15,7 @@ import University from "./component/University";
 import FacultyUni from "./component/FacultyUni";
 import DepartmentAdmin from "./component/DepartmentAdmin";
 import LandingUni from "./component/LandingUni";
+import DepAnalysis from "./component/DepAnalysis";
 
 function App() {
 	const [reSize, setResize] = useState(false);
@@ -56,7 +57,7 @@ function App() {
 						exact
 						path="/"
 						element={
-							<Proffessor
+							<DepAnalysis
 								reSize={reSize}
 								resizeStyle={handleReSizechange}
 							/>

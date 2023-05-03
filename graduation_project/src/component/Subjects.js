@@ -67,10 +67,7 @@ function Subjects() {
 			<Content>
 				<Header>
 					<h2>Subjects</h2>
-					<AddButton onClick={handleClickOpen}>
-						<AddCircleOutlineIcon style={addStyle} />
-						Add
-					</AddButton>
+					<AddButton onClick={handleClickOpen}>Add</AddButton>
 				</Header>
 
 				<SubList>

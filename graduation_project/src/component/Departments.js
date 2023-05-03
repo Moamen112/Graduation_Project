@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
-import DepartmentsData from "../common/DepartmentsData";
-
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -13,13 +12,13 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import axios from "axios";
 
 function Departments() {
-	const [departments, setDepartments] = useState(DepartmentsData);
-
+	const [departments, setDepartments] = useState([]);
 	const [editingDepartment, setEditingDepartment] = useState(null);
-
 	const [open, setOpen] = useState(false);
+	const [newDep, setNewDep] = useState(null);
 
 	const handleClickOpen = () => {
 		setEditingDepartment(null);
@@ -35,36 +34,104 @@ function Departments() {
 		setOpen(true);
 	};
 
+	const handleUpdate = async (id, department) => {
+		try {
+			const response = await axios.put(
+				`https://localhost:7097/api/universities/${universityId}/faculities/${facultyID}/departments/${id}`,
+				{
+					name: department.name,
+					description: department.description,
+				},
+			);
+			if (response.status === 204) {
+				const newDepartments = departments.map((dep) => {
+					if (dep === editingDepartment) {
+						return { ...dep, ...department };
+					}
+					return dep;
+				});
+
+				setDepartments(newDepartments);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const fetchData = async (deparment) => {
+		try {
+			const response = await axios.post(
+				`https://localhost:7097/api/universities/${universityId}/faculities/${facultyID}/departments`,
+				{
+					name: deparment.name,
+					description: deparment.description,
+				},
+			);
+			console.log(response);
+			if (response.status === 201) {
+				setDepartments([...departments, response.data]);
+			} else if (response.status === 404) {
+				console.log("University not found");
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	const handleSave = () => {
 		const departmentName = document.getElementById("name").value;
 		const departmentDescription =
 			document.getElementById("description").value;
 		const newDepartment = {
-			id: departments.length + 1,
+			//id: departments.length + 1,
 			name: departmentName,
 			description: departmentDescription,
 		};
 
 		if (editingDepartment === null) {
-			setDepartments([...departments, newDepartment]);
+			setNewDep(newDepartment);
+			fetchData(newDepartment);
 		} else {
-			const newDepartments = departments.map((department) => {
-				if (department === editingDepartment) {
-					return { ...department, ...newDepartment };
-				}
-				return department;
-			});
-			setDepartments(newDepartments);
+			handleUpdate(editingDepartment.id, newDepartment);
 		}
 		handleClose();
 	};
 
-	const handleDelete = (id) => {
-		const newDepartments = departments.filter(
-			(department) => department.id !== id,
-		);
-		setDepartments(newDepartments);
+	const handleDelete = async (id) => {
+		try {
+			const response = await axios.delete(
+				`https://localhost:7097/api/universities/${universityId}/faculities/${facultyID}/departments/${id}`,
+			);
+			if (response.status === 204) {
+				const newDepartments = departments.filter(
+					(department) => department.id !== id,
+				);
+				setDepartments(newDepartments);
+			}
+		} catch (error) {
+			console.log(error);
+		}
 	};
+
+	const universityId = "86F697D4-A762-44D6-8322-2C08C66F94E4";
+
+	const facultyID = "d0552b49-6e7d-4ced-8a30-62ce8066a2d4";
+
+	useEffect(() => {
+		axios
+			.get(
+				`https://localhost:7097/api/universities/${universityId}/faculities/${facultyID}/departments
+`,
+			)
+			.then((response) => {
+				if (response.status === 200) {
+					setDepartments(response.data);
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
 
 	return (
 		<DepContainer>
@@ -89,14 +156,22 @@ function Departments() {
 								<p>{department.description}</p>
 							</DepartmentInfoStyle>
 							<EditSection>
-								<EditIcon
-									style={editSectionStyle}
-									onClick={() => handleEdit(department)}
-								/>
-								<ClearOutlinedIcon
-									onClick={() => handleDelete(department.id)}
-									style={{ ...editSectionStyle, ...red }}
-								/>
+								<div>
+									<EditIcon
+										style={editSectionStyle}
+										onClick={() => handleEdit(department)}
+									/>
+									<ClearOutlinedIcon
+										onClick={() =>
+											handleDelete(department.id)
+										}
+										style={{ ...editSectionStyle, ...red }}
+									/>
+								</div>
+								<StyledLink
+									to={`/faculty/departments/${department.id}`}>
+									See more
+								</StyledLink>
 							</EditSection>
 						</DepSectionMain>
 					))}
@@ -151,6 +226,15 @@ function Departments() {
 }
 
 export default Departments;
+
+const StyledLink = styled(Link)`
+	text-decoration: none;
+	background-color: #053546;
+	color: #fff;
+	padding: 8px 15px;
+	border-radius: 20px;
+	font-size: 14px;
+`;
 
 const DepartmentInfoStyle = styled.div`
 	width: 70%;
@@ -231,8 +315,17 @@ const DepSectionMain = styled.li`
 const EditSection = styled.div`
 	width: 10%;
 	display: flex;
+	flex-direction: column;
 	align-items: right;
 	justify-content: space-around;
+	align-items: center;
+	gap: 10px;
+	margin-top: 20px;
+
+	div {
+		display: flex;
+		gap: 10px;
+	}
 `;
 
 const DepImage = styled.div`

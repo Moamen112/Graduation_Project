@@ -7,7 +7,7 @@ import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import ArrowLeftOutlinedIcon from "@mui/icons-material/ArrowLeftOutlined";
 function Nav(props) {
-	return (
+	return props.page !== "landing" ? (
 		<>
 			<Container
 				style={{
@@ -37,6 +37,8 @@ function Nav(props) {
 				</HideNav>
 			</Container>
 		</>
+	) : (
+		""
 	);
 }
 

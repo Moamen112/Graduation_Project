@@ -10,7 +10,7 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 const SideNav = (props) => {
-	return (
+	return props.page !== "landing" ? (
 		<>
 			<Container
 				style={
@@ -25,52 +25,69 @@ const SideNav = (props) => {
 							? noPadding
 							: { transition: "all ease-in-out 0.5s" }
 					}>
-					<NavLink>
-						<Link to={"/"}>
-							<HomeOutlinedIcon />
-							{props.size[0] > 750 && !props.reSize ? "Home" : ""}
-						</Link>
-					</NavLink>
-					<NavLink>
-						<Link to={"unifac"}>
-							<PermIdentityOutlinedIcon />
-							{props.size[0] > 750 && !props.reSize
-								? "Faculties"
-								: ""}
-						</Link>
-					</NavLink>
-					<NavLink>
-						<Link to={"facultyproff"}>
-							<PermIdentityOutlinedIcon />
-							{props.size[0] > 750 && !props.reSize
-								? "Professors"
-								: ""}
-						</Link>
-					</NavLink>
-					<NavLink>
-						<Link to={"facultydep"}>
-							<BorderAllOutlinedIcon />
-							{props.size[0] > 750 && !props.reSize
-								? "Departments"
-								: ""}
-						</Link>
-					</NavLink>
-					<NavLink>
-						<Link to={"facultysubj"}>
-							<LibraryBooksOutlinedIcon />
-							{props.size[0] > 750 && !props.reSize
-								? "Subject"
-								: ""}
-						</Link>
-					</NavLink>
-					<NavLink>
-						<Link>
-							<SettingsOutlinedIcon />
-							{props.size[0] > 750 && !props.reSize
-								? "Manage Admin"
-								: ""}
-						</Link>
-					</NavLink>
+					{props.page === "faculty" || props.page === "" ? (
+						<>
+							<NavLink>
+								<Link to={"/"}>
+									<HomeOutlinedIcon />
+									{props.size[0] > 750 && !props.reSize
+										? "Home"
+										: ""}
+								</Link>
+							</NavLink>
+							<NavLink>
+								<Link to={"faculty/departments"}>
+									<BorderAllOutlinedIcon />
+									{props.size[0] > 750 && !props.reSize
+										? "Departments"
+										: ""}
+								</Link>
+							</NavLink>
+							<NavLink>
+								<Link to={"faculty/proffesors"}>
+									<PermIdentityOutlinedIcon />
+									{props.size[0] > 750 && !props.reSize
+										? "Professors"
+										: ""}
+								</Link>
+							</NavLink>
+							<NavLink>
+								<Link>
+									<SettingsOutlinedIcon />
+									{props.size[0] > 750 && !props.reSize
+										? "Manage Admin"
+										: ""}
+								</Link>
+							</NavLink>
+						</>
+					) : props.page === "university" ? (
+						<>
+							<NavLink>
+								<Link to={"/university"}>
+									<HomeOutlinedIcon />
+									{props.size[0] > 750 && !props.reSize
+										? "Home"
+										: ""}
+								</Link>
+							</NavLink>
+							<NavLink>
+								<Link to={"university/faculties"}>
+									<PermIdentityOutlinedIcon />
+									{props.size[0] > 750 && !props.reSize
+										? "Faculties"
+										: ""}
+								</Link>
+							</NavLink>
+							<NavLink>
+								<Link>
+									<SettingsOutlinedIcon />
+									{props.size[0] > 750 && !props.reSize
+										? "Manage Admin"
+										: ""}
+								</Link>
+							</NavLink>
+						</>
+					) : null}
 				</NavLinks>
 				{props.size[0] > 750 && !props.reSize ? (
 					<LogoutButton>Logout</LogoutButton>
@@ -81,6 +98,8 @@ const SideNav = (props) => {
 				)}
 			</Container>
 		</>
+	) : (
+		""
 	);
 };
 

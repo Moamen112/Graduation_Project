@@ -1,6 +1,11 @@
 import "./App.css";
 import { useState, useEffect, useLayoutEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Route,
+	Routes,
+	useLocation,
+} from "react-router-dom";
 import Nav from "./common/Nav";
 import SideNav from "./common/SideNav";
 import Departments from "./component/Departments";
@@ -14,10 +19,14 @@ import University from "./component/University";
 import FacultyUni from "./component/FacultyUni";
 import LandingUni from "./component/LandingUni";
 import Faculties from "./component/Faculties";
+import Questions from "./component/Questions";
 
 function App() {
 	const [reSize, setResize] = useState(false);
 	const [size, setSize] = useState([0, 0]);
+	const currentPath = window.location.pathname.split("/");
+	console.log(currentPath[1]);
+
 	useLayoutEffect(() => {
 		function updateSize() {
 			setSize([window.innerWidth, window.innerHeight]);
@@ -44,10 +53,12 @@ function App() {
 				<SideNav
 					reSize={reSize}
 					size={size}
+					page={currentPath[1]}
 				/>
 				<Nav
 					handleClick={handleClick}
 					resizeStyle={handleReSizechange}
+					page={currentPath[1]}
 				/>
 				<Routes>
 					<Route
@@ -61,7 +72,7 @@ function App() {
 						}
 					/>
 					<Route
-						path="/facultydep"
+						path="/faculty/departments"
 						element={<Departments />}
 					/>
 					<Route
@@ -69,7 +80,7 @@ function App() {
 						element={<EditDepartments />}
 					/>
 					<Route
-						path="/facultyproff"
+						path="/faculty/proffesors"
 						element={<Proffessor />}
 					/>
 					<Route
@@ -89,7 +100,7 @@ function App() {
 						element={<University />}
 					/>
 					<Route
-						path="/facultyuni"
+						path="university/faculties/:facultyId"
 						element={<FacultyUni />}
 					/>
 					<Route
@@ -97,8 +108,22 @@ function App() {
 						element={<LandingUni />}
 					/>
 					<Route
-						path="/unifaculties"
-						element={<Faculties />}
+						path="university/faculties"
+						element={
+							<Faculties
+								reSize={reSize}
+								resizeStyle={handleReSizechange}
+							/>
+						}
+					/>
+					<Route
+						path="/questions"
+						element={
+							<Questions
+								reSize={reSize}
+								resizeStyle={handleReSizechange}
+							/>
+						}
 					/>
 				</Routes>
 			</Router>

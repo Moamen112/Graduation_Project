@@ -11,6 +11,10 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+
 function SubAnalysis() {
 	const columns = [
 		{
@@ -91,8 +95,8 @@ function SubAnalysis() {
 		},
 		cells: {
 			style: {
-				paddingLeft: "8px", // override the cell padding for data cells
-				paddingRight: "8px",
+				paddingLeft: "6px", // override the cell padding for data cells
+				paddingRight: "6px",
 			},
 		},
 	};
@@ -121,12 +125,14 @@ function SubAnalysis() {
 		const subName = document.getElementById("name").value;
 		const subCode = document.getElementById("code").value;
 		const subDescription = document.getElementById("description").value;
+		const prof = document.getElementById("demo-simple-select").value;
 
 		const newSub = {
 			id: subs.length + 1,
 			name: subName,
 			code: subCode,
 			description: subDescription,
+			prof: prof,
 		};
 
 		if (editingSub === null) {
@@ -166,6 +172,28 @@ function SubAnalysis() {
 			},
 		},
 	];
+
+	const profData = [
+		{
+			id: 1,
+			value: "Youssef",
+		},
+		{
+			id: 2,
+			value: "Moamen",
+		},
+		{
+			id: 3,
+			value: "Mohammed",
+		},
+	];
+
+	const [prof, setProf] = useState("");
+
+	const handleChange = (event) => {
+		setProf(event.target.value);
+	};
+
 	return (
 		<Container>
 			<Table>
@@ -224,6 +252,21 @@ function SubAnalysis() {
 						variant="standard"
 						defaultValue={editingSub ? editingSub.description : ""}
 					/>
+
+					<InputLabel id="demo-simple-select-label">
+						Professor
+					</InputLabel>
+					<Select
+						style={{ minWidth: "120px", marginTop: "8px" }}
+						labelId="demo-simple-select-label"
+						id="demo-simple-select"
+						label="Professor"
+						defaultValue={editingSub ? prof : ""}
+						onChange={handleChange}>
+						{profData.map((prof) => (
+							<MenuItem value={prof.id}>{prof.value}</MenuItem>
+						))}
+					</Select>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleClose}>Cancel</Button>

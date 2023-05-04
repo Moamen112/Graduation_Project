@@ -55,6 +55,17 @@ const TextArea = styled.textarea`
 	border-radius: 4px;
 `;
 
+const SaveBTN = styled.button`
+	padding: 10px 45px;
+	position: absolute;
+	bottom: 3%;
+	left: 27%;
+	border-radius: 20px;
+	background-color: #063443;
+	color: #fff;
+	font-size: 20px;
+`;
+
 const EditDepartments = (props) => {
 	const [formData, setFormData] = useState({
 		subjectName: "",
@@ -63,17 +74,6 @@ const EditDepartments = (props) => {
 		departmentID: "",
 		description: `Content`,
 	});
-
-	const SaveBTN = styled.button`
-		padding: 10px 45px;
-		position: absolute;
-		bottom: 3%;
-		left: 27%;
-		border-radius: 20px;
-		background-color: #063443;
-		color: #fff;
-		font-size: 20px;
-	`;
 
 	const handleChange = (e) => {
 		const { name, value, type, checked } = e.target;
@@ -84,8 +84,6 @@ const EditDepartments = (props) => {
 			};
 		});
 	};
-
-	console.log(formData);
 
 	return (
 		<Container>

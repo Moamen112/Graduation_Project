@@ -1,133 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import DataTable, { createTheme } from "react-data-table-component";
+import DataTable from "react-data-table-component";
 import CancelIcon from "@mui/icons-material/Cancel";
+import EditIcon from "@mui/icons-material/Edit";
+import axios from "axios";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 
 function Proffessor() {
 	const columns = [
 		{
-			name: "Professor name",
-			selector: (row) => row.title,
+			name: "Professor Name",
+			selector: (row) => row.fullName,
 		},
 		{
-			name: "Professor Subject",
-			selector: (row) => row.year,
+			name: "Professor Email",
+			selector: (row) => row.email,
 		},
 		{
-			name: "Hiring Date",
-			selector: (row) => row.Date,
+			name: "Phone Number",
+			selector: (row) => row.phoneNumber,
 		},
 		{
-			name: "Professor rate",
+			name: "Professor Rate",
 			selector: (row) => row.rate,
 		},
-	];
-
-	const data = [
 		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
+			name: "",
+			cell: (row) => (
+				<EditIcon
+					style={editSectionStyle}
+					onClick={() => handleEdit(row)}
+				/>
+			),
+			ignoreRowClick: true,
+			allowOverflow: true,
+			button: true,
 		},
 		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
-		},
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-			rate: "1988",
-			Date: "12-3-2020",
+			name: "",
+			cell: (row) => (
+				<CancelIcon
+					style={{ ...editSectionStyle, ...red }}
+					onClick={() => handleDelete(row.id)}
+				/>
+			),
+			ignoreRowClick: true,
+			allowOverflow: true,
+			button: true,
 		},
 	];
 
@@ -161,16 +85,57 @@ function Proffessor() {
 		},
 	};
 
-	const [tableData, setTableData] = useState(data);
+	const [profs, setProfs] = useState([]);
 
-	const handleDelete = (index) => {
-		const newData = [...tableData];
-		newData.splice(index, 1);
-		setTableData(newData);
+	const [editingProf, setEditingProf] = useState(null);
+
+	const [open, setOpen] = useState(false);
+
+	const handleClickOpen = () => {
+		setEditingProf(null);
+		setOpen(true);
 	};
 
-	const deleteButton = (cell, row, rowIndex) => {
-		return <CancelIcon onClick={() => handleDelete(rowIndex)} />;
+	const handleClose = () => {
+		setOpen(false);
+	};
+
+	const handleEdit = (row) => {
+		setEditingProf(row);
+		setOpen(true);
+	};
+
+	const handleSave = () => {
+		const profName = document.getElementById("name").value;
+		const profEmail = document.getElementById("email").value;
+		const profPhone = document.getElementById("phoneNumber").value;
+		const profRate = document.getElementById("rate").value;
+
+		const newProf = {
+			id: profs.length + 1,
+			name: profName,
+			email: profEmail,
+			phoneNumber: profPhone,
+			rate: profRate,
+		};
+
+		if (editingProf === null) {
+			setProfs([...profs, newProf]);
+		} else {
+			const newProfs = profs.map((p) => {
+				if (p === editingProf) {
+					return { ...p, ...newProf };
+				}
+				return p;
+			});
+			setProfs(newProfs);
+		}
+		handleClose();
+	};
+
+	const handleDelete = (id) => {
+		const newProfs = profs.filter((prof) => prof.id !== id);
+		setProfs(newProfs);
 	};
 
 	const conditionalRowStyles = [
@@ -191,18 +156,38 @@ function Proffessor() {
 			},
 		},
 	];
+
+	const facultyId = "D0552B49-6E7D-4CED-8A30-62CE8066A2D4";
+
+	useEffect(() => {
+		axios
+			.get(
+				`https://localhost:7097/api/faculities/${facultyId}/professors
+
+`,
+			)
+			.then((response) => {
+				if (response.status === 200) {
+					setProfs(response.data);
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
 	return (
 		<Container>
 			<Table>
 				<div className="subjects">
 					<div className="headers">
 						<h1>Professors</h1>
-						<button>Add</button>
+						<AddButton onClick={handleClickOpen}>Add</AddButton>
 					</div>
 					<div>
 						<DataTable
-							columns={[...columns, { cell: deleteButton }]}
-							data={data}
+							//
+							columns={[...columns]}
+							data={profs}
 							customStyles={customStyles}
 							pagination
 							dense
@@ -211,6 +196,77 @@ function Proffessor() {
 					</div>
 				</div>
 			</Table>
+			<Dialog
+				onSubmit={handleSave}
+				open={open}
+				onClose={handleClose}>
+				<DialogTitle>Professor Information</DialogTitle>
+				<DialogContent>
+					<TextField
+						autoFocus
+						margin="dense"
+						id="name"
+						label="Professor Name"
+						type="name"
+						fullWidth
+						variant="standard"
+						defaultValue={editingProf ? editingProf.name : ""}
+					/>
+					<TextField
+						autoFocus
+						margin="dense"
+						id="email"
+						label="Email Address"
+						type="email"
+						fullWidth
+						variant="standard"
+						defaultValue={editingProf ? editingProf.email : ""}
+					/>
+
+					<TextField
+						autoFocus
+						margin="dense"
+						id="phoneNumber"
+						label="Phone Number"
+						type="text"
+						fullWidth
+						variant="standard"
+						defaultValue={
+							editingProf ? editingProf.phoneNumber : ""
+						}
+					/>
+
+					<TextField
+						autoFocus
+						margin="dense"
+						id="rate"
+						label="Rate"
+						type="text"
+						fullWidth
+						variant="standard"
+						defaultValue={editingProf ? editingProf.rate : ""}
+					/>
+
+					<TextField
+						autoFocus
+						margin="dense"
+						id="password"
+						label="Password"
+						type="password"
+						fullWidth
+						variant="standard"
+						defaultValue={editingProf ? editingProf.password : ""}
+					/>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleClose}>Cancel</Button>
+					<Button
+						onClick={handleSave}
+						type="submit">
+						Save
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</Container>
 	);
 }
@@ -255,3 +311,24 @@ const Table = styled.div`
 		}
 	}
 `;
+const AddButton = styled.button`
+	border: none;
+	background-color: #053344;
+	color: #fff;
+	padding: 15px 25px;
+	border-radius: 15px;
+	transition: background-color 0.2s ease-in-out;
+	cursor: pointer;
+`;
+
+const editSectionStyle = {
+	fontSize: "25px",
+	color: "white",
+	backgroundColor: "#053546",
+	borderRadius: "50%",
+	cursor: "pointer",
+};
+
+const red = {
+	backgroundColor: "#F7433A",
+};

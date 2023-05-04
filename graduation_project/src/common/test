@@ -1,0 +1,46 @@
+/*<NavLink>
+						<Link to={"/"}>
+							<HomeOutlinedIcon />
+							{props.size[0] > 750 && !props.reSize ? "Home" : ""}
+						</Link>
+					</NavLink>
+					<NavLink>
+						<Link to={"unifac"}>
+							<PermIdentityOutlinedIcon />
+							{props.size[0] > 750 && !props.reSize
+								? "Faculties"
+								: ""}
+						</Link>
+					</NavLink>
+					<NavLink>
+						<Link to={"facultyproff"}>
+							<PermIdentityOutlinedIcon />
+							{props.size[0] > 750 && !props.reSize
+								? "Professors"
+								: ""}
+						</Link>
+					</NavLink>
+					<NavLink>
+						<Link to={"facultydep"}>
+							<BorderAllOutlinedIcon />
+							{props.size[0] > 750 && !props.reSize
+								? "Departments"
+								: ""}
+						</Link>
+					</NavLink>
+					<NavLink>
+						<Link to={"facultysubj"}>
+							<LibraryBooksOutlinedIcon />
+							{props.size[0] > 750 && !props.reSize
+								? "Subject"
+								: ""}
+						</Link>
+					</NavLink>
+					<NavLink>
+						<Link>
+							<SettingsOutlinedIcon />
+							{props.size[0] > 750 && !props.reSize
+								? "Manage Admin"
+								: ""}
+						</Link>
+							</NavLink>*/

@@ -1,10 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import DataTable, { createTheme } from "react-data-table-component";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Container } from "@mui/material";
+import axios from "axios";
 
 function FacultyUni(props) {
+	const { facultyId } = useParams();
+	const [data, setData] = useState({});
+
+	let universityId = "86F697D4-A762-44D6-8322-2C08C66F94E4";
+	useEffect(() => {
+		axios
+			.get(
+				`https://localhost:7097/api/universities/${universityId}/faculities/${facultyId}
+`,
+			)
+			.then((response) => {
+				setData(response.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
+
 	return (
 		<>
 			<UniContainer
@@ -12,6 +32,7 @@ function FacultyUni(props) {
 					...props.resizeStyle,
 					transition: "all ease-in-out 0.5s",
 				}}>
+				<h1>{data.name}</h1>
 				<Cards>
 					<Card>
 						<ImgContainer>
@@ -59,7 +80,7 @@ function FacultyUni(props) {
 								height="100%"
 								overflow="scroll"
 								scrolling="0"
-								frameborder="0"
+								frameBorder="0"
 								src="//plotly.com/~Muhammed_Zidan/80.embed"></iframe>
 						</div>
 					</Analysis>
@@ -79,6 +100,10 @@ const UniContainer = styled.section`
 	margin-left: 15%;
 	padding-top: 8%;
 	background-color: #cddee4;
+
+	h1 {
+		padding: 0px 7% 20px 7%;
+	}
 
 	@media only screen and (max-width: 600px) {
 		padding-top: 20%;

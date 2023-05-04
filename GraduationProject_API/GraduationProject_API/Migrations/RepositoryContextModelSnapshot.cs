@@ -243,7 +243,23 @@ namespace GraduationProject_API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("fdc74ef3-1e3d-4a13-9f19-4e381ce4c3d2"),
+                            Id = new Guid("706870e9-e373-11ed-b719-105badc84798"),
+                            DepartmentId = new Guid("84796c48-d538-4954-a98a-622dc5c9325a"),
+                            FacultyId = new Guid("d0552b49-6e7d-4ced-8a30-62ce8066a2d4"),
+                            Rate = 0.0,
+                            UniveristyId = new Guid("86f697d4-a762-44d6-8322-2c08c66f94e4")
+                        },
+                        new
+                        {
+                            Id = new Guid("706b3236-e373-11ed-a003-105badc84798"),
+                            DepartmentId = new Guid("84796c48-d538-4954-a98a-622dc5c9325a"),
+                            FacultyId = new Guid("d0552b49-6e7d-4ced-8a30-62ce8066a2d4"),
+                            Rate = 0.0,
+                            UniveristyId = new Guid("86f697d4-a762-44d6-8322-2c08c66f94e4")
+                        },
+                        new
+                        {
+                            Id = new Guid("706b3237-e373-11ed-988f-105badc84798"),
                             DepartmentId = new Guid("84796c48-d538-4954-a98a-622dc5c9325a"),
                             FacultyId = new Guid("d0552b49-6e7d-4ced-8a30-62ce8066a2d4"),
                             Rate = 0.0,
@@ -277,6 +293,48 @@ namespace GraduationProject_API.Migrations
                     b.HasIndex("SubjectId");
 
                     b.ToTable("Questionnaires");
+                });
+
+            modelBuilder.Entity("Entities.Models.Student", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DepartmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("FacultyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UniveristyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("FacultyId");
+
+                    b.HasIndex("UniveristyId");
+
+                    b.ToTable("Students");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("5aafe5df-cb75-4dfa-898a-9a1c4e9bb5a5"),
+                            DepartmentId = new Guid("84796c48-d538-4954-a98a-622dc5c9325a"),
+                            FacultyId = new Guid("d0552b49-6e7d-4ced-8a30-62ce8066a2d4"),
+                            UniveristyId = new Guid("86f697d4-a762-44d6-8322-2c08c66f94e4")
+                        },
+                        new
+                        {
+                            Id = new Guid("4a8ca884-c093-43c4-a019-ee6d804bf85e"),
+                            DepartmentId = new Guid("84796c48-d538-4954-a98a-622dc5c9325a"),
+                            FacultyId = new Guid("d0552b49-6e7d-4ced-8a30-62ce8066a2d4"),
+                            UniveristyId = new Guid("86f697d4-a762-44d6-8322-2c08c66f94e4")
+                        });
                 });
 
             modelBuilder.Entity("Entities.Models.Subject", b =>
@@ -324,8 +382,58 @@ namespace GraduationProject_API.Migrations
                             DepartmentId = new Guid("84796c48-d538-4954-a98a-622dc5c9325a"),
                             Description = "Parallel computing is a subject that focuses on the design and implementation of computing systems that are capable of performing multiple tasks simultaneously. This subject is offered in Damanhour University's Faculty of Computer Science and Information Technology, specifically within the Computer Science Department.",
                             Name = "Parallel Computing",
-                            ProfessorId = new Guid("fdc74ef3-1e3d-4a13-9f19-4e381ce4c3d2"),
+                            ProfessorId = new Guid("706870e9-e373-11ed-b719-105badc84798"),
                             Rate = 0.0
+                        },
+                        new
+                        {
+                            Id = new Guid("5fecd989-af05-4e8f-80a3-ebda42971bb3"),
+                            Code = "CS211",
+                            DepartmentId = new Guid("84796c48-d538-4954-a98a-622dc5c9325a"),
+                            Description = "Introduction to Computer Security is a subject offered by the Computer Science Department at Damanhour University's Faculty of Computer Science and Information Technology. The course provides an overview of the fundamental concepts and principles of computer security, including the protection of computer systems, networks, and data from unauthorized access, theft, damage, and other security threats.",
+                            Name = "Introduction to Computer Security",
+                            ProfessorId = new Guid("706870e9-e373-11ed-b719-105badc84798"),
+                            Rate = 4.0
+                        },
+                        new
+                        {
+                            Id = new Guid("15ee4163-b1d7-4ffd-9357-ae82b0cba7a0"),
+                            Code = "CS381",
+                            DepartmentId = new Guid("84796c48-d538-4954-a98a-622dc5c9325a"),
+                            Description = "Capstone Project II is a course offered in the Computer Science Department of Damanhour University's Faculty of Computer Science and Information Technology. This course is designed to provide students with an opportunity to apply the knowledge and skills they have acquired throughout their academic program to a real-world problem or project.",
+                            Name = "Capstone Project II",
+                            ProfessorId = new Guid("706870e9-e373-11ed-b719-105badc84798"),
+                            Rate = 2.5
+                        },
+                        new
+                        {
+                            Id = new Guid("17105397-5aa7-452e-bbb5-26a690c56553"),
+                            Code = "CS361",
+                            DepartmentId = new Guid("84796c48-d538-4954-a98a-622dc5c9325a"),
+                            Description = "Intelligent Systems is a subject offered in the Computer Science Department of Damanhour University's Faculty of Computer Science and Information Technology. This course focuses on the design, development, and application of intelligent systems, which are computer systems that can perceive and respond to their environment, learn from experience, and make decisions based on data analysis and reasoning.",
+                            Name = "Intelligent Systems",
+                            ProfessorId = new Guid("706870e9-e373-11ed-b719-105badc84798"),
+                            Rate = 3.5
+                        },
+                        new
+                        {
+                            Id = new Guid("f9d69186-526f-4141-92e0-8d8b29ee347f"),
+                            Code = "CS212",
+                            DepartmentId = new Guid("84796c48-d538-4954-a98a-622dc5c9325a"),
+                            Description = "Advanced Database is a subject offered in the Computer Science Department of Damanhour University's Faculty of Computer Science and Information Technology. This course is designed to provide students with an in-depth understanding of advanced concepts and techniques used in database management systems.",
+                            Name = "Advanced Database",
+                            ProfessorId = new Guid("706b3236-e373-11ed-a003-105badc84798"),
+                            Rate = 3.0
+                        },
+                        new
+                        {
+                            Id = new Guid("1f80d7c4-3dd1-4365-9420-558e223f0ee6"),
+                            Code = "CS352",
+                            DepartmentId = new Guid("84796c48-d538-4954-a98a-622dc5c9325a"),
+                            Description = "Computer Animation is a subject offered in the Computer Science Department of Damanhour University's Faculty of Computer Science and Information Technology. This course focuses on the principles and techniques used in the creation and manipulation of digital animations using computer software.",
+                            Name = "Computer Animation",
+                            ProfessorId = new Guid("706b3237-e373-11ed-988f-105badc84798"),
+                            Rate = 4.0
                         });
                 });
 
@@ -480,7 +588,7 @@ namespace GraduationProject_API.Migrations
                         {
                             Id = "99328045-8ECF-40A1-9F0B-0DEA6398F09A",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "75dad6c4-43ce-412c-b4f4-e3f104ecc0fb",
+                            ConcurrencyStamp = "b3c6beb3-0a82-45c2-be07-8ec020223e36",
                             Email = "john.doe@example.com",
                             EmailConfirmed = true,
                             FirstName = "John",
@@ -488,10 +596,10 @@ namespace GraduationProject_API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "JOHN.DOE@EXAMPLE.COM",
                             NormalizedUserName = "JOHN.DOE@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEKdKXIWCPaaD6QuXSqD78GbzjkObleviPj2Uug1CPGSrjolrJ0Me3seL46fyfbHiw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEE9BSZWo03EGnlXLtCzaSvhLCt4PyPtwIvtOrgd97/6SJEfK7yx0hgwmm9TmNO8SSQ==",
                             PhoneNumber = "01239931230",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "818f3563-a3f3-4fff-9cb7-437a287ebac7",
+                            SecurityStamp = "47b5cac4-d0d8-45eb-b8b0-00e225c69d61",
                             TwoFactorEnabled = false,
                             UserName = "john.doe@example.com"
                         },
@@ -499,7 +607,7 @@ namespace GraduationProject_API.Migrations
                         {
                             Id = "69E0E900-6DE2-45E8-85CA-583B32C5C5AA",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "886699f2-b0c3-48f2-ab86-b72ba22dd19e",
+                            ConcurrencyStamp = "cd96776f-81f4-4e69-b2da-a01aaa1e7e3c",
                             Email = "jane.doe@example.com",
                             EmailConfirmed = true,
                             FirstName = "Jane",
@@ -507,10 +615,10 @@ namespace GraduationProject_API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "JANE.DOE@EXAMPLE.COM",
                             NormalizedUserName = "JANE.DOE@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEG8brrSWYdXl1HPtJ0joQxW1v0a28miXoGqfgARfWPac+Mqotpj9h0vb4yWC9Vc+2A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAj5Auwj3xaU+kJ0sP3fd+1ESuf+Dqm2fNi6fMgeLRGO1Km1HrSjZCAfOo5JkJO0hQ==",
                             PhoneNumber = "01203993009",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "dc23656a-b0aa-4f61-89de-b15519f450a1",
+                            SecurityStamp = "b736c30f-438d-421d-b300-0d63185bb060",
                             TwoFactorEnabled = false,
                             UserName = "jane.doe@example.com"
                         },
@@ -518,7 +626,7 @@ namespace GraduationProject_API.Migrations
                         {
                             Id = "7A369173-1E2F-491F-874F-7B324C034BC2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "29ac8f92-99eb-455c-b7b7-7ab720e630db",
+                            ConcurrencyStamp = "2363cbf5-90b3-464c-be94-f81c1adbb1f6",
                             Email = "bob.smith@example.com",
                             EmailConfirmed = true,
                             FirstName = "Bob",
@@ -526,10 +634,10 @@ namespace GraduationProject_API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "BOB.SMITH@EXAMPLE.COM",
                             NormalizedUserName = "BOB.SMITH@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEL0hmY2CJfojig4iHqPqnkKjwiZ7+mtK56ORlVRJwRTyMZf6ScXnYaUa4FIuoDrrwQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGZNZm6FnmLOOjWwwY1LAFwPnwm7p0OHIdGUdfaSeVqx513mfSVDWgKgkd8FTD6ejg==",
                             PhoneNumber = "011234356789",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3cb99e36-df81-4659-9837-7432b0470368",
+                            SecurityStamp = "c5308af9-2398-4ead-80de-8154f604a6ff",
                             TwoFactorEnabled = false,
                             UserName = "bob.smith@example.com"
                         },
@@ -537,7 +645,7 @@ namespace GraduationProject_API.Migrations
                         {
                             Id = "FDC74EF3-1E3D-4A13-9F19-4E381CE4C3D2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6ee6d756-1fba-4a69-b79e-69393d8d4d02",
+                            ConcurrencyStamp = "b27c0aeb-2a5d-48ff-a2a5-5eff70622fd0",
                             Email = "sara.jones@example.com",
                             EmailConfirmed = true,
                             FirstName = "Sara",
@@ -545,12 +653,107 @@ namespace GraduationProject_API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "SARA.JONES@EXAMPLE.COM",
                             NormalizedUserName = "SARA.JONES@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFUF9OhOR8ZOwbNk+HgGbX4kvQZNWYIQM7ZxZAhIII4cRAkmTK3kul6B2uWLXpA9zA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEA9TAK2LwybyXtcmYXtH4/uzMazELpHftGDgXv5kbl60Xn7ge0t88lO4rF5knuHvCQ==",
                             PhoneNumber = "010765432231",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "59162b5c-0c13-47f4-b21d-63e140bbc396",
+                            SecurityStamp = "ec41452b-ee88-4e2f-9615-54197f837a8e",
                             TwoFactorEnabled = false,
                             UserName = "sara.jones@example.com"
+                        },
+                        new
+                        {
+                            Id = "706870e9-e373-11ed-b719-105badc84798",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "a959fa4a-8071-4afb-acd6-ab195113f0ce",
+                            Email = "Mo.Zi@example.com",
+                            EmailConfirmed = true,
+                            FirstName = "Mo",
+                            LastName = "Zi",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MO.ZI@EXAMPLE.COM",
+                            NormalizedUserName = "MO.ZI@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEM+Rp705wjPkPrWfvy6jhRXtpwg3rA3DE82+u5J5DTMUwy3FCSiSkAUOo6wgd+HMmA==",
+                            PhoneNumber = "01279426209",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "05a108d3-a964-4311-a7d9-5d5bd3514640",
+                            TwoFactorEnabled = false,
+                            UserName = "Mo.Zi@example.com"
+                        },
+                        new
+                        {
+                            Id = "706b3236-e373-11ed-a003-105badc84798",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "9ed1b2d3-f80c-49f1-93c8-02962aabeab5",
+                            Email = "Majdi.Fares@example.com",
+                            EmailConfirmed = true,
+                            FirstName = "Majdi",
+                            LastName = "Fares",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MAJDI.FARES@EXAMPLE.COM",
+                            NormalizedUserName = "MAJDI.FARES@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKF/9WcaHQcA4X8YNW+feXDGe6nkyD8VTStRE6BY+ksGDtfuenIe8nrXQPfY7GmfAw==",
+                            PhoneNumber = "01270867190",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "43baa4b1-ea52-47ba-b439-f5f0e674beeb",
+                            TwoFactorEnabled = false,
+                            UserName = "Majdi.Fares@example.com"
+                        },
+                        new
+                        {
+                            Id = "706b3237-e373-11ed-988f-105badc84798",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b5a951d4-d3d1-440a-8244-e2853c4dde46",
+                            Email = "Hamza.Yisri@example.com",
+                            EmailConfirmed = true,
+                            FirstName = "Hamza",
+                            LastName = "Yisri",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "HAMZA.YISRI@EXAMPLE.COM",
+                            NormalizedUserName = "HAMZA.YISRI@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDAYkW+HwRe3H2cCZNluEtkqJLiG9xUESJG6N8mZi/g3q37y4M0xC4n9hBHZ6Aaj5g==",
+                            PhoneNumber = "01256543256",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "b9a0a315-4cf9-4369-a17f-8293e3bd264d",
+                            TwoFactorEnabled = false,
+                            UserName = "Hamza.Yisri@example.com"
+                        },
+                        new
+                        {
+                            Id = "5AAFE5DF-CB75-4DFA-898A-9A1C4E9BB5A5",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e48312a7-cd23-48ec-91dd-669c53117faf",
+                            Email = "mosad5@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Mossad",
+                            LastName = "Ahmed",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MOSAD5@GMAIL.COM",
+                            NormalizedUserName = "MOSAD5@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEN7BPMQ+vaPkr0BOWCvrZa3TIh51rdasm7vStLWYZkbgojvvyfsYSRIIH5CAy/q6nw==",
+                            PhoneNumber = "+201211820083",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "9ebeeae5-c04c-4896-8bc8-f759eb53c492",
+                            TwoFactorEnabled = false,
+                            UserName = "mosad5@gmail.com"
+                        },
+                        new
+                        {
+                            Id = "4A8CA884-C093-43C4-A019-EE6D804BF85E",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "f9cf58de-5438-4471-bbef-fc506cbb962e",
+                            Email = "mosad53@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Mossad",
+                            LastName = "Gomaa",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MOSAD53@GMAIL.COM",
+                            NormalizedUserName = "MOSAD53@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDPHUGa3kDA+jT2b4wbMnYZT+zfbNUIr/SnoI0sRCavya9LghokbUDiP/F0ryUD9rw==",
+                            PhoneNumber = "+201211820083",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "e93a590d-dab9-41b7-b123-d7ef6276da13",
+                            TwoFactorEnabled = false,
+                            UserName = "mosad53@gmail.com"
                         });
                 });
 
@@ -584,35 +787,35 @@ namespace GraduationProject_API.Migrations
                         new
                         {
                             Id = "BEA713C7-93D2-4F39-8DC8-18F2F3070779",
-                            ConcurrencyStamp = "b5c81ecf-ebe4-425b-9400-0093723ee82e",
+                            ConcurrencyStamp = "ebe90fe2-8f40-4e9d-b6c1-6ee9e6c8b1b6",
                             Name = "University Admin",
                             NormalizedName = "UNIVERSITY ADMIN"
                         },
                         new
                         {
                             Id = "A2523A70-57E3-4B69-A405-F9752517ED62",
-                            ConcurrencyStamp = "361068dc-779b-4ddf-a825-7e0667f8e597",
+                            ConcurrencyStamp = "ce444435-60a7-44a6-a9c2-ae46a6fb3db2",
                             Name = "Faculty Admin",
                             NormalizedName = "FACULTY ADMIN"
                         },
                         new
                         {
                             Id = "64F2143D-B896-4355-90D2-AFD22424B234",
-                            ConcurrencyStamp = "77ce8e21-e632-4e15-987d-4eb14a24be3a",
+                            ConcurrencyStamp = "5dc80156-f862-45c1-8cee-d3a0593976f6",
                             Name = "Department Admin",
                             NormalizedName = "DEPARTMENT ADMIN"
                         },
                         new
                         {
                             Id = "E5E3E33B-D9F2-4E95-9CEB-26F28A0028E7",
-                            ConcurrencyStamp = "396bb4d6-b5f5-44a5-8c6e-9d862e36806c",
+                            ConcurrencyStamp = "b85c3978-26d9-488e-b69a-160d6d57c241",
                             Name = "Professor",
                             NormalizedName = "PROFESSOR"
                         },
                         new
                         {
                             Id = "E26639C4-7023-4878-A497-FC4B12CFA272",
-                            ConcurrencyStamp = "7928ff6c-e767-4548-b8a9-1e6cde8a1134",
+                            ConcurrencyStamp = "3ece682e-c879-403c-b30c-0c1c9e51e7a4",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         });
@@ -724,6 +927,31 @@ namespace GraduationProject_API.Migrations
                         {
                             UserId = "FDC74EF3-1E3D-4A13-9F19-4E381CE4C3D2",
                             RoleId = "E5E3E33B-D9F2-4E95-9CEB-26F28A0028E7"
+                        },
+                        new
+                        {
+                            UserId = "706870e9-e373-11ed-b719-105badc84798",
+                            RoleId = "E5E3E33B-D9F2-4E95-9CEB-26F28A0028E7"
+                        },
+                        new
+                        {
+                            UserId = "706b3236-e373-11ed-a003-105badc84798",
+                            RoleId = "E5E3E33B-D9F2-4E95-9CEB-26F28A0028E7"
+                        },
+                        new
+                        {
+                            UserId = "706b3237-e373-11ed-988f-105badc84798",
+                            RoleId = "E5E3E33B-D9F2-4E95-9CEB-26F28A0028E7"
+                        },
+                        new
+                        {
+                            UserId = "5AAFE5DF-CB75-4DFA-898A-9A1C4E9BB5A5",
+                            RoleId = "E26639C4-7023-4878-A497-FC4B12CFA272"
+                        },
+                        new
+                        {
+                            UserId = "4A8CA884-C093-43C4-A019-EE6D804BF85E",
+                            RoleId = "E26639C4-7023-4878-A497-FC4B12CFA272"
                         });
                 });
 
@@ -744,6 +972,21 @@ namespace GraduationProject_API.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("StudentSubject", b =>
+                {
+                    b.Property<Guid>("StudentsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SubjectsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("StudentsId", "SubjectsId");
+
+                    b.HasIndex("SubjectsId");
+
+                    b.ToTable("StudentSubject");
                 });
 
             modelBuilder.Entity("Entities.Models.Department", b =>
@@ -852,6 +1095,33 @@ namespace GraduationProject_API.Migrations
                     b.Navigation("Subject");
                 });
 
+            modelBuilder.Entity("Entities.Models.Student", b =>
+                {
+                    b.HasOne("Entities.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Models.Faculty", "Faculty")
+                        .WithMany()
+                        .HasForeignKey("FacultyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Models.University", "University")
+                        .WithMany()
+                        .HasForeignKey("UniveristyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Faculty");
+
+                    b.Navigation("University");
+                });
+
             modelBuilder.Entity("Entities.Models.Subject", b =>
                 {
                     b.HasOne("Entities.Models.Department", "Department")
@@ -929,6 +1199,21 @@ namespace GraduationProject_API.Migrations
                     b.HasOne("Entities.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("StudentSubject", b =>
+                {
+                    b.HasOne("Entities.Models.Student", null)
+                        .WithMany()
+                        .HasForeignKey("StudentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Models.Subject", null)
+                        .WithMany()
+                        .HasForeignKey("SubjectsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

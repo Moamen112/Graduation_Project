@@ -27,9 +27,14 @@ internal sealed class ProfessorService : IProfessorService
 
     public async Task<ProfessorDto> CreateProfessor(Guid facultyId, Guid departmentId, UserForCreationDto professor, bool trackChanges)
     {
+        var faculty = _repository.Faculty.GetFacultyById(facultyId, trackChanges);
+        if (faculty is null)
+            throw new FacultyNotFoundException(facultyId);
+
         var department = _repository.Department.GetDepartment(facultyId, departmentId, trackChanges);
         if (department is null)
             throw new DepartmentNotFoundException(departmentId);
+
 
         if (await _userManager.FindByEmailAsync(professor.Email) is not null)
             throw new EmailFoundException(professor.Email);
@@ -44,7 +49,7 @@ internal sealed class ProfessorService : IProfessorService
 
         var professorEntity = _mapper.Map<Professor>(professorToReturn);
 
-        _repository.Professor.CreateProfessor(department.FacultyId, facultyId, departmentId, professorEntity);
+        _repository.Professor.CreateProfessor(faculty.UniversityId, facultyId, departmentId, professorEntity);
         _repository.Save();
 
         return professorToReturn;
@@ -78,13 +83,19 @@ internal sealed class ProfessorService : IProfessorService
         return professorsDto;
     }
 
-    public async Task<ProfessorDto> GetProfessor(Guid id, bool trackChanges)
+    public async Task<ProfessorDto> GetProfessorWithSubjects(Guid id, bool trackChanges)
     {
         var user = await _userManager.FindByIdAsync(id.ToString());
         if (user is null)
             throw new UserNotFoundException(id);
 
+        var professorEntity = _repository.Professor.GetAProfessorWithSubjects(id, trackChanges);
+
         var professorDto = _mapper.Map<ProfessorDto>(user);
+        professorDto.Rate = professorEntity.Rate;
+        professorDto.Subjects = _mapper.Map<ICollection<SubjectForProfessorDto>>(professorEntity.Subjects);
+        
+
         return professorDto;
     }
 

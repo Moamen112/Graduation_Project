@@ -16,6 +16,7 @@ import FacultyUni from "./component/FacultyUni";
 import DepartmentAdmin from "./component/DepartmentAdmin";
 import LandingUni from "./component/LandingUni";
 import DepAnalysis from "./component/DepAnalysis";
+import MainLogin from "./component/MainLogin";
 
 function App() {
 	const [reSize, setResize] = useState(false);
@@ -44,20 +45,20 @@ function App() {
 	return (
 		<div className="App">
 			<Router>
-				<SideNav
+				{/* <SideNav
 					reSize={reSize}
 					size={size}
 				/>
 				<Nav
 					handleClick={handleClick}
 					resizeStyle={handleReSizechange}
-				/>
+				/> */}
 				<Routes>
 					<Route
 						exact
 						path="/"
 						element={
-							<DepAnalysis
+							<MainLogin
 								reSize={reSize}
 								resizeStyle={handleReSizechange}
 							/>

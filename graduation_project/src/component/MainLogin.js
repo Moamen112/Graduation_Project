@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import admin from "../images/admin.jpg";
+import admin from "../images/admin.png";
 import staff from "../images/staff.png";
-import student from "../images/student.jpg";
+import student from "../images/student.png";
+import bg from "../images/b.jpeg";
 
 function MainLogin() {
 	return (
@@ -41,8 +42,10 @@ const ColumnsContainer = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-image: url("../images/b.jpeg");
+	background-image: url(${bg});
 	background-size: cover;
+	background-position: center;
+	overflow: hidden;
 `;
 
 const Column = styled.div`
@@ -55,6 +58,7 @@ const Column = styled.div`
 	align-items: center;
 	text-align: center;
 	height: 100vh;
+	background-color: rgba(240, 240, 240, 0.6);
 `;
 
 const Image = styled.img`

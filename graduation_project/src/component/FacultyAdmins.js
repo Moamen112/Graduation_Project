@@ -11,7 +11,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 
-function Proffessor() {
+function FacultyAdmins() {
 	const columns = [
 		{
 			name: "ID",
@@ -19,20 +19,16 @@ function Proffessor() {
 			omit: true,
 		},
 		{
-			name: "Professor Name",
+			name: "Admin name",
 			selector: (row) => row.fullName,
 		},
 		{
-			name: "Professor Email",
+			name: "E-mail",
 			selector: (row) => row.email,
 		},
 		{
 			name: "Phone Number",
 			selector: (row) => row.phoneNumber,
-		},
-		{
-			name: "Professor Rate",
-			selector: (row) => row.rate,
 		},
 		{
 			name: "Actions",
@@ -85,12 +81,29 @@ function Proffessor() {
 		},
 	};
 
-	const [profs, setProfs] = useState([]);
-	const [editingProf, setEditingProf] = useState(null);
+	const [admins, setAdmins] = useState([]);
+	const [editingAdmin, setEditingAdmin] = useState(null);
 	const [open, setOpen] = useState({ status: false, page: "" });
 
+	const facultyId = "D0552B49-6E7D-4CED-8A30-62CE8066A2D4";
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const response = await axios.get(
+					`https://localhost:7097/api/faculities/${facultyId}/admins`,
+				);
+				setAdmins(response.data);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+
+		fetchData();
+	}, []);
+
 	const handleClickOpen = () => {
-		setEditingProf(null);
+		setEditingAdmin(null);
 		setOpen({ ...open, status: true, page: "add" });
 	};
 
@@ -106,58 +119,57 @@ function Proffessor() {
 			email: row.email,
 			phoneNumber: row.phoneNumber,
 		};
-		setEditingProf(data);
+		setEditingAdmin(data);
 		setOpen({ ...open, status: true, page: page });
 	};
-	console.log(editingProf);
 
-	const handleAdd = async (prof) => {
+	const handleAdd = async (admin) => {
 		try {
 			const response = await axios.post(
-				`https://localhost:7097/api/faculities/${facultyId}/departments/84796C48-D538-4954-A98A-622DC5C9325A/professors`,
+				`https://localhost:7097/api/faculities/${facultyId}/admins`,
 				{
-					firstName: prof.firstName,
-					lastName: prof.lastName,
-					email: prof.email,
-					phoneNumber: prof.phoneNumber,
-					password: prof.password,
+					firstName: admin.firstName,
+					lastName: admin.lastName,
+					email: admin.email,
+					phoneNumber: admin.phoneNumber,
+					password: admin.password,
 				},
 			);
 			console.log(response);
 			if (response.status === 201) {
-				setProfs([...profs, response.data]);
+				setAdmins([...admins, response.data]);
 			} else if (response.status === 404) {
-				console.log("Faculty or department not found");
+				console.log("Faculty not found");
 			}
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
-	const handleUpdate = async (id, prof) => {
+	const handleUpdate = async (id, admin) => {
 		try {
 			const response = await axios.put(
-				`https://localhost:7097/api/professors/${id}
+				`https://localhost:7097/api/faculities/${facultyId}/admins/${id}
 `,
 				{
-					firstName: prof.firstName,
-					lastName: prof.lastName,
-					email: prof.email,
-					phoneNumber: prof.phoneNumber,
+					firstName: admin.firstName,
+					lastName: admin.lastName,
+					email: admin.email,
+					phoneNumber: admin.phoneNumber,
 				},
 			);
 
 			console.log(response.status);
 
 			if (response.status === 204) {
-				const newProfs = profs.map((profe) => {
-					if (profe.id === editingProf.id) {
-						return { ...profe, ...prof };
+				const newAdmins = admins.map((ad) => {
+					if (ad.id === editingAdmin.id) {
+						return { ...ad, ...admin };
 					}
-					return profe;
+					return ad;
 				});
-
-				setProfs(newProfs);
+				console.log(newAdmins);
+				setAdmins(newAdmins);
 			}
 		} catch (error) {
 			console.log(error);
@@ -167,29 +179,27 @@ function Proffessor() {
 	const handleSave = () => {
 		const firstName = document.getElementById("firstName").value;
 		const lastName = document.getElementById("lastName").value;
-		const profEmail = document.getElementById("email").value;
-		const profPhone = document.getElementById("phoneNumber").value;
-
-		const profPassword =
+		const adminEmail = document.getElementById("email").value;
+		const adminPhone = document.getElementById("phoneNumber").value;
+		const password =
 			open.page !== "edit"
 				? document.getElementById("password").value
 				: "";
 
-		const newProf = {
-			//id: profs.length + 1,
+		const newAdmin = {
+			//id: admins.length + 1,
 			firstName: firstName,
 			lastName: lastName,
 			fullName: firstName + " " + lastName,
-			email: profEmail,
-			phoneNumber: profPhone,
-
-			password: profPassword,
+			email: adminEmail,
+			phoneNumber: adminPhone,
+			password: password,
 		};
 
-		if (editingProf === null) {
-			handleAdd(newProf);
+		if (editingAdmin === null) {
+			handleAdd(newAdmin);
 		} else {
-			handleUpdate(editingProf.id, newProf);
+			handleUpdate(editingAdmin.id, newAdmin);
 		}
 		handleClose();
 	};
@@ -197,12 +207,12 @@ function Proffessor() {
 	const handleDelete = async (id) => {
 		try {
 			const response = await axios.delete(
-				`https://localhost:7097/api/professors/${id}
+				`https://localhost:7097/api/faculities/${facultyId}/admins/${id}
 `,
 			);
 			if (response.status === 204) {
-				const deletedprof = profs.filter((prof) => prof.id !== id);
-				setProfs(deletedprof);
+				const newAdmins = admins.filter((admin) => admin.id !== id);
+				setAdmins(newAdmins);
 			}
 		} catch (error) {
 			console.log(error);
@@ -227,36 +237,18 @@ function Proffessor() {
 			},
 		},
 	];
-
-	const facultyId = "D0552B49-6E7D-4CED-8A30-62CE8066A2D4";
-
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const response = await axios.get(
-					`https://localhost:7097/api/faculities/${facultyId}/professors`,
-				);
-				setProfs(response.data);
-			} catch (error) {
-				console.log(error);
-			}
-		};
-
-		fetchData();
-	}, []);
 	return (
 		<Container>
 			<Table>
 				<div className="subjects">
 					<div className="headers">
-						<h1>Professors</h1>
+						<h1>Admins</h1>
 						<AddButton onClick={handleClickOpen}>Add</AddButton>
 					</div>
 					<div>
 						<DataTable
-							//
 							columns={[...columns]}
-							data={profs}
+							data={admins}
 							customStyles={customStyles}
 							pagination
 							dense
@@ -269,13 +261,7 @@ function Proffessor() {
 				onSubmit={handleSave}
 				open={open.status}
 				onClose={handleClose}>
-				<DialogTitle>
-					{open.page === "edit"
-						? "Edit Professor"
-						: open.page === "add"
-						? "Add Professor"
-						: null}
-				</DialogTitle>
+				<DialogTitle>Admin Information</DialogTitle>
 				<DialogContent>
 					<TextField
 						autoFocus
@@ -285,7 +271,9 @@ function Proffessor() {
 						type="name"
 						fullWidth
 						variant="standard"
-						defaultValue={editingProf ? editingProf.firstName : ""}
+						defaultValue={
+							editingAdmin ? editingAdmin.firstName : ""
+						}
 					/>
 					<TextField
 						autoFocus
@@ -295,8 +283,9 @@ function Proffessor() {
 						type="name"
 						fullWidth
 						variant="standard"
-						defaultValue={editingProf ? editingProf.lastName : ""}
+						defaultValue={editingAdmin ? editingAdmin.lastName : ""}
 					/>
+
 					<TextField
 						autoFocus
 						margin="dense"
@@ -305,7 +294,7 @@ function Proffessor() {
 						type="email"
 						fullWidth
 						variant="standard"
-						defaultValue={editingProf ? editingProf.email : ""}
+						defaultValue={editingAdmin ? editingAdmin.email : ""}
 					/>
 
 					<TextField
@@ -317,10 +306,9 @@ function Proffessor() {
 						fullWidth
 						variant="standard"
 						defaultValue={
-							editingProf ? editingProf.phoneNumber : ""
+							editingAdmin ? editingAdmin.phoneNumber : ""
 						}
 					/>
-
 					{open.page === "edit" ? (
 						""
 					) : (
@@ -333,7 +321,7 @@ function Proffessor() {
 							fullWidth
 							variant="standard"
 							defaultValue={
-								editingProf ? editingProf.password : ""
+								editingAdmin ? editingAdmin.password : ""
 							}
 						/>
 					)}
@@ -351,7 +339,7 @@ function Proffessor() {
 	);
 }
 
-export default Proffessor;
+export default FacultyAdmins;
 
 const Container = styled.section`
 	width: 85%;
@@ -391,6 +379,7 @@ const Table = styled.div`
 		}
 	}
 `;
+
 const AddButton = styled.button`
 	border: none;
 	background-color: #053344;

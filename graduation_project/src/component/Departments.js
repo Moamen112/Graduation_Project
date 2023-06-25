@@ -13,6 +13,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Departments() {
 	const [departments, setDepartments] = useState([]);
@@ -46,8 +48,10 @@ function Departments() {
 			if (response.status === 204) {
 				const newDepartments = departments.map((dep) => {
 					if (dep === editingDepartment) {
+						toast.success("Department has been updated");
 						return { ...dep, ...department };
 					}
+
 					return dep;
 				});
 
@@ -70,11 +74,12 @@ function Departments() {
 			console.log(response);
 			if (response.status === 201) {
 				setDepartments([...departments, response.data]);
+				toast.success("Department Created");
 			} else if (response.status === 404) {
 				console.log("University not found");
 			}
 		} catch (error) {
-			console.log(error);
+			return;
 		}
 	};
 
@@ -107,6 +112,7 @@ function Departments() {
 					(department) => department.id !== id,
 				);
 				setDepartments(newDepartments);
+				toast.success("Department Deleted");
 			}
 		} catch (error) {
 			console.log(error);

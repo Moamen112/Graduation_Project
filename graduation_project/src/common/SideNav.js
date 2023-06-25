@@ -52,7 +52,7 @@ const SideNav = (props) => {
 								</Link>
 							</NavLink>
 							<NavLink>
-								<Link>
+								<Link to={"faculty/admins"}>
 									<SettingsOutlinedIcon />
 									{props.size[0] > 750 && !props.reSize
 										? "Manage Admin"
@@ -79,10 +79,45 @@ const SideNav = (props) => {
 								</Link>
 							</NavLink>
 							<NavLink>
-								<Link>
+								<Link to={"university/admins"}>
 									<SettingsOutlinedIcon />
 									{props.size[0] > 750 && !props.reSize
 										? "Manage Admin"
+										: ""}
+								</Link>
+							</NavLink>
+						</>
+					) : props.page === "department" ? (
+						<>
+							<NavLink>
+								<Link to={"/department"}>
+									<HomeOutlinedIcon />
+									{props.size[0] > 750 && !props.reSize
+										? "Home"
+										: ""}
+								</Link>
+							</NavLink>
+							<NavLink>
+								<Link to={"department/subjects"}>
+									<LibraryBooksOutlinedIcon />
+									{props.size[0] > 750 && !props.reSize
+										? "Subjects"
+										: ""}
+								</Link>
+							</NavLink>
+							<NavLink>
+								<Link to={"department/professors"}>
+									<PermIdentityOutlinedIcon />
+									{props.size[0] > 750 && !props.reSize
+										? "Professors"
+										: ""}
+								</Link>
+							</NavLink>
+							<NavLink>
+								<Link to={"department/questionnaire"}>
+									<SettingsOutlinedIcon />
+									{props.size[0] > 750 && !props.reSize
+										? "Questionnaire"
 										: ""}
 								</Link>
 							</NavLink>

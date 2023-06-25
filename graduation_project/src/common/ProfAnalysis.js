@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import DataTable from "react-data-table-component";
 import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
-import axios from "axios";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -11,7 +11,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 
-function Proffessor() {
+function ProfAnalysis({ departmentId, facultyId }) {
 	const columns = [
 		{
 			name: "ID",
@@ -41,7 +41,6 @@ function Proffessor() {
 					<EditIcon
 						style={editSectionStyle}
 						onClick={() => handleEdit(row)}
-						sx={{ margin: "0px 7px" }}
 					/>
 					<CancelIcon
 						style={{ ...editSectionStyle, ...red }}
@@ -89,6 +88,19 @@ function Proffessor() {
 	const [editingProf, setEditingProf] = useState(null);
 	const [open, setOpen] = useState({ status: false, page: "" });
 
+	useEffect(() => {
+		axios
+			.get(
+				`https://localhost:7097/api/departments/${departmentId}/professors`,
+			)
+			.then((response) => {
+				setProfs(response.data);
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	}, []);
+
 	const handleClickOpen = () => {
 		setEditingProf(null);
 		setOpen({ ...open, status: true, page: "add" });
@@ -109,15 +121,14 @@ function Proffessor() {
 		setEditingProf(data);
 		setOpen({ ...open, status: true, page: page });
 	};
-	console.log(editingProf);
 
 	const handleAdd = async (prof) => {
 		try {
 			const response = await axios.post(
-				`https://localhost:7097/api/faculities/${facultyId}/departments/84796C48-D538-4954-A98A-622DC5C9325A/professors`,
+				`https://localhost:7097/api/faculities/${facultyId}/departments/${departmentId}/professors`,
 				{
-					firstName: prof.firstName,
-					lastName: prof.lastName,
+					firstName: prof.fullName.split(" ")[0],
+					lastName: prof.fullName.split(" ")[1],
 					email: prof.email,
 					phoneNumber: prof.phoneNumber,
 					password: prof.password,
@@ -135,13 +146,14 @@ function Proffessor() {
 	};
 
 	const handleUpdate = async (id, prof) => {
+		console.log(prof);
 		try {
 			const response = await axios.put(
 				`https://localhost:7097/api/professors/${id}
 `,
 				{
-					firstName: prof.firstName,
-					lastName: prof.lastName,
+					firstName: prof.fullName.split(" ")[0],
+					lastName: prof.fullName.split(" ")[1],
 					email: prof.email,
 					phoneNumber: prof.phoneNumber,
 				},
@@ -156,7 +168,6 @@ function Proffessor() {
 					}
 					return profe;
 				});
-
 				setProfs(newProfs);
 			}
 		} catch (error) {
@@ -165,11 +176,9 @@ function Proffessor() {
 	};
 
 	const handleSave = () => {
-		const firstName = document.getElementById("firstName").value;
-		const lastName = document.getElementById("lastName").value;
+		const profName = document.getElementById("name").value;
 		const profEmail = document.getElementById("email").value;
 		const profPhone = document.getElementById("phoneNumber").value;
-
 		const profPassword =
 			open.page !== "edit"
 				? document.getElementById("password").value
@@ -177,16 +186,16 @@ function Proffessor() {
 
 		const newProf = {
 			//id: profs.length + 1,
-			firstName: firstName,
-			lastName: lastName,
-			fullName: firstName + " " + lastName,
+			fullName: profName,
 			email: profEmail,
 			phoneNumber: profPhone,
-
 			password: profPassword,
 		};
 
+		console.log(newProf);
+
 		if (editingProf === null) {
+			console.log(newProf);
 			handleAdd(newProf);
 		} else {
 			handleUpdate(editingProf.id, newProf);
@@ -227,23 +236,6 @@ function Proffessor() {
 			},
 		},
 	];
-
-	const facultyId = "D0552B49-6E7D-4CED-8A30-62CE8066A2D4";
-
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const response = await axios.get(
-					`https://localhost:7097/api/faculities/${facultyId}/professors`,
-				);
-				setProfs(response.data);
-			} catch (error) {
-				console.log(error);
-			}
-		};
-
-		fetchData();
-	}, []);
 	return (
 		<Container>
 			<Table>
@@ -269,33 +261,23 @@ function Proffessor() {
 				onSubmit={handleSave}
 				open={open.status}
 				onClose={handleClose}>
-				<DialogTitle>
-					{open.page === "edit"
-						? "Edit Professor"
-						: open.page === "add"
-						? "Add Professor"
-						: null}
-				</DialogTitle>
+				<DialogTitle>Professor Information</DialogTitle>
 				<DialogContent>
 					<TextField
 						autoFocus
 						margin="dense"
-						id="firstName"
-						label="First name"
+						id="name"
+						label="Professor Name"
 						type="name"
 						fullWidth
 						variant="standard"
-						defaultValue={editingProf ? editingProf.firstName : ""}
-					/>
-					<TextField
-						autoFocus
-						margin="dense"
-						id="lastName"
-						label="Last name"
-						type="name"
-						fullWidth
-						variant="standard"
-						defaultValue={editingProf ? editingProf.lastName : ""}
+						defaultValue={
+							editingProf
+								? editingProf.firstName +
+								  " " +
+								  editingProf.lastName
+								: ""
+						}
 					/>
 					<TextField
 						autoFocus
@@ -351,19 +333,17 @@ function Proffessor() {
 	);
 }
 
-export default Proffessor;
+export default ProfAnalysis;
 
 const Container = styled.section`
 	width: 85%;
-	margin-left: 15%;
-	padding-top: 8%;
+	padding-top: 0%;
 	background-color: #cddee4;
-	min-height: 100vh;
 `;
 
 const Table = styled.div`
 	width: 100%;
-	padding: 0 6%;
+	padding: 0 2%;
 	height: 100%;
 
 	.subjects {
@@ -391,6 +371,7 @@ const Table = styled.div`
 		}
 	}
 `;
+
 const AddButton = styled.button`
 	border: none;
 	background-color: #053344;
@@ -404,6 +385,7 @@ const AddButton = styled.button`
 const editSectionStyle = {
 	fontSize: "25px",
 	color: "white",
+	marginLeft: "10px",
 	backgroundColor: "#053546",
 	borderRadius: "50%",
 	cursor: "pointer",

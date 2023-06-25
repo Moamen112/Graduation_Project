@@ -1,136 +1,96 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import DataTable, { createTheme } from "react-data-table-component";
-import CancelIcon from "@mui/icons-material/Cancel";
-
-createTheme(
-	"solarized",
-	{
-		text: {
-			primary: "#268bd2",
-			secondary: "#2aa198",
-		},
-		background: {
-			default: "#002b36",
-		},
-		context: {
-			background: "#cb4b16",
-			text: "#FFFFFF",
-		},
-		divider: {
-			default: "#073642",
-		},
-		action: {
-			button: "rgba(0,0,0,.54)",
-			hover: "rgba(0,0,0,.08)",
-			disabled: "rgba(0,0,0,.12)",
-		},
-	},
-	"dark",
-);
 
 function Faculty(props) {
-	const columns = [
-		{
-			name: "Title",
-			selector: (row) => row.title,
-			sortable: true,
-		},
-		{
-			name: "Year",
-			selector: (row) => row.year,
-			sortable: true,
-		},
-	];
-
-	const data = [
-		{
-			id: 1,
-			title: "Beetlejuice",
-			year: "1988",
-		},
-		{
-			id: 2,
-			title: "Ghostbusters",
-			year: "1984",
-		},
-		{
-			id: 2,
-			title: "sada",
-			year: "1984",
-		},
-		{
-			id: 2,
-			title: "Hello",
-			year: "1984",
-		},
-		{
-			id: 2,
-			title: "dadas",
-			year: "1984",
-		},
-	];
-
-	const customStyles = {
-		headRow: {
-			style: {
-				minHeight: "30px",
+	const department = {
+		data: [
+			{
+				name: "Computer Science",
+				subjects: [
+					{
+						name: "Computer Animation",
+						rate: 3.5,
+					},
+					{
+						name: "Database Management",
+						rate: 4.2,
+					},
+					{
+						name: "Artificial Intelligence",
+						rate: 4.8,
+					},
+				],
 			},
-		},
-
-		rows: {
-			style: {
-				minHeight: "30px",
-				// override the row height
+			{
+				name: "Electrical Engineering",
+				subjects: [
+					{
+						name: "Circuit Design",
+						rate: 4.0,
+					},
+					{
+						name: "Power Systems",
+						rate: 4.5,
+					},
+					{
+						name: "Digital Signal Processing",
+						rate: 4.3,
+					},
+				],
 			},
-		},
-		headCells: {
-			style: {
-				paddingLeft: "8px", // override the cell padding for head cells
-				paddingRight: "8px",
-				backgroundColor: "#063443",
-				color: "#FFF",
-				height: "30px",
+			{
+				name: "Mechanical Engineering",
+				subjects: [
+					{
+						name: "Thermodynamics",
+						rate: 4.2,
+					},
+					{
+						name: "Fluid Mechanics",
+						rate: 4.1,
+					},
+					{
+						name: "Structural Analysis",
+						rate: 4.4,
+					},
+				],
 			},
-		},
-		cells: {
-			style: {
-				paddingLeft: "8px", // override the cell padding for data cells
-				paddingRight: "8px",
+			{
+				name: "Civil Engineering",
+				subjects: [
+					{
+						name: "Structural Engineering",
+						rate: 4.6,
+					},
+					{
+						name: "Transportation Engineering",
+						rate: 4.2,
+					},
+					{
+						name: "Geotechnical Engineering",
+						rate: 4.5,
+					},
+				],
 			},
-		},
+			{
+				name: "Chemical Engineering",
+				subjects: [
+					{
+						name: "Thermodynamics",
+						rate: 4.3,
+					},
+					{
+						name: "Reaction Engineering",
+						rate: 4.1,
+					},
+					{
+						name: "Process Control",
+						rate: 4.4,
+					},
+				],
+			},
+		],
 	};
-
-	const [tableData, setTableData] = useState(data);
-
-	const handleDelete = (index) => {
-		const newData = [...tableData];
-		newData.splice(index, 1);
-		setTableData(newData);
-	};
-
-	const deleteButton = (cell, row, rowIndex) => {
-		return <CancelIcon onClick={() => handleDelete(rowIndex)} />;
-	};
-
-	const conditionalRowStyles = [
-		{
-			when: (row) => true,
-			style: {
-				"&:hover": {
-					cursor: "pointer",
-				},
-			},
-		},
-		{
-			when: (row) => true,
-			style: {
-				display: "flex",
-				justifyContent: "center",
-				alignItems: "center",
-			},
-		},
-	];
 
 	return (
 		<>
@@ -189,20 +149,29 @@ function Faculty(props) {
 							src="//plotly.com/~Muhammed_Zidan/80.embed"></iframe>
 					</div>
 					<div className="right-analysis">
-						<div className="upper-analysis">
-							<iframe
-								title="ss"
-								width="100%"
-								height="100%"
-								frameborder="0"
-								scrolling="no"
-								src="//plotly.com/~Muhammed_Zidan/129.embed"></iframe>
-						</div>
 						<div className="bottom-analysis">
-							<img
-								src="/imgs/analysis3.png"
-								alt="analysis1"
-							/>
+							<div className="dep-header">
+								<h4 className="dep-name">Department name</h4>
+								<h4 className="dep-rate">Problems</h4>
+							</div>
+
+							{department.data.map((dep) => (
+								<div className="dep-content">
+									<p className="dep-name">{dep.name}</p>
+									<div className="subj-problem">
+										<ul>
+											{dep.subjects.map((subj) => (
+												<>
+													<li>
+														{subj.name} -{" "}
+														{subj.rate}
+													</li>
+												</>
+											))}
+										</ul>
+									</div>
+								</div>
+							))}
 						</div>
 					</div>
 				</Analysis>
@@ -283,13 +252,13 @@ const Analysis = styled.div`
 	width: 100%;
 	display: flex;
 	justify-content: space-evenly;
-	flex-direction: column;
+	flex-direction: row;
 	gap: 20px;
 
 	.left-analysis {
-		width: 100%;
+		width: 65%;
 		background-color: #fff;
-		height: 650px;
+		height: 450px;
 		border-radius: 20px;
 		box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.2);
 
@@ -297,6 +266,7 @@ const Analysis = styled.div`
 			width: 100%;
 			height: 100%;
 			border: none;
+			border-radius: 10px;
 		}
 
 		img {
@@ -306,132 +276,84 @@ const Analysis = styled.div`
 	}
 
 	.right-analysis {
-		width: 100%;
+		width: 35%;
 		border-radius: 20px;
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		justify-content: space-between;
-
-		.upper-analysis {
-			background-color: #fff;
-			box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.2);
-			width: 48%;
-			height: 300px;
-			border-radius: 20px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-
-			iframe {
-				width: 100%;
-				height: 100%;
-				border: none;
-			}
-
-			img {
-				width: 100%;
-				height: 100%;
-			}
-		}
 
 		.bottom-analysis {
 			background-color: #fff;
 			box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.2);
-			width: 48%;
-			height: 300px;
-			border-radius: 20px;
+			width: 100%;
+			height: 450px;
+			padding: 10px 20px;
+			border-radius: 10px;
+			overflow: scroll;
 
-			img {
-				width: 100%;
-				height: 100%;
+			.dep-header {
+				display: flex;
+				justify-content: space-around;
+				padding: 20px 0px;
+
+				.dep-name {
+					width: 50%;
+					display: flex;
+					align-items: flex-start;
+					justify-content: flex-start;
+				}
+
+				.dep-rate {
+					width: 50%;
+				}
 			}
-		}
-	}
-`;
 
-const Tables = styled.div`
-	width: 100%;
-	display: flex;
-	justify-content: space-evenly;
-	padding: 0 5%;
-	margin-bottom: 20px;
-
-	.prof {
-		width: 30%;
-		box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.2);
-		max-height: 400px;
-		display: flex;
-		flex-direction: column;
-		background-color: #fff;
-		border-radius: 10px;
-		padding: 10px;
-
-		.headers {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			padding: 20px 5px;
-
-			button {
-				padding: 2px 10px;
-				background-color: #063443;
-				color: #fff;
-				border-radius: 10px;
+			.dep-content:last-child {
+				border: 0;
 			}
-		}
-	}
 
-	.depa {
-		width: 65%;
-		box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.2);
-		max-height: 400px;
-		display: flex;
-		flex-direction: column;
-		background-color: #fff;
-		border-radius: 10px;
-		padding: 10px;
+			.dep-content {
+				display: flex;
+				justify-content: space-around;
+				padding: 20px 0;
+				border-bottom: 1px solid #000;
 
-		.headers {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			padding: 20px 5px;
+				.dep-name {
+					width: 45%;
+					display: flex;
+					padding: 5px 10px;
+					font-size: 14px;
+					color: #041f2a;
+				}
 
-			button {
-				padding: 2px 10px;
-				background-color: #063443;
-				color: #fff;
-				border-radius: 10px;
-			}
-		}
-	}
-`;
+				.subj-problem {
+					width: 55%;
+					align-items: center;
+					justify-content: center;
+					padding: 0 10px;
+					font-size: 11px;
+					border-left: 1px solid #041f2a;
 
-const Subjects = styled.div`
-	width: 100%;
-	padding: 0 6%;
+					ul {
+						width: 100%;
+						list-style: none;
+						display: flex;
+						align-items: flex-start;
+						flex-direction: column;
+					}
 
-	.subjects {
-		width: 100%;
-		box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.2);
-		max-height: 400px;
-		display: flex;
-		flex-direction: column;
-		background-color: #fff;
-		border-radius: 20px;
-		padding: 10px;
+					li {
+						padding: 3px 0;
+						width: 100%;
+					}
 
-		.headers {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			padding: 20px 5px;
-
-			button {
-				padding: 2px 10px;
-				background-color: #063443;
-				color: #fff;
-				border-radius: 10px;
+					li::before {
+						content: "•";
+						font-size: 1.2em;
+						padding: 0 5px;
+						color: #063443;
+					}
+				}
 			}
 		}
 	}

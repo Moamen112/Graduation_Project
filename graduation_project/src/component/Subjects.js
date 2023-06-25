@@ -1,28 +1,68 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
-import subjectsData from "../common/SubjectsData";
-
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import axios from "axios";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 
 function Subjects() {
-	const [subjects, setSubjects] = useState(subjectsData);
-
+	const [subjects, setSubjects] = useState([]);
 	const [editingSubject, setEditingSubject] = useState(null);
-
 	const [open, setOpen] = useState(false);
+	const [profs, setProfs] = useState([]);
+	const [prof, setProf] = useState("");
+
+	const facultyId = "d0552b49-6e7d-4ced-8a30-62ce8066a2d4";
+	const departmentId = "84796c48-d538-4954-a98a-622dc5c9325a";
+
+	useEffect(() => {
+		axios
+			.get(
+				`https://localhost:7097/api/faculities/${facultyId}/departments/${departmentId}/subjects
+`,
+			)
+			.then((response) => {
+				if (response.status === 200) {
+					setSubjects(response.data);
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
+
+	useEffect(() => {
+		axios
+			.get(
+				`https://localhost:7097/api/departments/${departmentId}/professors`,
+			)
+			.then((response) => {
+				setProfs(response.data);
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	}, []);
 
 	const handleClickOpen = () => {
 		setEditingSubject(null);
 		setOpen(true);
+	};
+
+	const handleChange = (event) => {
+		setProf(event.target.value);
 	};
 
 	const handleClose = () => {
@@ -34,32 +74,92 @@ function Subjects() {
 		setOpen(true);
 	};
 
+	const handleAdd = async (subject) => {
+		try {
+			const response = await axios.post(
+				`https://localhost:7097/api/faculities/${facultyId}/departments/${departmentId}/subjects
+`,
+				{
+					name: subject.subjectName,
+					code: subject.code,
+					description: subject.description,
+					professorId: subject.professorId,
+				},
+			);
+
+			if (response.status === 201) {
+				setSubjects([...subjects, response.data]);
+			} else if (response.status === 404) {
+				console.log("Faculty or department not found");
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const handleUpdate = async (id, subject) => {
+		try {
+			const response = await axios.put(
+				`https://localhost:7097/api/faculities/${facultyId}/departments/${departmentId}/subjects/${id}
+`,
+				{
+					name: subject.subjectName,
+					description: subject.description,
+					code: subject.code,
+					professorId: subject.professorId,
+				},
+			);
+
+			if (response.status === 204) {
+				const newSubs = subjects.map((sub) => {
+					if (sub.id === editingSubject.id) {
+						return { ...sub, ...subject };
+					}
+					return sub;
+				});
+
+				setSubjects(newSubs);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	const handleSave = () => {
 		const subjectName = document.getElementById("name").value;
 		const subjectDescription = document.getElementById("description").value;
+		const subjectCode = document.getElementById("code").value;
+		const profs = prof;
 		const newSubject = {
-			id: subjects.length + 1,
-			name: subjectName,
+			//id: subjects.length + 1,
+			subjectName: subjectName,
+			code: subjectCode,
+			fullName: subjectName + " - " + subjectCode,
 			description: subjectDescription,
+			professorId: profs ? profs : editingSubject.professorId,
 		};
 
 		if (editingSubject === null) {
-			setSubjects([...subjects, newSubject]);
+			handleAdd(newSubject);
 		} else {
-			const newSubjects = subjects.map((subject) => {
-				if (subject === editingSubject) {
-					return { ...subject, ...newSubject };
-				}
-				return subject;
-			});
-			setSubjects(newSubjects);
+			handleUpdate(editingSubject.id, newSubject);
 		}
 		handleClose();
 	};
 
-	const handleDelete = (id) => {
-		const newSubjects = subjects.filter((subject) => subject.id !== id);
-		setSubjects(newSubjects);
+	const handleDelete = async (id) => {
+		try {
+			const response = await axios.delete(
+				`https://localhost:7097/api/faculities/${facultyId}/departments/${departmentId}/subjects/${id}
+`,
+			);
+			if (response.status === 204) {
+				const newSubs = subjects.filter((sub) => sub.id !== id);
+				setSubjects(newSubs);
+			}
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
@@ -67,10 +167,6 @@ function Subjects() {
 			<Content>
 				<Header>
 					<h2>Subjects</h2>
-					<AddButton onClick={handleClickOpen}>
-						<AddCircleOutlineIcon style={addStyle} />
-						Add
-					</AddButton>
 				</Header>
 
 				<SubList>
@@ -82,19 +178,15 @@ function Subjects() {
 							</SubImage>
 
 							<SubjectInfoStyle>
-								<h1>{subject.name}</h1>
+								<h1>{subject.fullName}</h1>
 								<p>{subject.description}</p>
 							</SubjectInfoStyle>
 
 							<EditSection>
-								<EditIcon
-									style={editSectionStyle}
-									onClick={() => handleEdit(subject)}
-								/>
-								<ClearOutlinedIcon
-									onClick={() => handleDelete(subject.id)}
-									style={{ ...editSectionStyle, ...red }}
-								/>
+								<StyledLink
+									to={`/department/subjects/${subject.id}`}>
+									See more
+								</StyledLink>
 							</EditSection>
 						</SubSection>
 					))}
@@ -115,9 +207,26 @@ function Subjects() {
 						type="text"
 						fullWidth
 						variant="standard"
-						defaultValue={editingSubject ? editingSubject.name : ""}
+						defaultValue={
+							editingSubject
+								? editingSubject.fullName.split(" -")[0]
+								: ""
+						}
 					/>
-
+					<TextField
+						autoFocus
+						margin="dense"
+						id="code"
+						label="Subject Code"
+						type="text"
+						fullWidth
+						variant="standard"
+						defaultValue={
+							editingSubject
+								? editingSubject.fullName.split("- ")[1]
+								: ""
+						}
+					/>
 					<TextField
 						autoFocus
 						margin="dense"
@@ -130,6 +239,27 @@ function Subjects() {
 							editingSubject ? editingSubject.description : ""
 						}
 					/>
+
+					<InputLabel id="demo-simple-select-label">
+						Professor
+					</InputLabel>
+					<Select
+						style={{ minWidth: "120px", marginTop: "8px" }}
+						labelId="demo-simple-select-label"
+						id="demo-simple-select"
+						label="Professor"
+						defaultValue={
+							editingSubject ? editingSubject.professorId : ""
+						}
+						onChange={handleChange}>
+						{profs.map((prof) => (
+							<MenuItem
+								key={prof.id}
+								value={prof.id}>
+								{prof.fullName}
+							</MenuItem>
+						))}
+					</Select>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleClose}>Cancel</Button>
@@ -146,9 +276,22 @@ function Subjects() {
 
 export default Subjects;
 
+const StyledLink = styled(Link)`
+	text-decoration: none;
+	background-color: #053546;
+	color: #fff;
+	padding: 8px 15px;
+	border-radius: 20px;
+	font-size: 14px;
+`;
+
 const SubjectInfoStyle = styled.div`
 	width: 70%;
 	text-align: left;
+
+	h1 {
+		font-size: 28px;
+	}
 `;
 
 const SubContainer = styled.div`
@@ -156,10 +299,10 @@ const SubContainer = styled.div`
 	text-align: left;
 	display: flex;
 	flex-direction: column;
-	width: 85%;
-	gap: 40px;
+	height: 100%;
 	margin-left: 15%;
 	padding-top: 8%;
+	min-height: 100vh;
 `;
 
 const Content = styled.div`
@@ -172,6 +315,7 @@ const Header = styled.div`
 	align-items: center;
 	text-align: left;
 	gap: 10%;
+	padding: 30px 20px;
 `;
 
 const AddButton = styled.button`
@@ -207,8 +351,8 @@ const SubList = styled.ul`
 `;
 
 const SubSection = styled.li`
-	width: 80%;
-	min-height: 150px;
+	width: 90%;
+	min-height: 170px;
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
@@ -224,8 +368,17 @@ const SubSection = styled.li`
 const EditSection = styled.div`
 	width: 10%;
 	display: flex;
-	align-items: center;
+	flex-direction: column;
+	align-items: right;
 	justify-content: space-around;
+	align-items: center;
+	gap: 10px;
+	margin-top: 20px;
+
+	div {
+		display: flex;
+		gap: 10px;
+	}
 `;
 
 const SubImage = styled.div`
@@ -236,14 +389,14 @@ const SubImage = styled.div`
 `;
 
 const SubImageStyle = {
-	fontSize: "55px",
+	fontSize: "75px",
 	backgroundColor: "#053546",
 	borderRadius: "50%",
 	padding: "20px",
 };
 
 const editSectionStyle = {
-	fontSize: "25px",
+	fontSize: "35px",
 	color: "white",
 	backgroundColor: "#053546",
 	borderRadius: "50%",

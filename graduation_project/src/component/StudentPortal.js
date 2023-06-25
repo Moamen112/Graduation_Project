@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ques from "../images/ques.jpg";
 import view from "../images/view.jpg";
@@ -13,23 +14,27 @@ function StudentPortal() {
 					<Ques>
 						<LeftSide style={imageStyle}>
 							<h2>View Questionnaire</h2>
-							<button style={ButtonStyle}>Let's Go</button>
+							<Link
+								to={"questionnaires"}
+								style={ButtonStyle}>
+								Let's Go
+							</Link>
 						</LeftSide>
 						<img
 							style={imageStyle}
 							src={ques}
-							alt="image"
+							alt="ques"
 						/>
 					</Ques>
 					<Profile>
 						<LeftSide style={imageStyle}>
 							<h2>View Your Profile</h2>
-							<button style={ButtonStyle}>Let's Go</button>
+							<Link style={ButtonStyle}>Let's Go</Link>
 						</LeftSide>
 						<img
 							style={imageStyle}
 							src={view}
-							alt="image"
+							alt="view"
 						/>
 					</Profile>
 				</Portals>
@@ -46,14 +51,19 @@ const imageStyle = {
 
 const LeftSide = styled.div`
 	width: 50%;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 `;
 
 const ButtonStyle = {
 	border: "none",
 	backgroundColor: "#063443",
 	color: "white",
+	width: "35%",
 	padding: "8px 15px",
 	cursor: "pointer",
+	textDecoration: "none",
 };
 
 const Profile = styled.div`
@@ -95,6 +105,7 @@ const ContainerBox = styled.div`
 	width: 80%;
 	height: 80%;
 	padding: 20px;
+	margin-top: 4%;
 	box-shadow: 15px 15px 10px 0 rgba(0, 0, 0, 0.5);
 `;
 

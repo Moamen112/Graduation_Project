@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import styled from "styled-components";
-import DataTable, { createTheme } from "react-data-table-component";
-import CancelIcon from "@mui/icons-material/Cancel";
-import { Container } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
+import axios from "axios";
 
-function University(props) {
-	const universityId = "86F697D4-A762-44D6-8322-2C08C66F94E4";
-	const [faculties, setFaculties] = useState([]);
+function DepartmentAdmin(props) {
+	const [subjects, setSubjects] = useState([]);
+
+	const facultyId = "d0552b49-6e7d-4ced-8a30-62ce8066a2d4";
+	const departmentId = "84796c48-d538-4954-a98a-622dc5c9325a";
 
 	useEffect(() => {
 		axios
 			.get(
-				`https://localhost:7097/api/universities/${universityId}/faculities`,
+				`https://localhost:7097/api/faculities/${facultyId}/departments/${departmentId}/subjects
+`,
 			)
 			.then((response) => {
 				if (response.status === 200) {
-					setFaculties(response.data);
+					setSubjects(response.data);
 				}
 			})
 			.catch((error) => {
@@ -27,7 +27,7 @@ function University(props) {
 
 	return (
 		<>
-			<UniContainer
+			<Container
 				style={{
 					...props.resizeStyle,
 					transition: "all ease-in-out 0.5s",
@@ -83,17 +83,19 @@ function University(props) {
 					</div>
 					<div className="right-analysis">
 						<div className="faculty-header">
-							<h4 className="fac-name">Faculty name</h4>
+							<h4 className="fac-name">Subject name</h4>
 							<h4 className="fac-rate">Rate</h4>
 							<h4>State</h4>
 						</div>
-						{faculties.map((fac) => (
+						{subjects.map((subj) => (
 							<div
 								className="faculty-content"
-								key={fac.id}>
-								<p className="fac-name">{fac.name}</p>
+								key={subj.id}>
+								<p className="fac-name">
+									{subj.fullName.split(" -")[0]}
+								</p>
 								<div className="star">
-									<p>{fac.rate}</p>
+									<p className="rt">{subj.rate}</p>
 									<StarIcon
 										sx={{
 											color: "orange",
@@ -101,23 +103,23 @@ function University(props) {
 										}}
 									/>
 								</div>
-								{fac.rate <= 5 && fac.rate > 4 ? (
+								{subj.rate <= 5 && subj.rate > 4 ? (
 									<span style={{ color: "#a0c15a" }}>
 										Exellent
 									</span>
-								) : fac.rate <= 4 && fac.rate > 3 ? (
+								) : subj.rate <= 4 && subj.rate > 3 ? (
 									<span style={{ color: "#add633" }}>
 										Very Good
 									</span>
-								) : fac.rate <= 3 && fac.rate > 2 ? (
+								) : subj.rate <= 3 && subj.rate > 2 ? (
 									<span style={{ color: "#ffd934" }}>
 										Fair
 									</span>
-								) : fac.rate <= 2 && fac.rate > 1 ? (
+								) : subj.rate <= 2 && subj.rate > 1 ? (
 									<span style={{ color: "	#ffb234" }}>
 										Bad{" "}
 									</span>
-								) : fac.rate <= 1 && fac.rate >= 0 ? (
+								) : subj.rate <= 1 && subj.rate >= 0 ? (
 									<span style={{ color: "red" }}>Poor</span>
 								) : (
 									" "
@@ -126,14 +128,14 @@ function University(props) {
 						))}
 					</div>
 				</Analysis>
-			</UniContainer>
+			</Container>
 		</>
 	);
 }
 
-export default University;
+export default DepartmentAdmin;
 
-const UniContainer = styled.section`
+const Container = styled.section`
 	width: 85%;
 	margin-left: 15%;
 	padding-top: 8%;
@@ -250,12 +252,16 @@ const Analysis = styled.div`
 				align-items: center;
 				width: 50px;
 				gap: 5px;
+
+				.rt {
+					width: 18px;
+				}
 			}
 
 			span {
 				color: #000;
 				font-weight: bold;
-				width: 70px;
+				width: 80px;
 				display: flex;
 				align-items: center;
 				justify-content: center;
@@ -279,6 +285,94 @@ const Analysis = styled.div`
 		img {
 			width: 100%;
 			height: 100%;
+		}
+	}
+`;
+
+const Tables = styled.div`
+	width: 100%;
+	display: flex;
+	justify-content: space-evenly;
+	padding: 0 5%;
+	margin-bottom: 20px;
+
+	.prof {
+		width: 30%;
+		box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.2);
+		max-height: 400px;
+		display: flex;
+		flex-direction: column;
+		background-color: #fff;
+		border-radius: 10px;
+		padding: 10px;
+
+		.headers {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 20px 5px;
+
+			button {
+				padding: 2px 10px;
+				background-color: #063443;
+				color: #fff;
+				border-radius: 10px;
+			}
+		}
+	}
+
+	.depa {
+		width: 65%;
+		box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.2);
+		max-height: 400px;
+		display: flex;
+		flex-direction: column;
+		background-color: #fff;
+		border-radius: 10px;
+		padding: 10px;
+
+		.headers {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 20px 5px;
+
+			button {
+				padding: 2px 10px;
+				background-color: #063443;
+				color: #fff;
+				border-radius: 10px;
+			}
+		}
+	}
+`;
+
+const Subjects = styled.div`
+	width: 100%;
+	padding: 0 6%;
+
+	.subjects {
+		width: 100%;
+		box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.2);
+		max-height: 400px;
+		display: flex;
+		flex-direction: column;
+		background-color: #fff;
+		border-radius: 20px;
+		padding: 10px;
+
+		.headers {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 20px 5px;
+
+			button {
+				padding: 2px 10px;
+				background-color: #063443;
+				color: #fff;
+				border-radius: 10px;
+			}
 		}
 	}
 `;

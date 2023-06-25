@@ -1,68 +1,113 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import main from "../images/main.jpg";
-
+import axios from "axios";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function StudentQues() {
-	const Item = styled(Paper)(() => ({
-		textAlign: "center",
-	}));
+	const [student, setStudent] = useState([]);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		axios
+			.get(
+				"https://localhost:7097/api/students/4097D913-ED6B-11ED-816E-105BADC84798/subjects",
+			)
+			.then((response) => {
+				setStudent(response.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
+
+	let studentId = "4097D913-ED6B-11ED-816E-105BADC84798";
+
+	const CheckSubmission = (questionnaireId) => {
+		const endpoint = `https://localhost:7097/api/questionnaires/${questionnaireId}/students/${studentId}/check`;
+
+		axios
+			.get(endpoint)
+			.then((response) => {
+				if (response.response.status === 400) {
+					console.log(response.response.message); // Display message in console
+				} else {
+					navigate(`/student/questionnaires/${questionnaireId}`); // Navigate to the form route
+				}
+			})
+			.catch((error) => {
+				if (error.response && error.response.status === 400) {
+					// Handle specific error code (status 400)
+					toast.success(error.response.data.message); // Display message in console
+					return;
+				} else {
+					console.log("Error checking submission");
+				}
+			});
+	};
 
 	return (
 		<MainContainer>
 			<HeaderContainer>
-				<img src={main} />
+				<img
+					src={main}
+					alt="main"
+				/>
 				<h1>Student Questionnaires</h1>
 			</HeaderContainer>
 			<ContentContainer>
-				<Box sx={{ width: "80%" }}>
+				<Box sx={{ width: "65%" }}>
 					<Grid
 						container
-						rowSpacing={3}
+						rowSpacing={4}
 						columnSpacing={{ xs: 3, sm: 5, md: 25 }}>
-						<Grid
-							item
-							xs={6}>
-							<Item style={FontStyle}>
-								Computer Vision<span>01</span>
-							</Item>
-							<StyledButton>FILL IT</StyledButton>
-						</Grid>
-						<Grid
-							item
-							xs={6}>
-							<Item style={FontStyle}>
-								Network Analysis <span>02</span>
-							</Item>
-							<StyledButton>FILL IT</StyledButton>
-						</Grid>
-						<Grid
-							item
-							xs={6}>
-							<Item style={FontStyle}>
-								Embedded Systems <span>03</span>
-							</Item>
-							<StyledButton>FILL IT</StyledButton>
-						</Grid>
-						<Grid
-							item
-							xs={6}>
-							<Item style={FontStyle}>
-								Computer Graphics <span>04</span>
-							</Item>
-							<StyledButton>FILL IT</StyledButton>
-						</Grid>
-						<Grid
-							item
-							xs={6}>
-							<Item style={FontStyle}>
-								Mobile Computing <span>05</span>
-							</Item>
-							<StyledButton>FILL IT</StyledButton>
-						</Grid>
+						{student.length > 0 ? (
+							student.map((stu, index) => (
+								<Grid
+									item
+									xs={6}
+									key={stu.id}>
+									<Item style={FontStyle}>
+										{stu.fullName}
+										<span>0{index + 1}</span>
+									</Item>
+									{stu.questionnaire != null ? (
+										<StyledButton
+											style={{
+												backgroundColor: "#063443",
+											}}
+											onClick={() =>
+												CheckSubmission(
+													stu.questionnaire.id,
+												)
+											}>
+											Fill It
+										</StyledButton>
+									) : (
+										<StyledButton
+											style={{
+												color: "#fff",
+												backgroundColor:
+													"rgb(77 102 110)",
+											}}
+											disabled>
+											No Questionnaire
+										</StyledButton>
+									)}
+								</Grid>
+							))
+						) : (
+							<Grid
+								item
+								xs={12}>
+								No subjects
+							</Grid>
+						)}
 					</Grid>
 				</Box>
 			</ContentContainer>
@@ -72,9 +117,12 @@ function StudentQues() {
 
 export default StudentQues;
 
+const Item = styled(Paper)(() => ({
+	textAlign: "center",
+}));
+
 const StyledButton = styled.button`
 	border: none;
-	background-color: #063443;
 	color: white;
 	width: 100%;
 	padding: 8px 15px;
@@ -83,9 +131,11 @@ const StyledButton = styled.button`
 
 const FontStyle = {
 	color: "#063443",
-	fontSize: "1.5em",
+	fontSize: "1.2em",
+	padding: "10px 0",
 	display: "flex",
 	alignItems: "right",
+	width: "100%",
 	justifyContent: "space-between",
 };
 
@@ -93,14 +143,19 @@ const ContentContainer = styled.div`
 	margin-top: 3%;
 	color: #063443;
 	display: flex;
-	align-items: right;
-	justify-content: space-around;
+	align-items: center;
+	justify-content: center;
 `;
 
 const HeaderContainer = styled.div`
 	color: #063443;
 	height: 20%;
 	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: 30px;
 
 	img {
 		width: 100%;

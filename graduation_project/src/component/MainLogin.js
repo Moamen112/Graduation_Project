@@ -3,7 +3,7 @@ import styled from "styled-components";
 import admin from "../images/admin.png";
 import staff from "../images/staff.png";
 import student from "../images/student.png";
-import bg from "../images/b.jpeg";
+import bg from "../images/b.jpg";
 
 function MainLogin() {
 	return (
@@ -58,7 +58,7 @@ const Column = styled.div`
 	align-items: center;
 	text-align: center;
 	height: 100vh;
-	background-color: rgba(240, 240, 240, 0.6);
+	background-color: rgba(240, 240, 240, 0.2);
 `;
 
 const Image = styled.img`
@@ -72,11 +72,19 @@ const Title = styled.h2`
 `;
 
 const Button = styled.button`
-	border: none;
+	border: solid 3px #053344;
 	background-color: #053344;
+	font-size: 20px;
+	font-weight: bolder;
 	color: #fff;
 	padding: 15px 30px;
 	border-radius: 15px;
 	transition: background-color 0.2s ease-in-out;
 	cursor: pointer;
+
+	&:hover {
+		background-color: #fff;
+		color: #053344;
+		border: solid 3px #053344;
+	}
 `;

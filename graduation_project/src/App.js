@@ -17,6 +17,7 @@ import DepartmentAdmin from "./component/DepartmentAdmin";
 import LandingUni from "./component/LandingUni";
 import DepAnalysis from "./component/DepAnalysis";
 import MainLogin from "./component/MainLogin";
+import Login from "./component/Login";
 
 function App() {
 	const [reSize, setResize] = useState(false);
@@ -58,7 +59,7 @@ function App() {
 						exact
 						path="/"
 						element={
-							<MainLogin
+							<Login
 								reSize={reSize}
 								resizeStyle={handleReSizechange}
 							/>

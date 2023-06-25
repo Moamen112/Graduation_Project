@@ -27,8 +27,8 @@ function Login() {
 	return (
 		<BackgroundContainer>
 			<LoginContainer>
-				<Title>Login</Title>
 				<Form onSubmit={handleSubmit}>
+					<Title>Login</Title>
 					<Input
 						type="text"
 						name="email"
@@ -66,13 +66,12 @@ const BackgroundContainer = styled.div`
 
 const LoginContainer = styled.div`
 	width: max-content;
-	padding: 0 3rem;
+
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	height: 100vh;
-	background-color: rgba(255, 255, 255, 0.8);
 `;
 
 const Title = styled.h2`
@@ -85,6 +84,11 @@ const Form = styled.form`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
+	padding: 0 6rem;
+	height: 50vh;
+	background-color: rgba(255, 255, 255, 0.8);
+	border-radius: 20px;
 `;
 
 const Input = styled.input`

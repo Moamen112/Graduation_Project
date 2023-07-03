@@ -59,7 +59,7 @@ function App() {
 						exact
 						path="/"
 						element={
-							<Login
+							<MainLogin
 								reSize={reSize}
 								resizeStyle={handleReSizechange}
 							/>

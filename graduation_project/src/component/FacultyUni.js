@@ -6,18 +6,24 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { Container } from "@mui/material";
 import axios from "axios";
 import StarIcon from "@mui/icons-material/Star";
+import Cookies from "js-cookie";
 
 function FacultyUni(props) {
 	const { facultyId } = useParams();
 	const [data, setData] = useState({});
 	const [departments, setDepartments] = useState([]);
 
-	let universityId = "86F697D4-A762-44D6-8322-2C08C66F94E4";
+	let universityId = Cookies.get("universityId");
 	useEffect(() => {
 		axios
 			.get(
 				`https://localhost:7097/api/universities/${universityId}/faculities/${facultyId}
 `,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			)
 			.then((response) => {
 				setData(response.data);
@@ -32,6 +38,11 @@ function FacultyUni(props) {
 			.get(
 				`https://localhost:7097/api/universities/${universityId}/faculities/${facultyId}/departments
 `,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			)
 			.then((response) => {
 				if (response.status === 200) {
@@ -96,12 +107,12 @@ function FacultyUni(props) {
 						<div className="left-analysis">
 							<iframe
 								title="aa"
-								width="100%"
-								height="100%"
 								overflow="scroll"
 								scrolling="0"
 								frameborder="0"
-								src="//plotly.com/~Muhammed_Zidan/80.embed"></iframe>
+								src="https://plotly.com/~Muhammed_Zidan/378.embed"
+								height="525"
+								width="100%"></iframe>
 						</div>
 						<div className="right-analysis">
 							<div className="faculty-header">

@@ -16,6 +16,7 @@ import axios from "axios";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import Cookies from "js-cookie";
 
 function Subjects() {
 	const [subjects, setSubjects] = useState([]);
@@ -24,14 +25,18 @@ function Subjects() {
 	const [profs, setProfs] = useState([]);
 	const [prof, setProf] = useState("");
 
-	const facultyId = "d0552b49-6e7d-4ced-8a30-62ce8066a2d4";
-	const departmentId = "84796c48-d538-4954-a98a-622dc5c9325a";
+	const facultyId = Cookies.get("facultyId");
+	const departmentId = Cookies.get("departmentId");
 
 	useEffect(() => {
 		axios
 			.get(
-				`https://localhost:7097/api/faculities/${facultyId}/departments/${departmentId}/subjects
-`,
+				`https://localhost:7097/api/faculities/${facultyId}/departments/${departmentId}/subjects`,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			)
 			.then((response) => {
 				if (response.status === 200) {
@@ -47,6 +52,11 @@ function Subjects() {
 		axios
 			.get(
 				`https://localhost:7097/api/departments/${departmentId}/professors`,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			)
 			.then((response) => {
 				setProfs(response.data);
@@ -77,13 +87,17 @@ function Subjects() {
 	const handleAdd = async (subject) => {
 		try {
 			const response = await axios.post(
-				`https://localhost:7097/api/faculities/${facultyId}/departments/${departmentId}/subjects
-`,
+				`https://localhost:7097/api/faculties/${facultyId}/departments/${departmentId}/subjects`,
 				{
 					name: subject.subjectName,
 					code: subject.code,
 					description: subject.description,
 					professorId: subject.professorId,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
 				},
 			);
 
@@ -107,6 +121,11 @@ function Subjects() {
 					description: subject.description,
 					code: subject.code,
 					professorId: subject.professorId,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
 				},
 			);
 
@@ -152,6 +171,11 @@ function Subjects() {
 			const response = await axios.delete(
 				`https://localhost:7097/api/faculities/${facultyId}/departments/${departmentId}/subjects/${id}
 `,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			);
 			if (response.status === 204) {
 				const newSubs = subjects.filter((sub) => sub.id !== id);

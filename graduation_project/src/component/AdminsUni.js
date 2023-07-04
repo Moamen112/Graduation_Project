@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import DataTable from "react-data-table-component";
 import CancelIcon from "@mui/icons-material/Cancel";
+import Cookies from "js-cookie";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 import Button from "@mui/material/Button";
@@ -81,7 +82,7 @@ function AdminsUni() {
 	const [editingAdmin, setEditingAdmin] = useState(null);
 	const [open, setOpen] = useState({ status: false, page: "" });
 
-	const universityId = "86F697D4-A762-44D6-8322-2C08C66F94E4";
+	const universityId = Cookies.get("universityId");
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -89,6 +90,11 @@ function AdminsUni() {
 				const response = await axios.get(
 					`https://localhost:7097/api/universities/${universityId}/admins
 `,
+					{
+						headers: {
+							Authorization: `Bearer ${Cookies.get("token")}`,
+						},
+					},
 				);
 				setAdmins(response.data);
 			} catch (error) {
@@ -123,14 +129,18 @@ function AdminsUni() {
 	const handleAdd = async (admin) => {
 		try {
 			const response = await axios.post(
-				`https://localhost:7097/api/universities/${universityId}/admins
-`,
+				`https://localhost:7097/api/universities/${universityId}/admins`,
 				{
 					firstName: admin.firstName,
 					lastName: admin.lastName,
 					email: admin.email,
 					phoneNumber: admin.phoneNumber,
 					password: admin.password,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
 				},
 			);
 			console.log(response);
@@ -154,6 +164,11 @@ function AdminsUni() {
 					lastName: admin.lastName,
 					email: admin.email,
 					phoneNumber: admin.phoneNumber,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
 				},
 			);
 

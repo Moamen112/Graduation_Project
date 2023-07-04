@@ -17,13 +17,14 @@ import Subjects from "./Subjects";
 import Proffessor from "./Proffessor";
 import ProfAnalysis from "../common/ProfAnalysis";
 import SubAnalysis from "../common/SubAnalysis";
+import Cookies from "js-cookie";
 
 function DepAnalysis() {
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [departmentName, setDepartmentName] = useState("Departments");
 	const [response, setResponse] = useState(null);
-	const universityId = "86F697D4-A762-44D6-8322-2C08C66F94E4";
-	const facultyId = "d0552b49-6e7d-4ced-8a30-62ce8066a2d4";
+	const universityId = Cookies.get("universityId");
+	const facultyId = Cookies.get("facultyId");
 	const { departmentId } = useParams();
 
 	useEffect(() => {
@@ -31,6 +32,11 @@ function DepAnalysis() {
 			try {
 				const res = await axios.get(
 					`https://localhost:7097/api/universities/${universityId}/faculities/${facultyId}/departments/${departmentId}`,
+					{
+						headers: {
+							Authorization: `Bearer ${Cookies.get("token")}`,
+						},
+					},
 				);
 				setResponse(res.data);
 			} catch (error) {
@@ -67,12 +73,12 @@ function DepAnalysis() {
 				<div className="frame">
 					<iframe
 						title="aa"
-						width="100%"
-						height="100%"
 						overflow="scroll"
 						scrolling="0"
 						frameborder="0"
-						src="//plotly.com/~Muhammed_Zidan/80.embed"></iframe>
+						src="https://plotly.com/~Muhammed_Zidan/376.embed"
+						height="525"
+						width="100%"></iframe>
 				</div>
 			</FrameContainer>
 			<Dialog
@@ -114,7 +120,10 @@ function DepAnalysis() {
 					<Grid
 						item
 						xs={12}>
-						<ProfAnalysis departmentId={departmentId} />
+						<ProfAnalysis
+							facultyId={facultyId}
+							departmentId={departmentId}
+						/>
 					</Grid>
 				</Grid>
 			</Box>

@@ -9,6 +9,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Cookies from "js-cookie";
 
 function ProfessorHome(props) {
 	const [expanded, setExpanded] = React.useState(false);
@@ -18,48 +19,20 @@ function ProfessorHome(props) {
 	const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
 	const day = currentDate.getDate().toString().padStart(2, "0");
 	const formattedDate = `${year}-${month}-${day}`;
+	const [analysisData, setAnalysisData] = useState([]);
 
-	const analysisData = [
-		{
-			question:
-				"To what extent was the instructor organized, well prepared, and use class time efficiently?",
-			answer: "The instructor was highly organized, well-prepared, and effectively utilized class time.",
-			recommendation:
-				"Continuing to prioritize organization and efficient use of class time will enhance the learning experience for students.",
-			isPositive: true, // Indicate whether the analysis is positive or negative
-		},
-		{
-			question:
-				"To what extent did the instructor present course material in a clear manner that facilitated understanding?",
-			answer: "The instructor presented the course material in a clear and concise manner, making it easy to comprehend.",
-			recommendation:
-				"Maintaining the clarity in course material delivery will contribute to better student engagement and learning outcomes.",
-			isPositive: true,
-		},
-		{
-			question:
-				"To what extent did the instructor treat students with respect?",
-			answer: "The instructor consistently treated students with respect and created an inclusive learning environment.",
-			recommendation:
-				"Sustaining a respectful and inclusive approach towards students will foster a positive classroom atmosphere.",
-			isPositive: true,
-		},
-		{
-			question:
-				"To what extent did exams and assignments reflect the course content?",
-			answer: "The exams and assignments poorly reflected the course content, causing confusion among students.",
-			recommendation:
-				"Revising the exams and assignments to align more closely with the course content will improve student understanding and performance.",
-			isPositive: false,
-		},
-		// Add more question objects here
-	];
+	const professorId = Cookies.get("userId");
 
 	useEffect(() => {
 		axios
 			.get(
-				`https://localhost:7097/api/professors/706870e9-e373-11ed-b719-105badc84798
+				`https://localhost:7097/api/professors/${professorId}
 `,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			)
 			.then((response) => {
 				setProf(response.data);
@@ -69,11 +42,30 @@ function ProfessorHome(props) {
 			});
 	}, []);
 
-	console.log(prof);
+	useEffect(() => {
+		axios
+			.get(
+				`https://localhost:7097/api/professors/${professorId}/recommendations
+`,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
+			)
+			.then((response) => {
+				setAnalysisData(response.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
+
 	const handleChange = (panel) => (event, isExpanded) => {
 		setExpanded(isExpanded ? panel : false);
 	};
 
+	console.log(analysisData);
 	return (
 		<>
 			<Container
@@ -82,18 +74,18 @@ function ProfessorHome(props) {
 					transition: "all ease-in-out 0.5s",
 				}}>
 				<Header>
-					<p>{`Welcome, ${prof.fullName} . rate: ${prof.rate}`}</p>
+					<p>{`Welcome, ${prof.fullName} | rate: ${prof.rate}`}</p>
 				</Header>
 				<Analysis>
 					<div className="left-analysis">
 						<iframe
 							title="aa"
-							width="100%"
-							height="100%"
 							overflow="scroll"
 							scrolling="0"
-							frameborder="0"
-							src="//plotly.com/~Muhammed_Zidan/80.embed"></iframe>
+							frameBorder="0"
+							src="https://plotly.com/~Muhammed_Zidan/374.embed"
+							height="525"
+							width="100%"></iframe>
 					</div>
 					<div className="right-analysis">
 						<div className="according">
@@ -205,18 +197,26 @@ function ProfessorHome(props) {
 											<div className="system-recommenditon">
 												<ul>
 													<li>
-														<h4
+														<h3
 															style={{
-																color: data.isPositive
-																	? "#a0c15a"
-																	: "000",
+																color: "#a0c15a",
 															}}>
-															Recommendation
-															{++index}:
-															<span>
-																{data.answer}
-															</span>
-														</h4>
+															{data.subjectName}
+														</h3>
+														{data.content.map(
+															(rec) => (
+																<h4
+																	style={{
+																		color: "red",
+																	}}>
+																	Recommendation
+																	{++index}:
+																	<span>
+																		{rec}
+																	</span>
+																</h4>
+															),
+														)}
 													</li>
 												</ul>
 											</div>
@@ -352,7 +352,7 @@ const Analysis = styled.div`
 				overflow: scroll;
 
 				.system-recommenditon:first-child {
-					padding-top: 3%;
+					padding-top: 45%;
 				}
 
 				.system-recommenditon:last-child {
@@ -370,6 +370,13 @@ const Analysis = styled.div`
 						list-style: none;
 
 						li {
+							h3 {
+								display: flex;
+								padding: 3px 10px;
+								width: 100%;
+								font-size: 20px;
+							}
+
 							h4 {
 								display: flex;
 								padding: 3px 10px;

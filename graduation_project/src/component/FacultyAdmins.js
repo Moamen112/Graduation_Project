@@ -10,6 +10,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import Cookies from "js-cookie";
 
 function FacultyAdmins() {
 	const columns = [
@@ -85,13 +86,18 @@ function FacultyAdmins() {
 	const [editingAdmin, setEditingAdmin] = useState(null);
 	const [open, setOpen] = useState({ status: false, page: "" });
 
-	const facultyId = "D0552B49-6E7D-4CED-8A30-62CE8066A2D4";
+	const facultyId = Cookies.get("facultyId");
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				const response = await axios.get(
 					`https://localhost:7097/api/faculities/${facultyId}/admins`,
+					{
+						headers: {
+							Authorization: `Bearer ${Cookies.get("token")}`,
+						},
+					},
 				);
 				setAdmins(response.data);
 			} catch (error) {
@@ -134,6 +140,11 @@ function FacultyAdmins() {
 					phoneNumber: admin.phoneNumber,
 					password: admin.password,
 				},
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			);
 			console.log(response);
 			if (response.status === 201) {
@@ -156,6 +167,11 @@ function FacultyAdmins() {
 					lastName: admin.lastName,
 					email: admin.email,
 					phoneNumber: admin.phoneNumber,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
 				},
 			);
 
@@ -209,6 +225,11 @@ function FacultyAdmins() {
 			const response = await axios.delete(
 				`https://localhost:7097/api/faculities/${facultyId}/admins/${id}
 `,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			);
 			if (response.status === 204) {
 				const newAdmins = admins.filter((admin) => admin.id !== id);

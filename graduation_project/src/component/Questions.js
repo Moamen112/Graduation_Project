@@ -10,20 +10,25 @@ import axios from "axios";
 import TextField from "@mui/material/TextField";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
 
 function Questions(props) {
 	const [subject, setSubject] = React.useState("");
 	const [date, setDate] = useState("");
 	const [endDate, setEndDate] = useState("");
 	const [subjects, setSubjects] = useState([]);
-
-	const facultyId = "d0552b49-6e7d-4ced-8a30-62ce8066a2d4";
+	const facultyId = Cookies.get("facultyId");
 
 	useEffect(() => {
 		axios
 			.get(
 				`https://localhost:7097/api/faculities/${facultyId}/departments/${departmentId}/subjects
 `,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			)
 			.then((response) => {
 				if (response.status === 200) {
@@ -46,17 +51,20 @@ function Questions(props) {
 	const handleEndDateChange = (event) => {
 		setEndDate(event.target.value);
 	};
-	const departmentId = "84796c48-d538-4954-a98a-622dc5c9325a";
-
+	const departmentId = Cookies.get("departmentId");
 	const handleCreate = async (id, start, end) => {
 		try {
 			const response = await axios.post(
-				`https://localhost:7097/api/departments/${departmentId}/subjects/${id}/questionnaires
-`,
+				`https://localhost:7097/api/departments/${departmentId}/subjects/${id}/questionnaires`,
 				{
 					title: "Week 1's Questionnaire",
 					createdAt: start,
 					endDate: end,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
 				},
 			);
 

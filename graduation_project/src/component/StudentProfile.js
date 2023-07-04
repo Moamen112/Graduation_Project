@@ -3,7 +3,6 @@ import styled from "styled-components";
 import main from "../images/main.jpg";
 import profile from "../images/profile.jpg";
 import PersonIcon from "@mui/icons-material/Person";
-
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";

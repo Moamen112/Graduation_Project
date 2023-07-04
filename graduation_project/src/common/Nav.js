@@ -56,6 +56,11 @@ function Nav(props) {
 			.get(
 				`https://localhost:7097/api/professors/706870e9-e373-11ed-b719-105badc84798
 `,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			)
 			.then((response) => {
 				setProf(response.data);
@@ -143,16 +148,19 @@ function Nav(props) {
 					</Box>
 				</Info>
 				{props.page === "professor" || props.page === "student" ? (
-					<h1>
+					<div className="for-logo">
 						<Link
 							to={props.page}
 							style={{
 								textDecoration: "none",
 								color: "#000",
 							}}>
-							Logo
+							<img
+								src="/imgs/logoDark.png"
+								alt="logo"
+							/>
 						</Link>
-					</h1>
+					</div>
 				) : (
 					<HideNav onClick={props.handleClick}>
 						<ArrowLeftOutlinedIcon
@@ -189,8 +197,18 @@ const Container = styled.nav`
 	justify-content: space-between;
 	z-index: 9999;
 
-	h1 {
-		padding: 20px;
+	.for-logo {
+		width: 10%;
+		height: 70%;
+
+		background-image: url("/imgs/logo11.svg");
+		background-position: cover;
+		background-repeat: no-repeat;
+
+		img {
+			width: 70%;
+			height: 100%;
+		}
 	}
 `;
 

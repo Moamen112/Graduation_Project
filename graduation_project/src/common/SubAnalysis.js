@@ -4,17 +4,16 @@ import styled from "styled-components";
 import DataTable from "react-data-table-component";
 import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
-
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import Cookies from "js-cookie";
 
 function SubAnalysis(props) {
 	const columns = [
@@ -132,6 +131,11 @@ function SubAnalysis(props) {
 		axios
 			.get(
 				`https://localhost:7097/api/departments/${props.departmentId}/professors`,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			)
 			.then((response) => {
 				setProfs(response.data);
@@ -149,6 +153,11 @@ function SubAnalysis(props) {
 		const fetchData = async () => {
 			const result = await axios.get(
 				`https://localhost:7097/api/faculities/${props.facultyId}/departments/${props.departmentId}/subjects`,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			);
 			setSubs(result.data);
 		};
@@ -180,6 +189,11 @@ function SubAnalysis(props) {
 					description: subject.description,
 					professorId: subject.professorId,
 				},
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			);
 
 			if (response.status === 201) {
@@ -202,6 +216,11 @@ function SubAnalysis(props) {
 					description: subject.description,
 					code: subject.code,
 					professorId: subject.professorId,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
 				},
 			);
 
@@ -247,6 +266,11 @@ function SubAnalysis(props) {
 			const response = await axios.delete(
 				`https://localhost:7097/api/faculities/${props.facultyId}/departments/${props.departmentId}/subjects/${id}
 `,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			);
 			if (response.status === 204) {
 				const newSubs = subs.filter((sub) => sub.id !== id);

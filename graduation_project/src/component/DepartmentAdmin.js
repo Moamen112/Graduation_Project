@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import Cookies from "js-cookie";
 import StarIcon from "@mui/icons-material/Star";
 import axios from "axios";
 
 function DepartmentAdmin(props) {
 	const [subjects, setSubjects] = useState([]);
-
-	const facultyId = "d0552b49-6e7d-4ced-8a30-62ce8066a2d4";
-	const departmentId = "84796c48-d538-4954-a98a-622dc5c9325a";
+	const facultyId = Cookies.get("facultyId");
+	const departmentId = Cookies.get("departmentId");
 
 	useEffect(() => {
 		axios
 			.get(
-				`https://localhost:7097/api/faculities/${facultyId}/departments/${departmentId}/subjects
-`,
+				`https://localhost:7097/api/faculities/${facultyId}/departments/${departmentId}/subjects`,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			)
 			.then((response) => {
 				if (response.status === 200) {
@@ -74,12 +78,12 @@ function DepartmentAdmin(props) {
 					<div className="left-analysis">
 						<iframe
 							title="aa"
-							width="100%"
-							height="100%"
 							overflow="scroll"
 							scrolling="0"
-							frameborder="0"
-							src="//plotly.com/~Muhammed_Zidan/80.embed"></iframe>
+							frameBorder="0"
+							src="https://plotly.com/~Muhammed_Zidan/376.embed"
+							height="525"
+							width="100%"></iframe>
 					</div>
 					<div className="right-analysis">
 						<div className="faculty-header">

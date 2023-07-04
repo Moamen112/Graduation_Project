@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
 
 function StudentQues() {
 	const [student, setStudent] = useState([]);
@@ -15,9 +16,11 @@ function StudentQues() {
 
 	useEffect(() => {
 		axios
-			.get(
-				"https://localhost:7097/api/students/4097D913-ED6B-11ED-816E-105BADC84798/subjects",
-			)
+			.get(`https://localhost:7097/api/students/${studentId}/subjects`, {
+				headers: {
+					Authorization: `Bearer ${Cookies.get("token")}`,
+				},
+			})
 			.then((response) => {
 				setStudent(response.data);
 			})
@@ -26,24 +29,30 @@ function StudentQues() {
 			});
 	}, []);
 
-	let studentId = "4097D913-ED6B-11ED-816E-105BADC84798";
+	let studentId = Cookies.get("userId");
+	console.log(studentId);
 
 	const CheckSubmission = (questionnaireId) => {
+		console.log(questionnaireId);
 		const endpoint = `https://localhost:7097/api/questionnaires/${questionnaireId}/students/${studentId}/check`;
 
 		axios
-			.get(endpoint)
+			.get(endpoint, {
+				headers: {
+					Authorization: `Bearer ${Cookies.get("token")}`,
+				},
+			})
 			.then((response) => {
-				if (response.response.status === 400) {
-					console.log(response.response.message); // Display message in console
+				/*if (response.response.status === 400) {
+					console.log(response.response.message);
 				} else {
 					navigate(`/student/questionnaires/${questionnaireId}`); // Navigate to the form route
-				}
+				}*/
 			})
 			.catch((error) => {
 				if (error.response && error.response.status === 400) {
 					// Handle specific error code (status 400)
-					toast.success(error.response.data.message); // Display message in console
+					navigate(`/student/questionnaires/${questionnaireId}`);
 					return;
 				} else {
 					console.log("Error checking submission");
@@ -166,4 +175,5 @@ const MainContainer = styled.div`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+	padding-bottom: 30px;
 `;

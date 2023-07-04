@@ -10,6 +10,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import Cookies from "js-cookie";
 
 function ProfAnalysis({ departmentId, facultyId }) {
 	const columns = [
@@ -92,6 +93,11 @@ function ProfAnalysis({ departmentId, facultyId }) {
 		axios
 			.get(
 				`https://localhost:7097/api/departments/${departmentId}/professors`,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			)
 			.then((response) => {
 				setProfs(response.data);
@@ -133,6 +139,11 @@ function ProfAnalysis({ departmentId, facultyId }) {
 					phoneNumber: prof.phoneNumber,
 					password: prof.password,
 				},
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			);
 			console.log(response);
 			if (response.status === 201) {
@@ -156,6 +167,11 @@ function ProfAnalysis({ departmentId, facultyId }) {
 					lastName: prof.fullName.split(" ")[1],
 					email: prof.email,
 					phoneNumber: prof.phoneNumber,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
 				},
 			);
 
@@ -208,6 +224,11 @@ function ProfAnalysis({ departmentId, facultyId }) {
 			const response = await axios.delete(
 				`https://localhost:7097/api/professors/${id}
 `,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			);
 			if (response.status === 204) {
 				const deletedprof = profs.filter((prof) => prof.id !== id);

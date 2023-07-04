@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import main from "../images/main.jpg";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 function SubjectQues() {
 	const [ratings, setRatings] = useState(Array(9).fill(0));
@@ -61,13 +62,13 @@ function SubjectQues() {
 		newRatings[index] = value;
 		setRatings(newRatings);
 	};
-	console.log(ratings);
+	const studentId = Cookies.get("userId");
 
 	const handleSubmit = async (event, id, start, end) => {
 		event.preventDefault();
 		try {
 			const response = await axios.post(
-				`https://localhost:7097/api/students/4097D913-ED6B-11ED-816E-105BADC84798/questionnaire/${questionnairId}/submit
+				`https://localhost:7097/api/students/${studentId}/questionnaire/${questionnairId}/submit
 `,
 				{
 					instructorEfficiency: ratings[0],
@@ -79,6 +80,11 @@ function SubjectQues() {
 					instructorRecommendation: ratings[6],
 					courseRecommendation: ratings[7],
 					courseMarket: ratings[8],
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
 				},
 			);
 

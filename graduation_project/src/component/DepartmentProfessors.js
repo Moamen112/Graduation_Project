@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import DataTable from "react-data-table-component";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 function DepartmentProfessors() {
 	const columns = [
@@ -60,7 +61,7 @@ function DepartmentProfessors() {
 
 	const [profs, setProfs] = useState([]);
 
-	const departmentId = "84796C48-D538-4954-A98A-622DC5C9325A";
+	const departmentId = Cookies.get("departmentId");
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -68,6 +69,11 @@ function DepartmentProfessors() {
 				const response = await axios.get(
 					`https://localhost:7097/api/departments/${departmentId}/professors
 `,
+					{
+						headers: {
+							Authorization: `Bearer ${Cookies.get("token")}`,
+						},
+					},
 				);
 				setProfs(response.data);
 			} catch (error) {

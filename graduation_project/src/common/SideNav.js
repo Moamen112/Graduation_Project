@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Cookies, { remove, removeAll } from "js-cookie";
 import { useState, useEffect, useLayoutEffect } from "react";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import BorderAllOutlinedIcon from "@mui/icons-material/BorderAllOutlined";
@@ -8,8 +9,24 @@ import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import LibraryBooksOutlinedIcon from "@mui/icons-material/LibraryBooksOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { AuthContext } from "../Context/authProvider";
 
 const SideNav = (props) => {
+	const navigate = useNavigate();
+	const { handleLogout } = useContext(AuthContext);
+
+	const logout = () => {
+		handleLogout();
+		// Additional logout actions (e.g., navigate to login page)
+		Object.keys(Cookies.get()).forEach(function (cookieName) {
+			var neededAttributes = {
+				// Here you pass the same attributes that were used when the cookie was created
+				// and are required when removing the cookie
+			};
+			Cookies.remove(cookieName, neededAttributes);
+		});
+		navigate("/", { replace: true });
+	};
 	return props.page !== "landing" ? (
 		<>
 			<Container
@@ -18,7 +35,12 @@ const SideNav = (props) => {
 						? sideNavFun
 						: { transition: "all ease-in-out 0.5s" }
 				}>
-				<Logo>Logo</Logo>
+				<Logo>
+					<img
+						src="/imgs/logo1.svg"
+						alt="logo"
+					/>
+				</Logo>
 				<NavLinks
 					style={
 						props.reSize
@@ -28,7 +50,7 @@ const SideNav = (props) => {
 					{props.page === "faculty" || props.page === "" ? (
 						<>
 							<NavLink>
-								<Link to={"/"}>
+								<Link to={"/faculty"}>
 									<HomeOutlinedIcon />
 									{props.size[0] > 750 && !props.reSize
 										? "Home"
@@ -125,9 +147,11 @@ const SideNav = (props) => {
 					) : null}
 				</NavLinks>
 				{props.size[0] > 750 && !props.reSize ? (
-					<LogoutButton>Logout</LogoutButton>
+					<LogoutButton onClick={logout}>Logout</LogoutButton>
 				) : (
-					<div className="logout-icon">
+					<div
+						className="logout-icon"
+						onClick={logout}>
 						<ExitToAppIcon />
 					</div>
 				)}
@@ -173,6 +197,11 @@ const Logo = styled.div`
 	font-size: 24px;
 	font-weight: bold;
 	background-color: #041f2a;
+
+	img {
+		width: 70%;
+		height: 70%;
+	}
 `;
 
 const NavLinks = styled.ul`

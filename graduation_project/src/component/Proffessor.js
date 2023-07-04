@@ -10,6 +10,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import Cookies from "js-cookie";
 
 function Proffessor() {
 	const columns = [
@@ -114,13 +115,18 @@ function Proffessor() {
 	const handleAdd = async (prof) => {
 		try {
 			const response = await axios.post(
-				`https://localhost:7097/api/faculities/${facultyId}/departments/84796C48-D538-4954-A98A-622DC5C9325A/professors`,
+				`https://localhost:7097/api/faculities/${facultyId}/departments/${departmentId}/professors`,
 				{
 					firstName: prof.firstName,
 					lastName: prof.lastName,
 					email: prof.email,
 					phoneNumber: prof.phoneNumber,
 					password: prof.password,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
 				},
 			);
 			console.log(response);
@@ -144,6 +150,11 @@ function Proffessor() {
 					lastName: prof.lastName,
 					email: prof.email,
 					phoneNumber: prof.phoneNumber,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
 				},
 			);
 
@@ -199,6 +210,11 @@ function Proffessor() {
 			const response = await axios.delete(
 				`https://localhost:7097/api/professors/${id}
 `,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			);
 			if (response.status === 204) {
 				const deletedprof = profs.filter((prof) => prof.id !== id);
@@ -228,13 +244,19 @@ function Proffessor() {
 		},
 	];
 
-	const facultyId = "D0552B49-6E7D-4CED-8A30-62CE8066A2D4";
+	const facultyId = Cookies.get("facultyId");
+	const departmentId = Cookies.get("departmentId");
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				const response = await axios.get(
 					`https://localhost:7097/api/faculities/${facultyId}/professors`,
+					{
+						headers: {
+							Authorization: `Bearer ${Cookies.get("token")}`,
+						},
+					},
 				);
 				setProfs(response.data);
 			} catch (error) {

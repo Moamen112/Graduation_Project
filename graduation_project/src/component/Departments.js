@@ -15,6 +15,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
 
 function Departments() {
 	const [departments, setDepartments] = useState([]);
@@ -44,6 +45,11 @@ function Departments() {
 					name: department.name,
 					description: department.description,
 				},
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			);
 			if (response.status === 204) {
 				const newDepartments = departments.map((dep) => {
@@ -69,6 +75,11 @@ function Departments() {
 				{
 					name: deparment.name,
 					description: deparment.description,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
 				},
 			);
 			console.log(response);
@@ -106,6 +117,11 @@ function Departments() {
 		try {
 			const response = await axios.delete(
 				`https://localhost:7097/api/universities/${universityId}/faculities/${facultyID}/departments/${id}`,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			);
 			if (response.status === 204) {
 				const newDepartments = departments.filter(
@@ -119,15 +135,20 @@ function Departments() {
 		}
 	};
 
-	const universityId = "86F697D4-A762-44D6-8322-2C08C66F94E4";
+	const universityId = Cookies.get("universityId");
 
-	const facultyID = "d0552b49-6e7d-4ced-8a30-62ce8066a2d4";
+	const facultyID = Cookies.get("facultyId");
 
 	useEffect(() => {
 		axios
 			.get(
 				`https://localhost:7097/api/universities/${universityId}/faculities/${facultyID}/departments
 `,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			)
 			.then((response) => {
 				if (response.status === 200) {

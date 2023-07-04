@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 function Faculty(props) {
 	const department = {
@@ -92,6 +94,33 @@ function Faculty(props) {
 		],
 	};
 
+	const [conclousin, setConclousin] = useState({});
+
+	const universityId = Cookies.get("universityId");
+	const facultyId = Cookies.get("facultyId");
+
+	useEffect(() => {
+		axios
+			.get(
+				`https://localhost:7097/api/universities/${universityId}/faculities/${facultyId}/departments/low-rate`,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
+			)
+			.then((response) => {
+				if (response.status === 200) {
+					setConclousin(response.data);
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
+
+	console.log(conclousin);
+
 	return (
 		<>
 			<Container
@@ -141,12 +170,12 @@ function Faculty(props) {
 					<div className="left-analysis">
 						<iframe
 							title="aa"
-							width="100%"
-							height="100%"
 							overflow="scroll"
 							scrolling="0"
 							frameborder="0"
-							src="//plotly.com/~Muhammed_Zidan/80.embed"></iframe>
+							src="https://plotly.com/~Muhammed_Zidan/378.embed"
+							height="525"
+							width="100%"></iframe>
 					</div>
 					<div className="right-analysis">
 						<div className="bottom-analysis">
@@ -155,23 +184,25 @@ function Faculty(props) {
 								<h4 className="dep-rate">Problems</h4>
 							</div>
 
-							{department.data.map((dep) => (
-								<div className="dep-content">
-									<p className="dep-name">{dep.name}</p>
-									<div className="subj-problem">
-										<ul>
-											{dep.subjects.map((subj) => (
-												<>
-													<li>
-														{subj.name} -{" "}
+							{conclousin &&
+								conclousin.length > 0 &&
+								conclousin.map((dep) => (
+									<div
+										className="dep-content"
+										key={dep.name}>
+										<p className="dep-name">{dep.name}</p>
+										<div className="subj-problem">
+											<ul>
+												{dep.subjects.map((subj) => (
+													<li key={subj.subjectName}>
+														{subj.subjectName} -{" "}
 														{subj.rate}
 													</li>
-												</>
-											))}
-										</ul>
+												))}
+											</ul>
+										</div>
 									</div>
-								</div>
-							))}
+								))}
 						</div>
 					</div>
 				</Analysis>
@@ -308,9 +339,9 @@ const Analysis = styled.div`
 				}
 			}
 
-			.dep-content:last-child {
+			/*.dep-content:last-child {
 				border: 0;
-			}
+			}*/
 
 			.dep-content {
 				display: flex;

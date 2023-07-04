@@ -8,66 +8,54 @@ import Typography from "@mui/material/Typography";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
 
 const SubjectAnalysis = () => {
 	const { subjectId } = useParams();
 	const [subject, setSubject] = useState([]);
 	const [questionnare, setQuestionnaire] = useState([]);
 	const [expanded, setExpanded] = useState(false);
+	const [analysisData, setAnalysisData] = useState([]);
 	const currentDate = new Date();
 	const year = currentDate.getFullYear();
 	const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
 	const day = currentDate.getDate().toString().padStart(2, "0");
 	const formattedDate = `${year}-${month}-${day}`;
-
-	const analysisData = [
-		{
-			question:
-				"To what extent was the instructor organized, well prepared, and use class time efficiently?",
-			answer: "The instructor was highly organized, well-prepared, and effectively utilized class time.",
-			recommendation:
-				"Continuing to prioritize organization and efficient use of class time will enhance the learning experience for students.",
-			isPositive: true, // Indicate whether the analysis is positive or negative
-		},
-		{
-			question:
-				"To what extent did the instructor present course material in a clear manner that facilitated understanding?",
-			answer: "The instructor presented the course material in a clear and concise manner, making it easy to comprehend.",
-			recommendation:
-				"Maintaining the clarity in course material delivery will contribute to better student engagement and learning outcomes.",
-			isPositive: true,
-		},
-		{
-			question:
-				"To what extent did the instructor treat students with respect?",
-			answer: "The instructor consistently treated students with respect and created an inclusive learning environment.",
-			recommendation:
-				"Sustaining a respectful and inclusive approach towards students will foster a positive classroom atmosphere.",
-			isPositive: true,
-		},
-		{
-			question:
-				"To what extent did exams and assignments reflect the course content?",
-			answer: "The exams and assignments poorly reflected the course content, causing confusion among students.",
-			recommendation:
-				"Revising the exams and assignments to align more closely with the course content will improve student understanding and performance.",
-			isPositive: false,
-		},
-
-		// Add more question objects here
-	];
-
-	const facultyID = "d0552b49-6e7d-4ced-8a30-62ce8066a2d4";
-	const departmentId = "84796c48-d538-4954-a98a-622dc5c9325a";
+	const facultyID = Cookies.get("facultyId");
+	const departmentId = Cookies.get("departmentId");
 
 	useEffect(() => {
 		axios
 			.get(
 				`https://localhost:7097/api/faculities/${facultyID}/departments/${departmentId}/subjects/${subjectId}
 `,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			)
 			.then((response) => {
 				setSubject(response.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
+
+	useEffect(() => {
+		axios
+			.get(
+				`https://localhost:7097/api/subjects/15EE4163-B1D7-4FFD-9357-AE82B0CBA7A0/conclusion
+`,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
+			)
+			.then((response) => {
+				setAnalysisData(response.data);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -84,6 +72,11 @@ const SubjectAnalysis = () => {
 			.get(
 				`https://localhost:7097/api/departments/${departmentId}/subjects/${subjectId}/questionnaires
 `,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			)
 			.then((response) => {
 				setQuestionnaire(response.data);
@@ -101,6 +94,11 @@ const SubjectAnalysis = () => {
 		try {
 			const response = await axios.delete(
 				`https://localhost:7097/api/departments/${departmentId}/subjects/${subjectId}/questionnaires/${id}`,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			);
 			if (response.status === 204) {
 				const deletedQuestionnaire = questionnare.filter(
@@ -115,10 +113,6 @@ const SubjectAnalysis = () => {
 	};
 
 	let firstThreeQuestionnaire = questionnare.slice(0, 4);
-
-	console.log(questionnare);
-
-	console.log(subject);
 
 	return (
 		<>
@@ -195,13 +189,13 @@ const SubjectAnalysis = () => {
 					<Analysis>
 						<div className="left-analysis">
 							<iframe
-								title="aa"
-								width="100%"
-								height="100%"
-								overflow="scroll"
-								scrolling="0"
-								frameBorder="0"
-								src="//plotly.com/~Muhammed_Zidan/80.embed"></iframe>
+								id="igraph"
+								title="subject"
+								scrolling="no"
+								seamless="seamless"
+								src="https://plotly.com/~Muhammed_Zidan/382.embed"
+								height="525"
+								width="100%"></iframe>
 						</div>
 					</Analysis>
 					<RightContainer>
@@ -222,8 +216,11 @@ const SubjectAnalysis = () => {
 										Last few Questionnaires
 									</Typography>
 								</AccordionSummary>
-								<AccordionDetails>
-									<div>
+								<AccordionDetails
+									sx={{
+										height: "100%",
+									}}>
+									<div className="to-scroll">
 										{questionnare.length > 0 ? (
 											firstThreeQuestionnaire.map(
 												(question) => (
@@ -322,27 +319,44 @@ const SubjectAnalysis = () => {
 						</QuestionnaireContainer>
 						<Conclusion>
 							<h1>Conclusion</h1>
-							{analysisData.length > 0 ? (
+							{analysisData &&
+							analysisData.goodConclusion &&
+							analysisData.badConclusion ? (
 								<div className="container-content">
-									{analysisData.map((data, index = 0) => (
-										<div className="system-recommenditon">
-											<ul>
-												<li>
-													<h4
-														style={{
-															color: data.isPositive
-																? "#a0c15a"
-																: "red",
-														}}>
-														Result{++index}:
-														<span>
-															{data.answer}
-														</span>
-													</h4>
-												</li>
-											</ul>
-										</div>
-									))}
+									{analysisData.goodConclusion.map(
+										(data, index = 0) => (
+											<div className="system-recommenditon to-padd">
+												<ul>
+													<li>
+														<h4
+															style={{
+																color: "#a0c15a",
+															}}>
+															Result{++index}:
+															<span>{data}</span>
+														</h4>
+													</li>
+												</ul>
+											</div>
+										),
+									)}
+									{analysisData.badConclusion.map(
+										(data, index = 0) => (
+											<div className="system-recommenditon">
+												<ul>
+													<li>
+														<h4
+															style={{
+																color: "red",
+															}}>
+															Result{++index}:
+															<span>{data}</span>
+														</h4>
+													</li>
+												</ul>
+											</div>
+										),
+									)}
 								</div>
 							) : (
 								<div className="container">
@@ -504,6 +518,11 @@ const QuestionnaireContainer = styled.div`
 		background-color: #fff;
 		position: relative;
 	}
+
+	.to-scroll {
+		overflow: scroll;
+		height: 80%;
+	}
 `;
 
 const Questionnare = styled.div`
@@ -576,6 +595,10 @@ const Conclusion = styled.div`
 			padding-bottom: 20px;
 		}
 
+		.to-padd:first-child {
+			padding-top: 38%;
+		}
+
 		.system-recommenditon {
 			width: 100%;
 			display: flex;
@@ -595,6 +618,7 @@ const Conclusion = styled.div`
 						span {
 							color: #000;
 							font-weight: 400;
+							padding-left: 5px;
 						}
 					}
 				}

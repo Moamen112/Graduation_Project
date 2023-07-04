@@ -12,6 +12,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 function Faculties(props) {
 	const [faculties, setFaculties] = useState([]);
@@ -37,6 +38,11 @@ function Faculties(props) {
 		try {
 			const response = await axios.put(
 				`https://localhost:7097/api/universities/${universityId}/faculities/${id}`,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 				{
 					name: faculty.name,
 					description: faculty.description,
@@ -64,6 +70,11 @@ function Faculties(props) {
 				{
 					name: faculty.name,
 					description: faculty.description,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
 				},
 			);
 			console.log(response);
@@ -99,6 +110,11 @@ function Faculties(props) {
 		try {
 			const response = await axios.delete(
 				`https://localhost:7097/api/universities/${universityId}/faculities/${id}/`,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			);
 			if (response.status === 204) {
 				const newFaculties = faculties.filter(
@@ -111,12 +127,17 @@ function Faculties(props) {
 		}
 	};
 
-	const universityId = "86F697D4-A762-44D6-8322-2C08C66F94E4";
+	const universityId = Cookies.get("universityId");
 
 	useEffect(() => {
 		axios
 			.get(
 				`https://localhost:7097/api/universities/${universityId}/faculities`,
+				{
+					headers: {
+						Authorization: `Bearer ${Cookies.get("token")}`,
+					},
+				},
 			)
 			.then((response) => {
 				if (response.status === 200) {

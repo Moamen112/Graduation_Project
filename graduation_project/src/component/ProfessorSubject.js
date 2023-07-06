@@ -2,24 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import StarIcon from "@mui/icons-material/Star";
-import TagIcon from "@mui/icons-material/Tag";
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import EventNoteIcon from "@mui/icons-material/EventNote";
-import EditIcon from "@mui/icons-material/Edit";
-import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 import Cookies from "js-cookie";
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 import main from "../images/main.jpg";
 import axios from "axios";
@@ -57,6 +58,8 @@ function SubjectQues() {
 		},
 	];
 
+	const navigate = useNavigate();
+
 	const handleRatingChange = (index, value) => {
 		const newRatings = [...ratings];
 		newRatings[index] = value;
@@ -88,7 +91,9 @@ function SubjectQues() {
 				},
 			);
 
-			console.log(response);
+			if (response.status === 204) {
+				navigate("/student/questionnaires");
+			}
 		} catch (error) {
 			console.log(error);
 		}

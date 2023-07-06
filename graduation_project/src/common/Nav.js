@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
@@ -24,8 +24,11 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Cookies from "js-cookie";
+import { AuthContext } from "../Context/authProvider";
 
 function Nav(props) {
+	const { handleLogout } = useContext(AuthContext);
+	const navigate = useNavigate();
 	const style = {
 		width: "100%",
 		marginLeft: "0",
@@ -47,6 +50,19 @@ function Nav(props) {
 
 	const handleClose = () => {
 		setAnchorEl(null);
+	};
+
+	const logout = () => {
+		handleLogout();
+		// Additional logout actions (e.g., navigate to login page)
+		Object.keys(Cookies.get()).forEach(function (cookieName) {
+			var neededAttributes = {
+				// Here you pass the same attributes that were used when the cookie was created
+				// and are required when removing the cookie
+			};
+			Cookies.remove(cookieName, neededAttributes);
+		});
+		navigate("/", { replace: true });
 	};
 
 	const myCookie = Cookies.get("id");
@@ -140,9 +156,7 @@ function Nav(props) {
 										Profile
 									</MenuItem>
 								</Link>
-								<MenuItem onClick={handleClose}>
-									Logout
-								</MenuItem>
+								<MenuItem onClick={logout}>Logout</MenuItem>
 							</Menu>
 						</IconButton>
 					</Box>

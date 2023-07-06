@@ -98,6 +98,7 @@ function Login() {
 					password: password,
 				})
 				.then((response) => {
+					console.log(response);
 					const role = response.data.role;
 					const token = response.data.token;
 					const userId = response.data.userId;
@@ -116,18 +117,12 @@ function Login() {
 					);
 
 					if (auth.role !== []) {
-						if (Cookies.get("isAuthenticated") === "true") {
-							if (Cookies.get("role") === "Department Admin") {
-								navigate("/department", { replace: true });
-							} else if (
-								Cookies.get("role") === "University Admin"
-							) {
-								navigate("/university", { replace: true });
-							} else if (
-								Cookies.get("role") === "Faculty Admin"
-							) {
-								navigate("/faculty", { replace: true });
-							}
+						if (Cookies.get("role") === "Department Admin") {
+							navigate("/department", { replace: true });
+						} else if (auth.role === "University Admin") {
+							navigate("/university", { replace: true });
+						} else if (Cookies.get("role") === "Faculty Admin") {
+							navigate("/faculty", { replace: true });
 						}
 					}
 				})

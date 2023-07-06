@@ -28,12 +28,9 @@ function StudentQues() {
 				console.log(err);
 			});
 	}, []);
-
 	let studentId = Cookies.get("userId");
-	console.log(studentId);
 
 	const CheckSubmission = (questionnaireId) => {
-		console.log(questionnaireId);
 		const endpoint = `https://localhost:7097/api/questionnaires/${questionnaireId}/students/${studentId}/check`;
 
 		axios
@@ -43,19 +40,17 @@ function StudentQues() {
 				},
 			})
 			.then((response) => {
-				/*if (response.response.status === 400) {
-					console.log(response.response.message);
-				} else {
+				if (response.status === 200) {
 					navigate(`/student/questionnaires/${questionnaireId}`); // Navigate to the form route
-				}*/
+				}
 			})
 			.catch((error) => {
 				if (error.response && error.response.status === 400) {
 					// Handle specific error code (status 400)
-					navigate(`/student/questionnaires/${questionnaireId}`);
-					return;
+					toast.error("You have already submitted that");
 				} else {
-					console.log("Error checking submission");
+					console.log("Something went wrong:", error.message);
+					// Additional error handling or logging if needed
 				}
 			});
 	};

@@ -47,7 +47,24 @@ import Auth from "./component/Auth";
 function App() {
 	const [reSize, setResize] = useState(false);
 	const [size, setSize] = useState([0, 0]);
-	const currentPath = window.location.pathname.split("/");
+
+	const [currentPath, setCurrentPath] = useState(
+		window.location.pathname.split("/"),
+	);
+	useEffect(() => {
+		const checkLocation = () => {
+			setCurrentPath(window.location.pathname.split("/"));
+			// Check the current URL path and perform actions based on it
+
+			// Additional logic goes here
+		};
+
+		// Add event listener for the popstate event
+		window.addEventListener("popstate", checkLocation);
+
+		// Initial check when the page loads
+		checkLocation();
+	}, [window.location.pathname]);
 	const { auth, setAuth, handleLogin } = useContext(AuthContext);
 
 	useLayoutEffect(() => {
@@ -84,9 +101,9 @@ function App() {
 	return (
 		<div className="App">
 			<Router>
-				{currentPath[1] == "faculty" ||
-				currentPath[1] == "department" ||
-				currentPath[1] == "university" ? (
+				{currentPath[1] === "faculty" ||
+				currentPath[1] === "department" ||
+				currentPath[1] === "university" ? (
 					<SideNav
 						reSize={reSize}
 						size={size}
@@ -95,11 +112,11 @@ function App() {
 				) : (
 					""
 				)}
-				{currentPath[1] == "faculty" ||
-				currentPath[1] == "department" ||
-				currentPath[1] == "university" ||
-				currentPath[1] == "professor" ||
-				currentPath[1] == "student" ? (
+				{currentPath[1] === "faculty" ||
+				currentPath[1] === "department" ||
+				currentPath[1] === "university" ||
+				currentPath[1] === "professor" ||
+				currentPath[1] === "student" ? (
 					<Nav
 						handleClick={handleClick}
 						resizeStyle={handleReSizechange}

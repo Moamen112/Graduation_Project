@@ -39,13 +39,13 @@ function Faculties(props) {
 			const response = await axios.put(
 				`https://localhost:7097/api/universities/${universityId}/faculities/${id}`,
 				{
+					name: faculty.name,
+					description: faculty.description,
+				},
+				{
 					headers: {
 						Authorization: `Bearer ${Cookies.get("token")}`,
 					},
-				},
-				{
-					name: faculty.name,
-					description: faculty.description,
 				},
 			);
 			if (response.status === 204) {

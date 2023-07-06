@@ -1,0 +1,598 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Graduation_Project\\GraduationProject_API_LAST\\GraduationProject_API\\GraduationProject_API.csproj": {}
+  },
+  "projects": {
+    "D:\\Graduation_Project\\GraduationProject_API_LAST\\Contracts\\Contracts.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Contracts\\Contracts.csproj",
+        "projectName": "Contracts",
+        "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Contracts\\Contracts.csproj",
+        "packagesPath": "C:\\Users\\Moamen Shehab\\.nuget\\packages\\",
+        "outputPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Contracts\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Moamen Shehab\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Graduation_Project\\GraduationProject_API_LAST\\Entities\\Entities.csproj": {
+                "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Entities\\Entities.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Graduation_Project\\GraduationProject_API_LAST\\Entities\\Entities.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Entities\\Entities.csproj",
+        "projectName": "Entities",
+        "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Entities\\Entities.csproj",
+        "packagesPath": "C:\\Users\\Moamen Shehab\\.nuget\\packages\\",
+        "outputPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Entities\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Moamen Shehab\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.10, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Graduation_Project\\GraduationProject_API_LAST\\GraduationProject_API.Presentation\\GraduationProject_API.Presentation.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Graduation_Project\\GraduationProject_API_LAST\\GraduationProject_API.Presentation\\GraduationProject_API.Presentation.csproj",
+        "projectName": "GraduationProject_API.Presentation",
+        "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\GraduationProject_API.Presentation\\GraduationProject_API.Presentation.csproj",
+        "packagesPath": "C:\\Users\\Moamen Shehab\\.nuget\\packages\\",
+        "outputPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\GraduationProject_API.Presentation\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Moamen Shehab\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Graduation_Project\\GraduationProject_API_LAST\\Service.Contracts\\Service.Contracts.csproj": {
+                "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Service.Contracts\\Service.Contracts.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Mvc.Core": {
+              "target": "Package",
+              "version": "[2.2.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Graduation_Project\\GraduationProject_API_LAST\\GraduationProject_API\\GraduationProject_API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Graduation_Project\\GraduationProject_API_LAST\\GraduationProject_API\\GraduationProject_API.csproj",
+        "projectName": "GraduationProject_API",
+        "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\GraduationProject_API\\GraduationProject_API.csproj",
+        "packagesPath": "C:\\Users\\Moamen Shehab\\.nuget\\packages\\",
+        "outputPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\GraduationProject_API\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Moamen Shehab\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Graduation_Project\\GraduationProject_API_LAST\\GraduationProject_API.Presentation\\GraduationProject_API.Presentation.csproj": {
+                "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\GraduationProject_API.Presentation\\GraduationProject_API.Presentation.csproj"
+              },
+              "D:\\Graduation_Project\\GraduationProject_API_LAST\\LoggerService\\LoggerService.csproj": {
+                "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\LoggerService\\LoggerService.csproj"
+              },
+              "D:\\Graduation_Project\\GraduationProject_API_LAST\\Repository\\Repository.csproj": {
+                "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Repository\\Repository.csproj"
+              },
+              "D:\\Graduation_Project\\GraduationProject_API_LAST\\Service\\Service.csproj": {
+                "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Service\\Service.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.10, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Graduation_Project\\GraduationProject_API_LAST\\LoggerService\\LoggerService.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Graduation_Project\\GraduationProject_API_LAST\\LoggerService\\LoggerService.csproj",
+        "projectName": "LoggerService",
+        "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\LoggerService\\LoggerService.csproj",
+        "packagesPath": "C:\\Users\\Moamen Shehab\\.nuget\\packages\\",
+        "outputPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\LoggerService\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Moamen Shehab\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Graduation_Project\\GraduationProject_API_LAST\\Contracts\\Contracts.csproj": {
+                "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Contracts\\Contracts.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "NLog.Extensions.Logging": {
+              "target": "Package",
+              "version": "[5.2.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Graduation_Project\\GraduationProject_API_LAST\\Repository\\Repository.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Repository\\Repository.csproj",
+        "projectName": "Repository",
+        "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Repository\\Repository.csproj",
+        "packagesPath": "C:\\Users\\Moamen Shehab\\.nuget\\packages\\",
+        "outputPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Repository\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Moamen Shehab\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Graduation_Project\\GraduationProject_API_LAST\\Contracts\\Contracts.csproj": {
+                "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Contracts\\Contracts.csproj"
+              },
+              "D:\\Graduation_Project\\GraduationProject_API_LAST\\Entities\\Entities.csproj": {
+                "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Entities\\Entities.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.10, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Graduation_Project\\GraduationProject_API_LAST\\Service.Contracts\\Service.Contracts.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Service.Contracts\\Service.Contracts.csproj",
+        "projectName": "Service.Contracts",
+        "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Service.Contracts\\Service.Contracts.csproj",
+        "packagesPath": "C:\\Users\\Moamen Shehab\\.nuget\\packages\\",
+        "outputPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Service.Contracts\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Moamen Shehab\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Graduation_Project\\GraduationProject_API_LAST\\Entities\\Entities.csproj": {
+                "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Entities\\Entities.csproj"
+              },
+              "D:\\Graduation_Project\\GraduationProject_API_LAST\\Shared\\Shared.csproj": {
+                "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Shared\\Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Graduation_Project\\GraduationProject_API_LAST\\Service\\Service.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Service\\Service.csproj",
+        "projectName": "Service",
+        "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Service\\Service.csproj",
+        "packagesPath": "C:\\Users\\Moamen Shehab\\.nuget\\packages\\",
+        "outputPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Service\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Moamen Shehab\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Graduation_Project\\GraduationProject_API_LAST\\Contracts\\Contracts.csproj": {
+                "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Contracts\\Contracts.csproj"
+              },
+              "D:\\Graduation_Project\\GraduationProject_API_LAST\\Service.Contracts\\Service.Contracts.csproj": {
+                "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Service.Contracts\\Service.Contracts.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.10, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Graduation_Project\\GraduationProject_API_LAST\\Shared\\Shared.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Shared\\Shared.csproj",
+        "projectName": "Shared",
+        "projectPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Shared\\Shared.csproj",
+        "packagesPath": "C:\\Users\\Moamen Shehab\\.nuget\\packages\\",
+        "outputPath": "D:\\Graduation_Project\\GraduationProject_API_LAST\\Shared\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Moamen Shehab\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

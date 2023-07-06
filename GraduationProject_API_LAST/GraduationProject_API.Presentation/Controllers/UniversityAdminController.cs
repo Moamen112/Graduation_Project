@@ -1,0 +1,56 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Service.Contracts;
+using Shared.DataTranferObjects;
+using System.Data;
+
+namespace GraduationProject_API.Presentation.Controllers;
+
+[ApiController]
+[Route("api/universities/{universityId}/admins")]
+public class UniversityAdminController : ControllerBase
+{
+    private readonly IServiceManager _service;
+    public UniversityAdminController(IServiceManager service) => _service = service;
+
+    [HttpGet]
+    [Authorize(Roles = "University Admin")]
+    public async Task<IActionResult> GetAllAdmins(Guid universityId)
+    {
+        var admins = await _service.UniversityAdminService.GetAllAdmins(universityId, false);
+
+        return Ok(admins);
+    }
+
+    [HttpGet("{id:Guid}", Name = "GetUniversityAdmin")]
+    [Authorize(Roles = "University Admin")]
+    public async Task<IActionResult> GetAdmin(Guid universityId, Guid id)
+    {
+        var admin = await _service.UniversityAdminService.GetUniveristyAdmin(universityId, id, false);
+        
+        return Ok(admin);
+    }
+
+    [HttpPut("{id:Guid}")]
+    [Authorize(Roles = "University Admin")]
+    public async Task<IActionResult> UpdateAdminDetails(Guid universityId, Guid id, 
+        [FromBody] UserForUpdateDto admin)
+    {
+        if (admin is null)
+            return BadRequest("Object is null");
+
+        await _service.UniversityAdminService.UpdateAdminForUniversity(universityId, id, admin, false, true);
+        return NoContent();
+    }
+
+    [HttpPost]
+    [Authorize(Roles = "University Admin")]
+    public async Task<IActionResult> CreateAdmin(Guid universityId, [FromBody] UserForCreationDto admin)
+    {
+        if (admin is null)
+            return BadRequest("Object is null");
+
+        var result = await _service.UniversityAdminService.CreateAdminForUniversity(universityId, admin, false);
+        return CreatedAtRoute("GetUniversityAdmin", new { universityId, result.Id }, result);
+    }
+}

@@ -99,7 +99,7 @@ function DepartmentAdmin(props) {
 									{subj.fullName.split(" -")[0]}
 								</p>
 								<div className="star">
-									<p className="rt">{subj.rate}</p>
+									<p className="rt">{subj.rate.toFixed(1)}</p>
 									<StarIcon
 										sx={{
 											color: "orange",

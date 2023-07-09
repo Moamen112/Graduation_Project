@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { AuthContext } from "../Context/authProvider";
+import { toast } from "react-toastify";
 
 function Login() {
 	const [email, setEmail] = useState("");
@@ -55,7 +56,7 @@ function Login() {
 					}
 				})
 				.catch((error) => {
-					console.error(error);
+					toast.error(error.response.data.Message);
 				});
 		} else if (currentPath[currentPath.length - 1] === "student") {
 			axios
@@ -89,7 +90,7 @@ function Login() {
 					}
 				})
 				.catch((error) => {
-					console.error(error);
+					toast.error(error.response.data.Message);
 				});
 		} else if (currentPath[currentPath.length - 1] === "admin") {
 			axios
@@ -127,7 +128,7 @@ function Login() {
 					}
 				})
 				.catch((error) => {
-					console.error(error);
+					toast.error(error.response.data.Message);
 				});
 		}
 	};
